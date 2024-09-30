@@ -1,9 +1,5 @@
 package view;
 
-
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,15 +29,17 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
-
     public TelaLogin() {
         initComponents();
+        iniciarFormulario();
+        jButton1.setEnabled(false);
     }
     Usuario usuario = new Usuario();
 
-    Color d = new Color(255, 0, 51);
-    Color f = new Color(255, 255, 255);
+    Color red = new Color(255, 0, 51);
+    Color green = new Color(0, 204, 0);
 
+   // Método para validar os campos
     public boolean camposValidos() {
         String userName = txtUsuario.getText().trim();
         String senha = new String(txsenha.getPassword());
@@ -50,7 +48,6 @@ public class TelaLogin extends javax.swing.JFrame {
         if (userName.isEmpty() || userName.length() < 2) {
             txtUsuario.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
             lblMessagem1.setText("Preencha o campo User Name com mais de 2 caracteres");
-            txtUsuario.requestFocus();
             return false;
         } else {
             txtUsuario.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
@@ -60,7 +57,6 @@ public class TelaLogin extends javax.swing.JFrame {
         if (senha.isEmpty() || senha.length() <= 4) {
             txsenha.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
             lblMessagem1.setText("A senha deve ter mais de 4 caracteres");
-            txsenha.requestFocus();
             return false;
         } else {
             txsenha.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
@@ -70,29 +66,34 @@ public class TelaLogin extends javax.swing.JFrame {
         return true;
     }
 
-    
-     public void habilitarBotaoSeValido() {
+public void habilitarBotaoSeValido() {
         jButton1.setEnabled(camposValidos());
     }
 
-    // Função de inicialização
+    // Inicializa o formulário e adiciona os ouvintes
     public void iniciarFormulario() {
-        // Colocar o foco no campo txtUsuario ao iniciar
-        txtUsuario.requestFocus();
+        txtUsuario.requestFocus();  // Coloca o foco no campo txtUsuario ao iniciar
 
-        // Adicionar ouvintes de teclas para atualizar a validação em tempo real
+        // Adiciona ouvintes de teclas para validar em tempo real
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                habilitarBotaoSeValido();
+                habilitarBotaoSeValido();  // Verifica a validade a cada tecla liberada
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    txsenha.requestFocus();  // Move o foco para a senha ao pressionar Enter
+                }
             }
         });
-        
+
         txsenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                habilitarBotaoSeValido();
+                habilitarBotaoSeValido();  // Verifica a validade a cada tecla liberada
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER && camposValidos()) {
+                    jButton1.requestFocus();  // Move o foco para o botão ao pressionar Enter
+                }
             }
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,10 +219,11 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txsenhaKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             camposValidos();
-
-            // End of variables declaration
+            if (camposValidos()) {
+                jButton1.requestFocus();  // Move o foco para o botão de login se tudo estiver válido
+            }
         }
     }//GEN-LAST:event_txsenhaKeyPressed
 
@@ -243,34 +245,33 @@ public class TelaLogin extends javax.swing.JFrame {
         jButton1.setEnabled(camposEstaoPreenchidos && camposSaoValidos);
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-    if (!camposValidos()) {
-        return;  // Não faz nada se os campos não são válidos
-    }
 
-    LoginDAO loginDAO = new LoginDAO();
-    String userName = txtUsuario.getText();
-    String senha = String.valueOf(txsenha.getPassword());
-
-    Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
-
-    if (usuarioAutenticado != null) {
-        String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
-        lblMessagem1.setText("Usuário autenticado como: " + perfil);
-
-        // Exibe mensagem de boas-vindas de acordo com o perfil
-        if (perfil.equals("Admin")) {
-            lblMessagem1.setText("Bem-vindo Admin");
-        } else if (perfil.equals("SuperAdmin")) {
-            lblMessagem1.setText("Bem-vindo SuperAdmin");
-        } else if (perfil.equals("User")) {
-            lblMessagem1.setText("Bem-vindo User");
+     if (!camposValidos()) {
+            return;  // Não faz nada se os campos não são válidos
         }
-    } else {
-        // Se falhar a autenticação, exibe mensagem de erro
-        lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
-    }
 
+        LoginDAO loginDAO = new LoginDAO();
+        String userName = txtUsuario.getText();
+        String senha = String.valueOf(txsenha.getPassword());
+
+        Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
+
+        if (usuarioAutenticado != null) {
+            String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
+            lblMessagem1.setText("Usuário autenticado como: " + perfil);
+
+            // Exibe mensagem de boas-vindas de acordo com o perfil
+            if (perfil.equals("Admin")) {
+                lblMessagem1.setText("Bem-vindo Admin");
+            } else if (perfil.equals("SuperAdmin")) {
+                lblMessagem1.setText("Bem-vindo SuperAdmin");
+            } else if (perfil.equals("User")) {
+                lblMessagem1.setText("Bem-vindo User");
+            }
+        } else {
+            // Se falhar a autenticação, exibe mensagem de erro
+            lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
@@ -305,36 +306,35 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
-    if (!camposValidos()) {
-        return;  // Não faz nada se os campos não são válidos
-    }
+            if (!camposValidos()) {
+                return;  // Não faz nada se os campos não são válidos
+            }
 
-    LoginDAO loginDAO = new LoginDAO();
-    String userName = txtUsuario.getText();
-    String senha = String.valueOf(txsenha.getPassword());
+            LoginDAO loginDAO = new LoginDAO();
+            String userName = txtUsuario.getText();
+            String senha = String.valueOf(txsenha.getPassword());
 
-    Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
+            Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
 
-    if (usuarioAutenticado != null) {
-        String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
-        lblMessagem1.setText("Usuário autenticado como: " + perfil);
+            if (usuarioAutenticado != null) {
+                String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
+                lblMessagem1.setText("Usuário autenticado como: " + perfil);
 
-        // Exibe mensagem de boas-vindas de acordo com o perfil
-        if (perfil.equals("Admin")) {
-            lblMessagem1.setText("Bem-vindo Admin");
-        } else if (perfil.equals("SuperAdmin")) {
-            lblMessagem1.setText("Bem-vindo SuperAdmin");
-        } else if (perfil.equals("User")) {
-            lblMessagem1.setText("Bem-vindo User");
+                // Exibe mensagem de boas-vindas de acordo com o perfil
+                if (perfil.equals("Admin")) {
+                    lblMessagem1.setText("Bem-vindo Admin");
+                } else if (perfil.equals("SuperAdmin")) {
+                    lblMessagem1.setText("Bem-vindo SuperAdmin");
+                } else if (perfil.equals("User")) {
+                    lblMessagem1.setText("Bem-vindo User");
+                }
+            } else {
+                // Se falhar a autenticação, exibe mensagem de erro
+                lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
+            }
         }
-    } else {
-        // Se falhar a autenticação, exibe mensagem de erro
-        lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
-    }
-}
 
 
-        
     }//GEN-LAST:event_jButton1KeyPressed
 
     /**
