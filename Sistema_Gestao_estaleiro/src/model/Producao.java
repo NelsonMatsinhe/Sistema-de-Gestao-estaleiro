@@ -20,7 +20,7 @@ public class Producao {
     private Long id;
 
     @ManyToOne
-    private Bloco bloco;
+    private Producao bloco;
 
     private int quantidadeProduzida;
 
@@ -33,7 +33,7 @@ public class Producao {
     // Construtor padrão
     public Producao() {}
 
-    public Producao(Bloco bloco, int quantidadeProduzida, Date dataProducao, int diasParaCura) {
+    public Producao(Producao bloco, int quantidadeProduzida, Date dataProducao, int diasParaCura) {
         this.bloco = bloco;
         this.quantidadeProduzida = quantidadeProduzida;
         this.dataProducao = dataProducao;
@@ -59,11 +59,11 @@ public class Producao {
         this.id = id;
     }
 
-    public Bloco getBloco() {
+    public Producao getProducao() {
         return bloco;
     }
 
-    public void setBloco(Bloco bloco) {
+    public void setProducao(Producao bloco) {
         this.bloco = bloco;
     }
 

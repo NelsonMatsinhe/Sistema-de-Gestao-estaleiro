@@ -12,7 +12,7 @@ package model;
 import javax.persistence.*;
 
 @Entity
-public class Bloco {
+public class produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,10 @@ public class Bloco {
     private int quantidadeEmEstoque;
 
     // Construtor padrão
-    public Bloco() {}
+
+    public produto() {
+    }
+  
 
     // Getters e setters
     public Long getId() {
