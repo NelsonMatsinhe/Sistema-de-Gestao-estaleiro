@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import view.TelaMenuAdmin;
+import view.TelaMenuUser;
 
 /**
  *
@@ -258,32 +260,42 @@ public void iniciarFormulario() {
  
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (!camposValidos()) {
-            return;  // Não faz nada se os campos não são válidos
-        }
-
-        LoginDAO loginDAO = new LoginDAO();
-        String userName = txtUsuario.getText();
-        String senha = String.valueOf(txsenha.getPassword());
-
-        Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
-
-        if (usuarioAutenticado != null) {
-            String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
-            lblMessagem1.setText("Usuário autenticado como: " + perfil);
-
-            // Exibe mensagem de boas-vindas de acordo com o perfil
-            if (perfil.equals("Admin")) {
-                lblMessagem1.setText("Bem-vindo Admin");
-            } else if (perfil.equals("SuperAdmin")) {
-                lblMessagem1.setText("Bem-vindo SuperAdmin");
-            } else if (perfil.equals("User")) {
-                lblMessagem1.setText("Bem-vindo User");
+         if (!camposValidos()) {
+                return;  // Não faz nada se os campos não são válidos
             }
-        } else {
-            // Se falhar a autenticação, exibe mensagem de erro
-            lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
-        }
+
+            LoginDAO loginDAO = new LoginDAO();
+            String userName = txtUsuario.getText();
+            String senha = String.valueOf(txsenha.getPassword());
+
+            Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
+
+            if (usuarioAutenticado != null) {
+                String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
+                lblMessagem1.setText("Usuário autenticado como: " + perfil);
+
+                // Exibe mensagem de boas-vindas de acordo com o perfil
+                if (perfil.equals("Admin")) {
+                    lblMessagem1.setText("Bem-vindo Admin");
+                    TelaMenuAdmin a  = new TelaMenuAdmin();
+                    
+                    a.setVisible(true);
+                    this.dispose();
+                } else if (perfil.equals("SuperAdmin")) {
+                    
+                    lblMessagem1.setText("Bem-vindo SuperAdmin");
+                } else if (perfil.equals("User")) {
+                  
+                    lblMessagem1.setText("Bem-vindo User");
+                    TelaMenuUser U = new TelaMenuUser ();
+                     U.setVisible(true);
+                       this.dispose();
+                }
+            } else {
+                // Se falhar a autenticação, exibe mensagem de erro
+                lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
+            }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
@@ -319,14 +331,18 @@ public void iniciarFormulario() {
                 if (perfil.equals("Admin")) {
                     lblMessagem1.setText("Bem-vindo Admin");
                     TelaMenuAdmin a  = new TelaMenuAdmin();
+                    
                     a.setVisible(true);
+                    this.dispose();
                 } else if (perfil.equals("SuperAdmin")) {
                     
                     lblMessagem1.setText("Bem-vindo SuperAdmin");
                 } else if (perfil.equals("User")) {
+                  
                     lblMessagem1.setText("Bem-vindo User");
                     TelaMenuUser U = new TelaMenuUser ();
                      U.setVisible(true);
+                       this.dispose();
                 }
             } else {
                 // Se falhar a autenticação, exibe mensagem de erro

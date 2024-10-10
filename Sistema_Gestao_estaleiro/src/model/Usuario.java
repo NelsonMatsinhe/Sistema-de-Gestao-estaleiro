@@ -19,7 +19,7 @@ public class Usuario {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "userName")
+    @Column(name = "userName", unique = true)
     private String userName;
 
     @Column(name = "senha")

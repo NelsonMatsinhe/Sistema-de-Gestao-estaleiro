@@ -55,7 +55,6 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         Menu1 = new javax.swing.JPanel();
         lblMenu1 = new javax.swing.JLabel();
@@ -80,21 +79,15 @@ public class TelaMenuUser extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 0, 0));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/logogolo.png"))); // NOI18N
-        jLabel7.setText("EStaleiro");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1285, Short.MAX_VALUE))
+            .addGap(0, 1580, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 16, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -2774,7 +2767,6 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private javax.swing.JPanel Menu6;
     private javax.swing.JPanel Menu7;
     private javax.swing.JDesktopPane jDesktopPane;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblMenu1;
