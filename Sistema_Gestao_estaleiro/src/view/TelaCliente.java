@@ -337,7 +337,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
 
             habilitarFormulario(false);
-             carregarGrade();
             
         }
     }//GEN-LAST:event_btExcluirActionPerformed
@@ -360,7 +359,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
 
             habilitarFormulario(false);
-            carregarGrade();
+     e
         }
         
         
@@ -392,7 +391,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
 
             habilitarFormulario(false);
-            carregarGrade();
+           
         }
         
         
@@ -466,17 +465,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if (evt.getClickCount() == 2) {
-            ClienteTableModel tm = (ClienteTableModel) jTable1.getModel();
-            cliente = tm.getRowValue(jTable1.getRowSorter().convertRowIndexToModel(jTable1.getSelectedRow()));
-            
-           //txtID.setValue((cliente.getId());
-            txtnome.setText(cliente.getNome());
-            txtendereco.setText(cliente.getEndereco());
-            telefone.setValue(cliente.getTelefone());
-
-            habilitarFormulario(true);
-        }
+      
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
@@ -569,14 +558,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     return true;
     }
 
-    private void carregarGrade() {
-        ClienteTableModel tm = (ClienteTableModel) jTable1.getModel();
-        try {
-            tm.setDados(clienteDAO.listarTodos());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;

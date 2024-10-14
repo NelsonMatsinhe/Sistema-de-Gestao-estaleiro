@@ -17,7 +17,14 @@ public class TelaMenuUser extends javax.swing.JFrame {
 
     Color DefaultColor, ClickedColor, MouseColor;
 
-    TelaHome home =new TelaHome();
+   // TelaCliente cliente = new TelaCliente();
+    TelaUsuario TelaUsuario;
+    TelaProduto TelaProduto= new TelaProduto();
+  //  TelaVenda venda = new TelaVenda();
+   // TelaStock stock = new TelaStock();
+
+    TelaHome home = new TelaHome();
+
     public TelaMenuUser() {
         try {
             initComponents();
@@ -607,6 +614,10 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private void lblMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseClicked
         try {
 
+            jDesktopPane.add(TelaUsuario).setVisible(true);
+            
+            
+            
         } catch (Exception ex) {
             Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -667,6 +678,7 @@ public class TelaMenuUser extends javax.swing.JFrame {
 
     private void lblMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseClicked
         try {
+            jDesktopPane.add(TelaProduto).setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
         }
