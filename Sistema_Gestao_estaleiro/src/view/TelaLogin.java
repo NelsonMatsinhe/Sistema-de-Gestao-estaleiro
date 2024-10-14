@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import view.TelaMenuAdmin;
+import view.TelaMenuUser;
 
 /**
  *
@@ -30,69 +32,82 @@ public class TelaLogin extends javax.swing.JFrame {
      * Creates new form TelaLogin
      */
     public TelaLogin() {
-        initComponents();
+             initComponents();
         iniciarFormulario();
-        jButton1.setEnabled(false);
+        jButton1.setEnabled(false); // Desabilita o botão inicialmente
+  
     }
     Usuario usuario = new Usuario();
-
     Color red = new Color(255, 0, 51);
     Color green = new Color(0, 204, 0);
-
-   // Método para validar os campos
-    public boolean camposValidos() {
-        String userName = txtUsuario.getText().trim();
+      // Método para validar o campo "User Name"
+    public boolean validarUserName(String userName) {
+        // Regex: Aceita apenas letras, números e pelo menos 2 caracteres
+        return userName.matches("[a-zA-Z0-9]{2,}");
+    }
+ public boolean camposValidos() {
         String senha = new String(txsenha.getPassword());
+        String userName = txtUsuario.getText().trim();
 
-        // Validação do nome de usuário
-        if (userName.isEmpty() || userName.length() < 2) {
+        if (userName.isEmpty() || !validarUserName(userName)) {
+            txtUsuario.requestFocus();
             txtUsuario.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
-            lblMessagem1.setText("Preencha o campo User Name com mais de 2 caracteres");
+            lblMessagem1.setText("Preencha o campo User Name válido (somente letras e números)");
             return false;
         } else {
             txtUsuario.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
+            lblMessagem1.setText("");
         }
 
-        // Validação da senha
         if (senha.isEmpty() || senha.length() <= 4) {
             txsenha.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
             lblMessagem1.setText("A senha deve ter mais de 4 caracteres");
+            txsenha.requestFocus();
             return false;
         } else {
             txsenha.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
+            lblMessagem1.setText("");
         }
 
         lblMessagem1.setText("");
         return true;
     }
 
-public void habilitarBotaoSeValido() {
-        jButton1.setEnabled(camposValidos());
+// Habilitar botão se ambos os campos forem válidos
+    public void habilitarBotaoSeValido() {
+        boolean camposSaoValidos = camposValidos();
+        jButton1.setEnabled(camposSaoValidos);
     }
+// Inicializa o formulário e adiciona os ouvintes
+public void iniciarFormulario() {
+    txtUsuario.requestFocus(); // Coloca o foco no campo txtUsuario ao iniciar
 
-    // Inicializa o formulário e adiciona os ouvintes
-    public void iniciarFormulario() {
-        txtUsuario.requestFocus();  // Coloca o foco no campo txtUsuario ao iniciar
-
-        // Adiciona ouvintes de teclas para validar em tempo real
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                habilitarBotaoSeValido();  // Verifica a validade a cada tecla liberada
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                    txsenha.requestFocus();  // Move o foco para a senha ao pressionar Enter
+    // Modifica o ouvinte do campo txtUsuario
+    txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+               // evt.consume(); // Impede o comportamento padrão da tecla Enter
+                if (camposValidos()) {
+                    txsenha.requestFocus(); // Move o foco para a senha APENAS ao pressionar Enter
                 }
             }
-        });
+            habilitarBotaoSeValido(); // Verifica a validade a cada tecla pressionada
+        }
+    });
 
-        txsenha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                habilitarBotaoSeValido();  // Verifica a validade a cada tecla liberada
-                if (evt.getKeyCode() == KeyEvent.VK_ENTER && camposValidos()) {
-                    jButton1.requestFocus();  // Move o foco para o botão ao pressionar Enter
+    // Modifica o ouvinte do campo txsenha
+    txsenha.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+               // evt.consume(); // Impede o comportamento padrão da tecla Enter
+                if (camposValidos()) {
+                    jButton1.requestFocus(); // Move o foco para o botão APENAS ao pressionar Enter
                 }
             }
-        });
-    }
+            habilitarBotaoSeValido(); // Verifica a validade a cada tecla pressionada
+        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,7 +133,7 @@ public void habilitarBotaoSeValido() {
         lblMessagem.setForeground(new java.awt.Color(255, 0, 0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        setBounds(new java.awt.Rectangle(2, 2, 2, 2));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -184,11 +199,14 @@ public void habilitarBotaoSeValido() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
         });
         jPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 318, 35));
 
         lblMessagem1.setForeground(new java.awt.Color(255, 0, 0));
-        jPanel2.add(lblMessagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 318, 26));
+        jPanel2.add(lblMessagem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 390, 26));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 420, 540));
 
@@ -213,16 +231,17 @@ public void habilitarBotaoSeValido() {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+ 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txsenhaKeyPressed
-       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            camposValidos();
+             if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            evt.consume(); // Impede o comportamento padrão da tecla Enter
             if (camposValidos()) {
-                jButton1.requestFocus();  // Move o foco para o botão de login se tudo estiver válido
+                jButton1.requestFocus();
+                lblMessagem1.setText("");
             }
         }
     }//GEN-LAST:event_txsenhaKeyPressed
@@ -238,68 +257,56 @@ public void habilitarBotaoSeValido() {
             txsenha.setEchoChar('*');
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-    private void habilitarBotaoLogin() {
-        boolean camposEstaoPreenchidos = !txtUsuario.getText().isEmpty() && txsenha.getPassword().length > 0;
-        boolean camposSaoValidos = camposValidos();
-
-        jButton1.setEnabled(camposEstaoPreenchidos && camposSaoValidos);
-    }
+ 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-     if (!camposValidos()) {
-            return;  // Não faz nada se os campos não são válidos
-        }
-
-        LoginDAO loginDAO = new LoginDAO();
-        String userName = txtUsuario.getText();
-        String senha = String.valueOf(txsenha.getPassword());
-
-        Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
-
-        if (usuarioAutenticado != null) {
-            String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
-            lblMessagem1.setText("Usuário autenticado como: " + perfil);
-
-            // Exibe mensagem de boas-vindas de acordo com o perfil
-            if (perfil.equals("Admin")) {
-                lblMessagem1.setText("Bem-vindo Admin");
-            } else if (perfil.equals("SuperAdmin")) {
-                lblMessagem1.setText("Bem-vindo SuperAdmin");
-            } else if (perfil.equals("User")) {
-                lblMessagem1.setText("Bem-vindo User");
+         if (!camposValidos()) {
+                return;  // Não faz nada se os campos não são válidos
             }
-        } else {
-            // Se falhar a autenticação, exibe mensagem de erro
-            lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
-        }
+
+            LoginDAO loginDAO = new LoginDAO();
+            String userName = txtUsuario.getText();
+            String senha = String.valueOf(txsenha.getPassword());
+
+            Usuario usuarioAutenticado = loginDAO.autenticar(userName, senha);
+
+            if (usuarioAutenticado != null) {
+                String perfil = loginDAO.verificarPerfil(usuarioAutenticado);
+                lblMessagem1.setText("Usuário autenticado como: " + perfil);
+
+                // Exibe mensagem de boas-vindas de acordo com o perfil
+                if (perfil.equals("Admin")) {
+                    lblMessagem1.setText("Bem-vindo Admin");
+                    TelaMenuAdmin a  = new TelaMenuAdmin();
+                    
+                    a.setVisible(true);
+                    this.dispose();
+                } else if (perfil.equals("SuperAdmin")) {
+                    
+                    lblMessagem1.setText("Bem-vindo SuperAdmin");
+                } else if (perfil.equals("User")) {
+                  
+                    lblMessagem1.setText("Bem-vindo User");
+                    TelaMenuUser U = new TelaMenuUser ();
+                     U.setVisible(true);
+                       this.dispose();
+                }
+            } else {
+                // Se falhar a autenticação, exibe mensagem de erro
+                lblMessagem1.setText("Falha na autenticação. Verifique o nome de usuário e a senha.");
+            }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
-        // Adicione esses ouvintes de teclado aos campos de entrada
-        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                    evt.consume(); // Impede o comportamento padrão da tecla Enter
-                    if (camposValidos()) {
-                        txsenha.requestFocus();
-                        lblMessagem.setText("");
-                    }
-                }
+          if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            evt.consume(); // Impede o comportamento padrão da tecla Enter
+            if (camposValidos()) {
+                txsenha.requestFocus();
+                lblMessagem.setText("");
             }
-        });
-
-        txsenha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                    evt.consume(); // Impede o comportamento padrão da tecla Enter
-                    if (camposValidos()) {
-                        jButton1.requestFocus();
-                        lblMessagem1.setText("");
-                        lblMessagem1.setText("");
-                    }
-                }
-            }
-        });
+        }
+       
 
     }//GEN-LAST:event_txtUsuarioKeyPressed
 
@@ -323,10 +330,19 @@ public void habilitarBotaoSeValido() {
                 // Exibe mensagem de boas-vindas de acordo com o perfil
                 if (perfil.equals("Admin")) {
                     lblMessagem1.setText("Bem-vindo Admin");
+                    TelaMenuAdmin a  = new TelaMenuAdmin();
+                    
+                    a.setVisible(true);
+                    this.dispose();
                 } else if (perfil.equals("SuperAdmin")) {
+                    
                     lblMessagem1.setText("Bem-vindo SuperAdmin");
                 } else if (perfil.equals("User")) {
+                  
                     lblMessagem1.setText("Bem-vindo User");
+                    TelaMenuUser U = new TelaMenuUser ();
+                     U.setVisible(true);
+                       this.dispose();
                 }
             } else {
                 // Se falhar a autenticação, exibe mensagem de erro
@@ -336,6 +352,11 @@ public void habilitarBotaoSeValido() {
 
 
     }//GEN-LAST:event_jButton1KeyPressed
+
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        
+                habilitarBotaoSeValido(); 
+    }//GEN-LAST:event_txtUsuarioKeyReleased
 
     /**
      * @param args the command line arguments

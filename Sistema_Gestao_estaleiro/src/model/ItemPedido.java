@@ -19,14 +19,14 @@ public class ItemPedido {
     private Long id;
 
     @ManyToOne
-    private Bloco bloco;
+    private Producao bloco;
 
     private int quantidade;
     private double precoUnitario;
 
     public ItemPedido() {}
 
-    public ItemPedido(Bloco bloco, int quantidade, double precoUnitario) {
+    public ItemPedido(Producao bloco, int quantidade, double precoUnitario) {
         this.bloco = bloco;
         this.quantidade = quantidade;
         this.precoUnitario = precoUnitario;
@@ -45,11 +45,11 @@ public class ItemPedido {
         this.id = id;
     }
 
-    public Bloco getBloco() {
+    public Producao getProducao() {
         return bloco;
     }
 
-    public void setBloco(Bloco bloco) {
+    public void setProducao(Producao bloco) {
         this.bloco = bloco;
     }
 

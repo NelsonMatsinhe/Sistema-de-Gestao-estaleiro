@@ -31,6 +31,17 @@ public class Material {
     // Construtor padrão
     public Material() {}
 
+     public void adicionarEstoque(double quantidade) {
+        this.quantidade += quantidade;
+    }
+
+    public void removerEstoque(double quantidade) {
+        if (this.quantidade >= quantidade) {
+            this.quantidade -= quantidade;
+        } else {
+            throw new IllegalArgumentException("Estoque insuficiente.");
+        }
+    }
     // Getters e setters
     public Long getId() {
         return id;

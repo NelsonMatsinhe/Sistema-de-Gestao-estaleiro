@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model;
 
 /**
@@ -19,30 +18,34 @@ public class Producao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+   @ManyToOne
+    @JoinColumn(name = "produto_id", nullable = false)
+    private Produto produto;
     @ManyToOne
-    private Bloco bloco;
-
+    @JoinColumn(name = "funcionario_id", nullable = false)
+    private Funcionario funcionario;
+    
     private int quantidadeProduzida;
 
     @Temporal(TemporalType.DATE)
     private Date dataProducao;
 
-    private int diasParaCura; // Dias necessários para o bloco estar pronto para uso
+    private int diasParaCura; // Dias necessários para o produto estar pronto para uso
     private boolean prontaParaUso;
 
     // Construtor padrão
-    public Producao() {}
-
-    public Producao(Bloco bloco, int quantidadeProduzida, Date dataProducao, int diasParaCura) {
-        this.bloco = bloco;
-        this.quantidadeProduzida = quantidadeProduzida;
-        this.dataProducao = dataProducao;
-        this.diasParaCura = diasParaCura;
-        this.prontaParaUso = false;
+    public Producao() {
+    }
+  public void registrarProducao(Funcionario funcionario, int quantidade) {
+        this.funcionario = funcionario;
+        this.quantidadeProduzida = quantidade;
+        this.dataProducao = new Date();
+        this.produto.atualizarEstoque(quantidade);
     }
 
+ 
     public void verificarCura() {
-        // Verifica se o bloco já está curado com base na data de produção e dias para cura
+        // Verifica se o produto já está curado com base na data de produção e dias para cura
         Date hoje = new Date();
         long diferencaDias = (hoje.getTime() - dataProducao.getTime()) / (1000 * 60 * 60 * 24);
         if (diferencaDias >= diasParaCura) {
@@ -59,13 +62,23 @@ public class Producao {
         this.id = id;
     }
 
-    public Bloco getBloco() {
-        return bloco;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setBloco(Bloco bloco) {
-        this.bloco = bloco;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+
 
     public int getQuantidadeProduzida() {
         return quantidadeProduzida;
@@ -99,4 +112,3 @@ public class Producao {
         this.prontaParaUso = prontaParaUso;
     }
 }
-

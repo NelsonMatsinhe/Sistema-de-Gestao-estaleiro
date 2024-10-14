@@ -23,7 +23,7 @@ public class Estoque {
     private List<Material> materiais;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Bloco> blocos;
+    private List<Producao> blocos;
 
     // Construtor padrão
     public Estoque() {}
@@ -36,11 +36,11 @@ public class Estoque {
         this.materiais.remove(material);
     }
 
-    public void adicionarBloco(Bloco bloco) {
+    public void adicionarProducao(Producao bloco) {
         this.blocos.add(bloco);
     }
 
-    public void removerBloco(Bloco bloco) {
+    public void removerProducao(Producao bloco) {
         this.blocos.remove(bloco);
     }
 
@@ -61,11 +61,11 @@ public class Estoque {
         this.materiais = materiais;
     }
 
-    public List<Bloco> getBlocos() {
+    public List<Producao> getProducaos() {
         return blocos;
     }
 
-    public void setBlocos(List<Bloco> blocos) {
+    public void setProducaos(List<Producao> blocos) {
         this.blocos = blocos;
     }
 }

@@ -29,7 +29,7 @@ public class TestUsuario {
         System.out.println("Usuário inserido com sucesso!");
 
         // Listar todos os usuários para verificar se a inserção foi bem-sucedida
-        for (Usuario usuario : usuarioDAO.listarTodos()) {
+        for (Usuario usuario : usuarioDAO.listarTodosAtivos()) {
             System.out.println("ID: " + usuario.getCodigoUsuario() + " Nome: " + usuario.getNome());
         }
     }
