@@ -38,19 +38,6 @@ public class Fornecedor {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "licenca_comercial", unique = true)
-    private String licencaComercial;
-
-    @Column(name = "banco")
-    private String banco;
-
-    @Column(name = "iban")
-    private String iban;
-
-    @Column(name = "data_registro")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataRegistro;
-
     // Getters e Setters
     public int getId() {
         return id;
@@ -100,35 +87,4 @@ public class Fornecedor {
         this.email = email;
     }
 
-    public String getLicencaComercial() {
-        return licencaComercial;
-    }
-
-    public void setLicencaComercial(String licencaComercial) {
-        this.licencaComercial = licencaComercial;
-    }
-
-    public String getBanco() {
-        return banco;
-    }
-
-    public void setBanco(String banco) {
-        this.banco = banco;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
-    public Date getDataRegistro() {
-        return dataRegistro;
-    }
-
-    public void setDataRegistro(Date dataRegistro) {
-        this.dataRegistro = dataRegistro;
-    }
 }

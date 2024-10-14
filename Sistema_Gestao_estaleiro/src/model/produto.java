@@ -2,72 +2,123 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model;
 
+import com.sun.istack.NotNull;
+import java.math.BigDecimal;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
 /**
+ * class do produtos
  *
  * @author Nelson Matsinhe
  */
-import javax.persistence.*;
-
 @Entity
-public class produto {
+@Table(name = "produtos")
+public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    private String tipo;
-    private double resistencia;
-    private String dimensoes;
-    private int quantidadeEmEstoque;
+    @NotNull
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
-    // Construtor padrão
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+    
+    private int quantidade;
+    
+    @Column(name = "data_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataRegistro;
 
-    public produto() {
+    @NotNull
+    @Column(name = "preco", nullable = false)
+    private BigDecimal preco;
+
+    // Construtores
+    public Produto() {
+        this.id = 0;
+        this.nome = "";
+
+        this.categoria = new Categoria();
+        this.dataRegistro = new Date();
+        this.preco = new BigDecimal("0.00");
+
     }
-  
 
-    // Getters e setters
-    public Long getId() {
+    public Produto(int codProduto) {
+        this.id = codProduto;
+        this.nome = "";
+
+        this.categoria = new Categoria();
+        this.dataRegistro = new Date();
+        this.preco = new BigDecimal("0.00");
+
+    }
+     public void atualizarEstoque(int quantidade) {
+        this.quantidade += quantidade;
+    }
+
+    // Getters e Setters
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNome() {
+        return nome;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public double getResistencia() {
-        return resistencia;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setResistencia(double resistencia) {
-        this.resistencia = resistencia;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
-    public String getDimensoes() {
-        return dimensoes;
+    public Date getDataRegistro() {
+        return dataRegistro;
     }
 
-    public void setDimensoes(String dimensoes) {
-        this.dimensoes = dimensoes;
+    public void setDataRegistro(Date dataRegistro) {
+        this.dataRegistro = dataRegistro;
     }
 
-    public int getQuantidadeEmEstoque() {
-        return quantidadeEmEstoque;
+    public BigDecimal getPreco() {
+        return preco;
     }
 
-    public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
-        this.quantidadeEmEstoque = quantidadeEmEstoque;
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Produto) {
+            Produto p = (Produto) o;
+            if (p.getId() == this.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
-

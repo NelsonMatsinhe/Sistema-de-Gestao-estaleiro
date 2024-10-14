@@ -2,9 +2,13 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +19,10 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_usuario")
     private long codigoUsuario;
-
-    @Column(name = "nome")
-    private String nome;
+    
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
 
     @Column(name = "userName", unique = true)
     private String userName;
@@ -28,23 +33,18 @@ public class Usuario {
     @Column(name = "estado")
     private Boolean estado;
 
-    @Column(name = "perfil")
-    private String perfil;
-
+    
+    
     public Usuario() {
         this.codigoUsuario = 0;
-        this.nome = "";
         this.userName = "";
         this.senha = "";
-        this.perfil = "";
     }
 
     public Usuario(int codigo) {
         this.codigoUsuario = codigo;
-        this.nome = "";
         this.userName = "";
         this.senha = "";
-        this.perfil = "";
     }
 
     // Getters e Setters
@@ -54,14 +54,6 @@ public class Usuario {
 
     public void setCodigoUsuario(long codigoUsuario) {
         this.codigoUsuario = codigoUsuario;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getUserName() {
@@ -88,12 +80,12 @@ public class Usuario {
         this.estado = estado;
     }
 
-    public String getPerfil() {
-        return perfil;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
 }
