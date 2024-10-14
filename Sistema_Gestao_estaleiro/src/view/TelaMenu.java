@@ -5,27 +5,40 @@
  */
 package view;
 
+import view.TelaUsuario;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 /**
  *
  * @author Nelson Matsinhe
  */
-public class TelaMenuUser extends javax.swing.JFrame {
+public class TelaMenu extends javax.swing.JFrame {
 
-    Color DefaultColor, ClickedColor, MouseColor;
+    Color DefaultColor, ClickedColor,MouseColor;
+     TelaHome Estatisca = new TelaHome ();
+      TelaCliente cliente = new TelaCliente();
+       TelaUsuario TelaUsuario;
+          //  TelaViagem TelaEvento = new TelaViagem();
+          TelaProduto produto = new TelaProduto();
+          TelaVenda venda=new TelaVenda();
+           TelaStock   stock  =new  TelaStock();
+     
 
-    TelaHome home =new TelaHome();
-    public TelaMenuUser() {
+    public TelaMenu() {
         try {
+            this.TelaUsuario = new TelaUsuario();
             initComponents();
-            jDesktopPane.add(home).setVisible(true);
-            DefaultColor = new Color(102, 102, 102);
+            
+            jDesktopPane.add(Estatisca).setVisible(true);
+            
+            DefaultColor = new Color(102,102,102);
             ClickedColor = new Color(0, 0, 0);
-            MouseColor = new Color(51, 51, 51);
-
+            MouseColor=new Color(51,51,51);
+            
             Menu1.setBackground(DefaultColor);
             Menu2.setBackground(DefaultColor);
             Menu3.setBackground(DefaultColor);
@@ -33,14 +46,14 @@ public class TelaMenuUser extends javax.swing.JFrame {
             Menu5.setBackground(DefaultColor);
             Menu6.setBackground(DefaultColor);
             Menu7.setBackground(DefaultColor);
-            Menu8.setBackground(DefaultColor);
-            Menu9.setBackground(DefaultColor);
-            Menu10.setBackground(DefaultColor);
+            //Menu8.setBackground(DefaultColor);
+            //////Menu9.setBackground(DefaultColor);
+           // Menu10.setBackground(DefaultColor);
             Menu11.setBackground(DefaultColor);
         } catch (Exception ex) {
-            Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+       
     }
 
     /**
@@ -53,6 +66,7 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         Menu1 = new javax.swing.JPanel();
         lblMenu1 = new javax.swing.JLabel();
@@ -66,44 +80,40 @@ public class TelaMenuUser extends javax.swing.JFrame {
         lblMenu5 = new javax.swing.JLabel();
         Menu6 = new javax.swing.JPanel();
         lblMenu6 = new javax.swing.JLabel();
-        Menu11 = new javax.swing.JPanel();
-        lblMenu11 = new javax.swing.JLabel();
         Menu7 = new javax.swing.JPanel();
         lblMenu7 = new javax.swing.JLabel();
-        Menu8 = new javax.swing.JPanel();
-        lblMenu8 = new javax.swing.JLabel();
-        Menu9 = new javax.swing.JPanel();
-        lblMenu9 = new javax.swing.JLabel();
-        Menu10 = new javax.swing.JPanel();
-        lblMenu10 = new javax.swing.JLabel();
+        Menu11 = new javax.swing.JPanel();
+        lblMenu11 = new javax.swing.JLabel();
         jDesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocationByPlatform(true);
-        setMaximumSize(null);
-        setPreferredSize(new java.awt.Dimension(250, 50));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(19, 860));
 
-        jPanel1.setBackground(new java.awt.Color(51, 102, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/logogolo.png"))); // NOI18N
+        jLabel7.setText("EStaleiro");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 955, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1285, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
+            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setPreferredSize(new java.awt.Dimension(950, 540));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Menu1.setMaximumSize(null);
-        Menu1.setPreferredSize(new java.awt.Dimension(250, 50));
+        Menu1.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu1.setBackground(new java.awt.Color(0, 0, 0));
         lblMenu1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -112,7 +122,6 @@ public class TelaMenuUser extends javax.swing.JFrame {
         lblMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-home-40 (1).png"))); // NOI18N
         lblMenu1.setText("              Home");
         lblMenu1.setAlignmentX(0.5F);
-        lblMenu1.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu1MouseClicked(evt);
@@ -133,27 +142,23 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu1Layout.setHorizontalGroup(
             Menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu1Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu1Layout.setVerticalGroup(
             Menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Menu1Layout.createSequentialGroup()
-                .addComponent(lblMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(lblMenu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 250, 50));
+        jPanel4.add(Menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 309, 68));
 
-        Menu2.setMaximumSize(null);
-        Menu2.setPreferredSize(new java.awt.Dimension(250, 50));
+        Menu2.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu2.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-product-40.png"))); // NOI18N
         lblMenu2.setText("              Produto");
-        lblMenu2.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu2MouseClicked(evt);
@@ -174,26 +179,22 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu2Layout.setHorizontalGroup(
             Menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu2Layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addComponent(lblMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu2Layout.setVerticalGroup(
             Menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu2Layout.createSequentialGroup()
-                .addComponent(lblMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(lblMenu2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 50));
+        jPanel4.add(Menu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 309, 68));
 
-        Menu3.setMaximumSize(null);
-        Menu3.setPreferredSize(new java.awt.Dimension(250, 50));
+        Menu3.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu3.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-cliente-40 (1).png"))); // NOI18N
         lblMenu3.setText("              Cliente");
-        lblMenu3.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu3MouseClicked(evt);
@@ -214,18 +215,17 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu3Layout.setHorizontalGroup(
             Menu3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu3Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu3Layout.setVerticalGroup(
             Menu3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMenu3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblMenu3, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 250, 50));
+        jPanel4.add(Menu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 309, 68));
 
-        Menu4.setMaximumSize(null);
-        Menu4.setPreferredSize(new java.awt.Dimension(250, 50));
+        Menu4.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu4.setForeground(new java.awt.Color(255, 255, 255));
@@ -251,24 +251,22 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu4Layout.setHorizontalGroup(
             Menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu4Layout.createSequentialGroup()
-                .addGap(0, 25, Short.MAX_VALUE)
-                .addComponent(lblMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu4Layout.setVerticalGroup(
             Menu4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMenu4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(lblMenu4, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 250, 50));
+        jPanel4.add(Menu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 309, 68));
 
-        Menu5.setMaximumSize(null);
-        Menu5.setPreferredSize(new java.awt.Dimension(250, 50));
+        Menu5.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu5.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-usuário-de-gênero-neutro-40.png"))); // NOI18N
         lblMenu5.setText("              Usuario");
-        lblMenu5.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu5MouseClicked(evt);
@@ -288,26 +286,25 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu5.setLayout(Menu5Layout);
         Menu5Layout.setHorizontalGroup(
             Menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Menu5Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(lblMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu5Layout.createSequentialGroup()
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu5Layout.setVerticalGroup(
             Menu5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblMenu5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE)
+                .addComponent(lblMenu5, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
         );
 
-        jPanel4.add(Menu5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 250, 50));
+        jPanel4.add(Menu5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 309, 68));
 
         Menu6.setPreferredSize(new java.awt.Dimension(137, 40));
 
         lblMenu6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu6.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu6.setText("              Relatorio ");
+        lblMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-stock-40.png"))); // NOI18N
+        lblMenu6.setText("              Stock ");
         lblMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu6MouseClicked(evt);
@@ -328,17 +325,51 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu6Layout.setHorizontalGroup(
             Menu6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu6Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu6Layout.setVerticalGroup(
             Menu6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu6Layout.createSequentialGroup()
-                .addComponent(lblMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(lblMenu6, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 250, 50));
+        jPanel4.add(Menu6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 309, 68));
+
+        Menu7.setPreferredSize(new java.awt.Dimension(137, 40));
+
+        lblMenu7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblMenu7.setForeground(new java.awt.Color(255, 255, 255));
+        lblMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
+        lblMenu7.setText("              Relatorio ");
+        lblMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMenu7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblMenu7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblMenu7MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblMenu7MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Menu7Layout = new javax.swing.GroupLayout(Menu7);
+        Menu7.setLayout(Menu7Layout);
+        Menu7Layout.setHorizontalGroup(
+            Menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu7Layout.createSequentialGroup()
+                .addGap(0, 30, Short.MAX_VALUE)
+                .addComponent(lblMenu7, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        Menu7Layout.setVerticalGroup(
+            Menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblMenu7, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(Menu7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 460, 310, 68));
 
         Menu11.setPreferredSize(new java.awt.Dimension(137, 40));
 
@@ -366,167 +397,15 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu11Layout.setHorizontalGroup(
             Menu11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu11Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu11, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 29, Short.MAX_VALUE)
+                .addComponent(lblMenu11, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         Menu11Layout.setVerticalGroup(
             Menu11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblMenu11, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(lblMenu11, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
         );
 
-        jPanel4.add(Menu11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 250, 50));
-
-        Menu7.setPreferredSize(new java.awt.Dimension(137, 40));
-
-        lblMenu7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMenu7.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu7.setText("              stock ");
-        lblMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMenu7MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMenu7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMenu7MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblMenu7MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout Menu7Layout = new javax.swing.GroupLayout(Menu7);
-        Menu7.setLayout(Menu7Layout);
-        Menu7Layout.setHorizontalGroup(
-            Menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu7Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        Menu7Layout.setVerticalGroup(
-            Menu7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu7Layout.createSequentialGroup()
-                .addComponent(lblMenu7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(Menu7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 250, 50));
-
-        Menu8.setPreferredSize(new java.awt.Dimension(137, 40));
-
-        lblMenu8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMenu8.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu8.setText("              Material ");
-        lblMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMenu8MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMenu8MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMenu8MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblMenu8MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout Menu8Layout = new javax.swing.GroupLayout(Menu8);
-        Menu8.setLayout(Menu8Layout);
-        Menu8Layout.setHorizontalGroup(
-            Menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu8Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu8, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        Menu8Layout.setVerticalGroup(
-            Menu8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu8Layout.createSequentialGroup()
-                .addComponent(lblMenu8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(Menu8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 250, 50));
-
-        Menu9.setPreferredSize(new java.awt.Dimension(137, 40));
-
-        lblMenu9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMenu9.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu9.setText("              Produção ");
-        lblMenu9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMenu9MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMenu9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMenu9MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblMenu9MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout Menu9Layout = new javax.swing.GroupLayout(Menu9);
-        Menu9.setLayout(Menu9Layout);
-        Menu9Layout.setHorizontalGroup(
-            Menu9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu9Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        Menu9Layout.setVerticalGroup(
-            Menu9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu9Layout.createSequentialGroup()
-                .addComponent(lblMenu9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(Menu9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 250, 50));
-
-        Menu10.setPreferredSize(new java.awt.Dimension(137, 40));
-
-        lblMenu10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMenu10.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu10.setText("              Forcenecedor ");
-        lblMenu10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMenu10MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMenu10MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMenu10MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lblMenu10MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout Menu10Layout = new javax.swing.GroupLayout(Menu10);
-        Menu10.setLayout(Menu10Layout);
-        Menu10Layout.setHorizontalGroup(
-            Menu10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu10Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(lblMenu10, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        Menu10Layout.setVerticalGroup(
-            Menu10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu10Layout.createSequentialGroup()
-                .addComponent(lblMenu10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(Menu10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 250, 50));
+        jPanel4.add(Menu11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 309, 68));
 
         jDesktopPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -534,7 +413,7 @@ public class TelaMenuUser extends javax.swing.JFrame {
         jDesktopPane.setLayout(jDesktopPaneLayout);
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1270, Short.MAX_VALUE)
         );
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,48 +424,62 @@ public class TelaMenuUser extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDesktopPane)))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jDesktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jDesktopPane)))
-                .addGap(1, 1, 1))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+                    .addComponent(jDesktopPane)))
         );
 
-        setSize(new java.awt.Dimension(1223, 678));
+        setSize(new java.awt.Dimension(1579, 958));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblMenu4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MousePressed
-        Menu1.setBackground(DefaultColor);
+       Menu1.setBackground(DefaultColor);
         Menu2.setBackground(DefaultColor);
         Menu3.setBackground(DefaultColor);
         Menu4.setBackground(ClickedColor);
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu4MousePressed
 
     private void lblMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseClicked
 
         try {
+            
+      
+           
+            
+            
+            
+            ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(cliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(produto.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(Estatisca .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(TelaUsuario .DISPOSE_ON_CLOSE);
+          
+            jDesktopPane.removeAll();
+            jDesktopPane.add(venda).setVisible(true);
 
+           
+            
         } catch (Exception ex) {
-            Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblMenu4MouseClicked
 
@@ -598,22 +491,37 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu5.setBackground(ClickedColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu5MousePressed
 
     private void lblMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseClicked
         try {
+            
+         
+       
 
+            ////TelaUsuario
+        ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(cliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(produto.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(Estatisca .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(venda.DISPOSE_ON_CLOSE);
+          
+            
+
+            jDesktopPane.removeAll();
+            jDesktopPane.add(TelaUsuario ).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblMenu5MouseClicked
 
     private void lblMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MousePressed
-
+        
         Menu1.setBackground(DefaultColor);
         Menu2.setBackground(DefaultColor);
         Menu3.setBackground(ClickedColor);
@@ -621,9 +529,9 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu3MousePressed
 
@@ -635,23 +543,33 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
-
-
+        
+       
     }//GEN-LAST:event_lblMenu1MousePressed
 
     private void lblMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseClicked
         try {
+           
+                 ////Estatisca
+        ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(cliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(produto.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(TelaUsuario .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(venda.DISPOSE_ON_CLOSE);
+            jDesktopPane.removeAll();
+            jDesktopPane.add(Estatisca).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblMenu1MouseClicked
 
     private void lblMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MousePressed
-
+        
         Menu1.setBackground(DefaultColor);
         Menu2.setBackground(ClickedColor);
         Menu3.setBackground(DefaultColor);
@@ -659,233 +577,187 @@ public class TelaMenuUser extends javax.swing.JFrame {
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu2MousePressed
 
     private void lblMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseClicked
         try {
+               ////produto
+        ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(cliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(Estatisca.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(TelaUsuario .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(venda.DISPOSE_ON_CLOSE);
+            jDesktopPane.removeAll();
+
+            jDesktopPane.add(produto).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(TelaMenuUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblMenu2MouseClicked
 
     private void lblMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseClicked
+  
+        try {
+               ////produto
+        ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(cliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(Estatisca.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(TelaUsuario .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(venda.DISPOSE_ON_CLOSE);
+             this.setDefaultCloseOperation(produto.DISPOSE_ON_CLOSE);
+            jDesktopPane.removeAll();
 
+            jDesktopPane.add(stock).setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }//GEN-LAST:event_lblMenu6MouseClicked
 
     private void lblMenu6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MousePressed
-        Menu1.setBackground(DefaultColor);
+          Menu1.setBackground(DefaultColor);
         Menu2.setBackground(DefaultColor);
         Menu3.setBackground(DefaultColor);
         Menu4.setBackground(DefaultColor);
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(ClickedColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu6MousePressed
 
-    private void lblMenu11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseClicked
-
-        this.dispose();
-
-    }//GEN-LAST:event_lblMenu11MouseClicked
-
-    private void lblMenu11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MousePressed
-        Menu1.setBackground(DefaultColor);
-        Menu2.setBackground(DefaultColor);
-        Menu3.setBackground(DefaultColor);
-        Menu4.setBackground(DefaultColor);
-        Menu5.setBackground(DefaultColor);
-        Menu6.setBackground(DefaultColor);
-        Menu7.setBackground(ClickedColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
-        Menu11.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu11MousePressed
-
-    private void lblMenu1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseEntered
-
-        Menu1.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu1MouseEntered
-
-    private void lblMenu1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseExited
-        Menu1.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu1MouseExited
-
-    private void lblMenu2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseExited
-        Menu2.setBackground(DefaultColor);        // TODO add your handling code here:
-    }//GEN-LAST:event_lblMenu2MouseExited
-
-    private void lblMenu3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseExited
-        Menu3.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu3MouseExited
-
-    private void lblMenu4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseExited
-        Menu4.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu4MouseExited
-
-    private void lblMenu5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseExited
-        Menu5.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu5MouseExited
-
-    private void lblMenu6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseExited
-        Menu6.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu6MouseExited
-
-    private void lblMenu11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseExited
-        Menu11.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu11MouseExited
-
-    private void lblMenu2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseEntered
-
-        Menu2.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu2MouseEntered
-
-    private void lblMenu3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseEntered
-
-        Menu3.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu3MouseEntered
-
-    private void lblMenu4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseEntered
-
-        Menu4.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu4MouseEntered
-
-    private void lblMenu5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseEntered
-
-        Menu5.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu5MouseEntered
-
-    private void lblMenu6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseEntered
-
-        Menu6.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu6MouseEntered
-
-    private void lblMenu11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseEntered
-
-        Menu11.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu11MouseEntered
-
-    private void lblMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseClicked
-    }//GEN-LAST:event_lblMenu3MouseClicked
-
     private void lblMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseClicked
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_lblMenu7MouseClicked
 
-    private void lblMenu7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseEntered
-        Menu7.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu7MouseEntered
-
-    private void lblMenu7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseExited
-        Menu7.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu7MouseExited
-
     private void lblMenu7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MousePressed
-        // TODO add your handling code here:
-
-        Menu1.setBackground(DefaultColor);
+            Menu1.setBackground(DefaultColor);
         Menu2.setBackground(DefaultColor);
         Menu3.setBackground(DefaultColor);
         Menu4.setBackground(DefaultColor);
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(ClickedColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu7MousePressed
 
-    private void lblMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblMenu8MouseClicked
+    private void lblMenu11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseClicked
+   
+        
+        
+     this.dispose();
+    
+    }//GEN-LAST:event_lblMenu11MouseClicked
 
-    private void lblMenu8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MouseEntered
-        // TODO add your handling code here:
-        Menu8.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu8MouseEntered
-
-    private void lblMenu8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MouseExited
-        Menu8.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu8MouseExited
-
-    private void lblMenu8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MousePressed
-        // TODO add your handling code here:
-        Menu1.setBackground(DefaultColor);
+    private void lblMenu11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MousePressed
+            Menu1.setBackground(DefaultColor);
         Menu2.setBackground(DefaultColor);
         Menu3.setBackground(DefaultColor);
         Menu4.setBackground(DefaultColor);
         Menu5.setBackground(DefaultColor);
         Menu6.setBackground(DefaultColor);
         Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(ClickedColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(DefaultColor);
-        Menu11.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu8MousePressed
+        //Menu8.setBackground(DefaultColor);
+        //////Menu9.setBackground(DefaultColor);
+       // Menu10.setBackground(DefaultColor);
+        Menu11.setBackground(ClickedColor);
+    }//GEN-LAST:event_lblMenu11MousePressed
 
-    private void lblMenu9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblMenu9MouseClicked
+    private void lblMenu1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseEntered
+    
+        
+ Menu1.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu1MouseEntered
 
-    private void lblMenu9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseEntered
-        Menu9.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu9MouseEntered
+    private void lblMenu1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseExited
+  Menu1.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu1MouseExited
 
-    private void lblMenu9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseExited
-        Menu9.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu9MouseExited
+    private void lblMenu2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseExited
+  Menu2.setBackground(DefaultColor);        // TODO add your handling code here:
+    }//GEN-LAST:event_lblMenu2MouseExited
 
-    private void lblMenu9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MousePressed
-        // TODO add your handling code here:
-        Menu1.setBackground(DefaultColor);
-        Menu2.setBackground(DefaultColor);
-        Menu3.setBackground(DefaultColor);
-        Menu4.setBackground(DefaultColor);
-        Menu5.setBackground(DefaultColor);
-        Menu6.setBackground(DefaultColor);
-        Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(ClickedColor);
-        Menu10.setBackground(DefaultColor);
-        Menu11.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu9MousePressed
+    private void lblMenu3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseExited
+       Menu3.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu3MouseExited
 
-    private void lblMenu10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblMenu10MouseClicked
+    private void lblMenu4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseExited
+  Menu4.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu4MouseExited
 
-    private void lblMenu10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MouseEntered
-        // TODO add your handling code here:
-        Menu10.setBackground(MouseColor);
-    }//GEN-LAST:event_lblMenu10MouseEntered
+    private void lblMenu5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseExited
+    Menu5.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu5MouseExited
 
-    private void lblMenu10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MouseExited
-        Menu10.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu10MouseExited
+    private void lblMenu6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseExited
+          Menu6.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu6MouseExited
 
-    private void lblMenu10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MousePressed
-        // TODO add your handling code here:
-        Menu1.setBackground(DefaultColor);
-        Menu2.setBackground(DefaultColor);
-        Menu3.setBackground(DefaultColor);
-        Menu4.setBackground(DefaultColor);
-        Menu5.setBackground(DefaultColor);
-        Menu6.setBackground(DefaultColor);
-        Menu7.setBackground(DefaultColor);
-        Menu8.setBackground(DefaultColor);
-        Menu9.setBackground(DefaultColor);
-        Menu10.setBackground(ClickedColor);
-        Menu11.setBackground(DefaultColor);
-    }//GEN-LAST:event_lblMenu10MousePressed
+    private void lblMenu7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseExited
+         Menu7.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu7MouseExited
+
+    private void lblMenu11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseExited
+    Menu11.setBackground(DefaultColor);
+    }//GEN-LAST:event_lblMenu11MouseExited
+
+    private void lblMenu2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseEntered
+            
+ Menu2.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu2MouseEntered
+
+    private void lblMenu3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseEntered
+              
+ Menu3.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu3MouseEntered
+
+    private void lblMenu4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseEntered
+           
+ Menu4.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu4MouseEntered
+
+    private void lblMenu5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseEntered
+             
+ Menu5.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu5MouseEntered
+
+    private void lblMenu6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseEntered
+              
+ Menu6.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu6MouseEntered
+
+    private void lblMenu7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseEntered
+        
+ Menu7.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu7MouseEntered
+
+    private void lblMenu11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu11MouseEntered
+             
+ Menu11.setBackground(MouseColor);
+    }//GEN-LAST:event_lblMenu11MouseEntered
+
+    private void lblMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseClicked
+           ////cliente
+        ////venda    
+            this.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(produto.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(Estatisca.DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(TelaUsuario .DISPOSE_ON_CLOSE);
+            this.setDefaultCloseOperation(venda.DISPOSE_ON_CLOSE);
+            jDesktopPane.removeAll();
+
+            jDesktopPane.add(cliente).setVisible(true);
+    }//GEN-LAST:event_lblMenu3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -904,1038 +776,14 @@ public class TelaMenuUser extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaMenuUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaMenuUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaMenuUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaMenuUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -2964,14 +1812,13 @@ public class TelaMenuUser extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaMenuUser().setVisible(true);
+                new TelaMenu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Menu1;
-    private javax.swing.JPanel Menu10;
     private javax.swing.JPanel Menu11;
     private javax.swing.JPanel Menu2;
     private javax.swing.JPanel Menu3;
@@ -2979,13 +1826,11 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private javax.swing.JPanel Menu5;
     private javax.swing.JPanel Menu6;
     private javax.swing.JPanel Menu7;
-    private javax.swing.JPanel Menu8;
-    private javax.swing.JPanel Menu9;
     private javax.swing.JDesktopPane jDesktopPane;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblMenu1;
-    private javax.swing.JLabel lblMenu10;
     private javax.swing.JLabel lblMenu11;
     private javax.swing.JLabel lblMenu2;
     private javax.swing.JLabel lblMenu3;
@@ -2993,7 +1838,5 @@ public class TelaMenuUser extends javax.swing.JFrame {
     private javax.swing.JLabel lblMenu5;
     private javax.swing.JLabel lblMenu6;
     private javax.swing.JLabel lblMenu7;
-    private javax.swing.JLabel lblMenu8;
-    private javax.swing.JLabel lblMenu9;
     // End of variables declaration//GEN-END:variables
 }
