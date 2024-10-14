@@ -56,4 +56,20 @@ public class Maquina {
         this.tipo = tipo;
     }
 
+    public boolean isAlocada() {
+        return alocada;
+    }
+
+    public void setAlocada(boolean alocada) {
+        this.alocada = alocada;
+    }
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
 }
