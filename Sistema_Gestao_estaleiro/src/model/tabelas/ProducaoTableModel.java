@@ -4,8 +4,7 @@
  */
 
 package model.tabelas;
-
-import model.Produto;
+import model.Producao;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -15,10 +14,10 @@ import java.util.List;
  */
 
 
-public class ProdutoTableModel extends AbstractTableModel {
+public class ProducaoTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome", "Preço"};
-    private List<Produto> dados;
+    private String colunas[] = {"Id", "Produto", "Funcionário", "Quantidade Produzida", "Data de Produção", "Dias para Cura", "Pronta para Uso"};
+    private List<Producao> dados;
 
     @Override
     public int getRowCount() {
@@ -35,14 +34,22 @@ public class ProdutoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int l, int c) {
-        Produto produto = dados.get(l);
+        Producao producao = dados.get(l);
         switch (c) {
             case 0:
-                return produto.getId();
+                return producao.getId();
             case 1:
-                return produto.getNome();
+                return producao.getProduto().getNome(); // Supondo que Produto tenha um método getNome
             case 2:
-                return produto.getPreco();
+                return producao.getFuncionario().getNome(); // Supondo que Funcionario tenha um método getNome
+            case 3:
+                return producao.getQuantidadeProduzida();
+            case 4:
+                return producao.getDataProducao();
+            case 5:
+                return producao.getDiasParaCura();
+            case 6:
+                return producao.isProntaParaUso() ? "Sim" : "Não";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -58,13 +65,12 @@ public class ProdutoTableModel extends AbstractTableModel {
         return false;
     }
 
-    public void setDados(List<Produto> dados) {
+    public void setDados(List<Producao> dados) {
         this.dados = dados;
         fireTableDataChanged();
     }
 
-    public Produto getRowValue(int l) {
+    public Producao getRowValue(int l) {
         return dados.get(l);
     }
 }
-

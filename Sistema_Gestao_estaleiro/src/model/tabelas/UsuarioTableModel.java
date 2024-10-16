@@ -1,23 +1,33 @@
-package model.tabelas;
+        /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
+package model.tabelas;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.Usuario;
 
 /**
- * Classe que define o modelo para tabela contendo dados do cliente
+ *
+ * @author Nelson Matsinhe
+ */
+
+
+/**
+ * Classe que define o modelo para tabela contendo dados do usuário.
  *
  * @author Nelson Matsinhe
  */
 public class UsuarioTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome","UserName","Senha","Perfil","Estado",};
+    private String colunas[] = {"Id", "Nome de Usuário", "Email", "Status"};
     private List<Usuario> dados;
 
     @Override
     public int getRowCount() {
-        if(dados == null){
+        if (dados == null) {
             return 0;
         }
         return dados.size();
@@ -29,26 +39,21 @@ public class UsuarioTableModel extends AbstractTableModel {
     }
 
     @Override
-public Object getValueAt(int l, int c) {
-    Usuario cliente = dados.get(l);
-    switch (c) {
-        case 0:
-            return cliente.getCodigoUsuario();
-        case 1:
-            return cliente.getNome();
-        case 2:
-            return cliente.getUserName();
-        case 3:
-            return cliente.getSenha();
-            case 4:
-            return cliente.getPerfil();
-            case 5:
-            return cliente.getEstado();
-        default:
-            throw new IndexOutOfBoundsException("Coluna inexistente!");
+    public Object getValueAt(int l, int c) {
+        Usuario usuario = dados.get(l);
+        switch (c) {
+            case 0:
+                return usuario.getId();
+            case 1:
+                return usuario.getNomeUsuario();
+            case 2:
+                return usuario.getEmail();
+            case 3:
+                return usuario.isAtivo() ? "Ativo" : "Inativo"; // Supondo que tenha um método isAtivo()
+            default:
+                throw new IndexOutOfBoundsException("Coluna inexistente!");
+        }
     }
-}
-
 
     @Override
     public String getColumnName(int c) {
@@ -69,3 +74,4 @@ public Object getValueAt(int l, int c) {
         return dados.get(l);
     }
 }
+

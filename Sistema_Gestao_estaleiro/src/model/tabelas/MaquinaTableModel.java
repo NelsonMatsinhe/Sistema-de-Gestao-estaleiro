@@ -1,23 +1,28 @@
+ /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 package model.tabelas;
 
-
-import java.util.List;
+import model.Maquina;
 import javax.swing.table.AbstractTableModel;
-import model.Produto;
+import java.util.List;
 
 /**
- * Classe que define o modelo para tabela contendo dados do produto
  *
  * @author Nelson Matsinhe
  */
-public class stockTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Codigo","Nome","Quantidade"};
-    private List<Produto> dados;
+
+public class MaquinaTableModel extends AbstractTableModel {
+
+    private String colunas[] = {"Id", "Tipo", "Alocada"};
+    private List<Maquina> dados;
 
     @Override
     public int getRowCount() {
-        if(dados == null){
+        if (dados == null) {
             return 0;
         }
         return dados.size();
@@ -30,14 +35,14 @@ public class stockTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int l, int c) {
-        Produto produto = dados.get(l);
+        Maquina maquina = dados.get(l);
         switch (c) {
             case 0:
-                return produto.getId();
-                case 1:
-                return produto.getNome();
-                case 2:
-               return produto.getQuantidadeDisponivel();    
+                return maquina.getId();
+            case 1:
+                return maquina.getTipo();
+            case 2:
+                return maquina.isAlocada() ? "Sim" : "Não";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -53,12 +58,12 @@ public class stockTableModel extends AbstractTableModel {
         return false;
     }
 
-    public void setDados(List<Produto> dados) {
+    public void setDados(List<Maquina> dados) {
         this.dados = dados;
         fireTableDataChanged();
     }
 
-    public Produto getRowValue(int l) {
+    public Maquina getRowValue(int l) {
         return dados.get(l);
     }
 }
