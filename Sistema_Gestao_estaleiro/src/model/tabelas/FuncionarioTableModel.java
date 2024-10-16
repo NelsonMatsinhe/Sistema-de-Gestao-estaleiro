@@ -2,17 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model.tabelas;
 
 import model.Funcionario;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
+
 /**
  *
  * @author Nelson Matsinhe
  */
-
 
 public class FuncionarioTableModel extends AbstractTableModel {
 
@@ -40,6 +39,8 @@ public class FuncionarioTableModel extends AbstractTableModel {
                 return funcionario.getId();
             case 1:
                 return funcionario.getNome();
+            case 2:
+                return funcionario.getCargo();
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -64,4 +65,3 @@ public class FuncionarioTableModel extends AbstractTableModel {
         return dados.get(l);
     }
 }
-

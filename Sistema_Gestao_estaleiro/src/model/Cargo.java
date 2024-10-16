@@ -11,5 +11,5 @@ package model;
 public enum Cargo {
     OPERADOR,
     GERENTE,
-    ADMINISTRADOR
+    ADMINISTRADOR, SUPERVISOR
 }

@@ -5,7 +5,7 @@
 
 package teste;
 
-import view.TelaMenuUser;
+import view.TelaMenuAdmin ;
 
 /**
  *
@@ -14,7 +14,7 @@ import view.TelaMenuUser;
 public class NewClass {
 
     public static void main(String[] args) {
-        TelaMenuUser U = new TelaMenuUser ();
+        TelaMenuAdmin U = new TelaMenuAdmin ();
                      U.setVisible(true);
     }
 }
