@@ -12,10 +12,9 @@ import java.util.List;
  *
  * @author Nelson Matsinhe
  */
-
 public class FuncionarioTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome", "Função"};
+    private String colunas[] = {"Id", "Nome", "Função", "Estado"}; // Adicionado "Estado"
     private List<Funcionario> dados;
 
     @Override
@@ -41,6 +40,8 @@ public class FuncionarioTableModel extends AbstractTableModel {
                 return funcionario.getNome();
             case 2:
                 return funcionario.getCargo();
+            case 3:
+                return funcionario. getEstado() ? "Ativo" : "Inativo"; // Retorna o estado
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }

@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -41,10 +43,42 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         habilitarFormulario(false);
         carregarGrade();
+         txtNome.requestFocus();
+
         // Adicionando os valores da enum Cargo no combo box
-     for (Cargo cargo : Cargo.values()) {
-        comboCargo.addItem(cargo.name());
-     }
+        for (Cargo cargo : Cargo.values()) {
+            comboCargo.addItem(cargo.name());
+        }
+
+        // Botão Novo habilita o formulário
+        btNovo.addActionListener(e -> habilitarFormulario(true));
+
+        // Ação do botão Salvar
+        btSalvar.addActionListener(e -> {
+            if (validarFormulario()) {
+                //    btEditarActionPerformed();
+            }
+        });
+
+        // Ação do botão Editar
+        // btEditar.addActionListener(e -> btEditarActionPerformed());
+        // Validação ao mudar os campos
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                habilitarSalvar();
+            }
+        });
+
+        comboCargo.addActionListener(e -> habilitarSalvar());
+
+        rbtnAtivo.addActionListener(e -> habilitarSalvar());
+        rbtnInativo.addActionListener(e -> habilitarSalvar());
+
+        TbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectRegistryTable();
+            }
+        });
 
     }
     /**
@@ -66,6 +100,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        estadoGroup = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         txtID = new javax.swing.JTextField();
@@ -228,8 +263,9 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                 .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
                 .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
-                .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         comboCargo.addActionListener(new java.awt.event.ActionListener() {
@@ -242,6 +278,8 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Cargo:");
 
+        rbtnAtivo.setBackground(new java.awt.Color(51, 102, 0));
+        estadoGroup.add(rbtnAtivo);
         rbtnAtivo.setForeground(new java.awt.Color(255, 255, 255));
         rbtnAtivo.setText("Activo");
         rbtnAtivo.addActionListener(new java.awt.event.ActionListener() {
@@ -250,6 +288,8 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
             }
         });
 
+        rbtnInativo.setBackground(new java.awt.Color(51, 102, 0));
+        estadoGroup.add(rbtnInativo);
         rbtnInativo.setForeground(new java.awt.Color(255, 255, 255));
         rbtnInativo.setText("inactivo");
 
@@ -401,34 +441,65 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-       
         if (validarFormulario()) {
+            // Certifique-se de que o funcionário foi instanciado corretamente
+            if (funcionario == null) {
+                funcionario = new Funcionario();
+            }
+
             funcionario.setNome(txtNome.getText());
-           
-            funcionario.setCargo((Cargo) comboCargo.getSelectedItem());
-         
+            funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
+
             if (rbtnAtivo.isSelected()) {
                 funcionario.setEstado(true);  // Ativo
             } else if (rbtnInativo.isSelected()) {
                 funcionario.setEstado(false); // Inativo
             }
+
+            // Verificar se o id é nulo e inicializá-lo se for o caso
+            if (funcionario.getId() == null) {
+                funcionario.setId(0L);  // Define o id como 0 (novo funcionário)
+            }
+
+            // Operação de salvar ou atualizar o funcionário
             if (funcionario.getId() == 0) {
                 try {
                     funcionarioDAO.salvar(funcionario);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao inserir o fornecedor.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao inserir o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+            } else {
+                // Código para atualizar o funcionário, caso seja necessário
             }
 
             habilitarFormulario(false);
             carregarGrade();
         }
-
-
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+
+        if (!txtID.getText().isEmpty()) {
+            Long id = Long.parseLong(txtID.getText());
+
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este funcionário?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+            if (confirmacao == JOptionPane.YES_OPTION) {
+                try {
+                    funcionarioDAO.remover(id);  // Desativa o funcionário
+                    JOptionPane.showMessageDialog(this, "Funcionário desativado com sucesso.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao desativar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+                habilitarFormulario(false);
+                carregarGrade();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um funcionário para excluir.");
+        }
+
 
     }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -437,6 +508,43 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+
+        if (validarFormulario()) {
+            System.out.println("Formulário validado com sucesso."); // Adicione esta linha
+
+            Long id;
+            try {
+                id = Long.parseLong(txtID.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return; // Retorna se o ID não for válido
+            }
+
+            Funcionario funcionario = funcionarioDAO.buscarPorId(id);
+            if (funcionario != null) {
+                System.out.println("Funcionário encontrado: " + funcionario.getNome()); // Adicione esta linha
+
+                funcionario.setNome(txtNome.getText());
+                funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
+
+                funcionario.setEstado(rbtnAtivo.isSelected());
+
+                try {
+                    funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
+                    JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+                habilitarFormulario(false);
+                carregarGrade();
+            } else {
+                JOptionPane.showMessageDialog(this, "Funcionário não encontrado para edição.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
+        }
+
 
     }//GEN-LAST:event_btEditarActionPerformed
 
@@ -460,23 +568,49 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtnAtivoActionPerformed
 
+    /**
+     * Seleciona o registro da tabela e preenche o formulário.
+     */
     public void selectRegistryTable() {
+        int selectedRow = TbFuncionario.getSelectedRow();
+        if (selectedRow != -1) {
+            txtID.setText(TbFuncionario.getValueAt(selectedRow, 0).toString());
+            txtNome.setText(TbFuncionario.getValueAt(selectedRow, 1).toString());
 
-        txtID.setText(TbFuncionario.getValueAt(TbFuncionario.getSelectedRow(), 0).toString());
+            String cargo = TbFuncionario.getValueAt(selectedRow, 2).toString();
+            for (int i = 0; i < comboCargo.getItemCount(); i++) {
+                if (comboCargo.getItemAt(i).toString().equals(cargo)) {
+                    comboCargo.setSelectedIndex(i);
+                    break;
+                }
+            }
 
-        //Object objNome = jTable1.getValueAt(jTable1.getSelectedRow(), 1);
-        txtNome.setText(TbFuncionario.getValueAt(TbFuncionario.getSelectedRow(), 1).toString());
+            String estado = TbFuncionario.getValueAt(selectedRow, 3).toString();
+            if (estado.equalsIgnoreCase("Ativo")) {
+                rbtnAtivo.setSelected(true);
+            } else {
+                rbtnInativo.setSelected(true);
+            }
+
+            habilitarFormulario(true); // Habilita o formulário para edição
+        }
     }
 
+    /**
+     * Método para habilitar ou desabilitar o formulário.
+     */
     private void habilitarFormulario(boolean ativo) {
         btNovo.setEnabled(!ativo);
-        btSalvar.setEnabled(ativo);
-        btExcluir.setEnabled(ativo);
+        btSalvar.setEnabled(ativo && validarFormulario()); // Habilitado apenas se for válido
         btCancelar.setEnabled(ativo);
+        btExcluir.setEnabled(ativo);
         txtID.setEnabled(ativo);
         txtNome.setEnabled(ativo);
+        comboCargo.setEnabled(ativo);
+        rbtnAtivo.setEnabled(ativo);
+        rbtnInativo.setEnabled(ativo);
 
-        btEditar.setEnabled(ativo);
+        btEditar.setEnabled(TbFuncionario.getSelectedRow() >= 0 && ativo); // Habilitado se houver uma linha selecionada
 
         TbFuncionario.setEnabled(!ativo);
 
@@ -485,31 +619,64 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         }
     }
 
-    private void limpaFormulario() {
-
-        txtNome.setText("");
-        txtID.setText("");
-        txtNome.setText("");
+    /**
+     * Habilita o botão salvar se o formulário for válido.
+     */
+    private void habilitarSalvar() {
+        btSalvar.setEnabled(validarFormulario());
     }
 
-    private boolean validarFormulario() {
-        if (txtNome.getText().isEmpty()) {
-            txtNome.requestFocus();
-            //txtNome.setBackground(d);
-            lblMessagem.setText("Prenche o campo com um nome ");
-            return false;
-        } else if (txtNome.getText().trim().length() < 2) {
-            lblMessagem.setText("Prenche o campo com um nome valido");
-            txtNome.setBackground(d);
-            txtNome.requestFocus();
-            return false;
-        } else {
-            txtNome.setBackground(f);
-            lblMessagem.setText("");
+    /**
+     * Limpa os campos do formulário.
+     */
+    private void limpaFormulario() {
+        txtID.setText("");
+        txtNome.setText("");
+        comboCargo.setSelectedIndex(-1); // Nenhum cargo selecionado
+        estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
+        lblMessagem.setText("");
+    }
 
+    /**
+     * Validação do formulário.
+     */
+    private boolean validarFormulario() {
+        Border borderError = BorderFactory.createLineBorder(Color.RED, 2);  // Borda vermelha para erros
+        Border borderNormal = BorderFactory.createLineBorder(Color.GRAY, 1); // Borda normal
+
+        boolean isValid = true;
+
+        // Validação do campo Nome
+        if (txtNome.getText().isEmpty()) {
+            txtNome.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com um nome.");
+            txtNome.requestFocus();
+            isValid = false;
+        } else if (txtNome.getText().trim().length() < 2) {
+            txtNome.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com um nome válido.");
+            txtNome.requestFocus();
+            isValid = false;
+        } else {
+            txtNome.setBorder(borderNormal);
         }
 
-        return true;
+        // Validação do combo Cargo
+        if (comboCargo.getSelectedItem() == null) {
+            comboCargo.setBorder(borderError);
+            lblMessagem.setText("Selecione um cargo.");
+            isValid = false;
+        } else {
+            comboCargo.setBorder(borderNormal);
+        }
+
+        // Validação dos botões de rádio (estado)
+        if (!rbtnAtivo.isSelected() && !rbtnInativo.isSelected()) {
+            lblMessagem.setText("Selecione o estado (Ativo ou Inativo).");
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void carregarGrade() {
@@ -529,6 +696,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> comboCargo;
+    private javax.swing.ButtonGroup estadoGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
