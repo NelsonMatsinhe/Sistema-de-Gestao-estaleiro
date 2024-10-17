@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package view;
+package controller;
 
 /**
  *
  * @author Nelson Matsinhe
  */
-class ProdutoDAO {
+public class ProdutoDAO {
 
 }

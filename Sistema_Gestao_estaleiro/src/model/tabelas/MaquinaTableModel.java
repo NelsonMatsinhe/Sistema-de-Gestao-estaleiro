@@ -1,25 +1,28 @@
+ /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 package model.tabelas;
 
-import java.text.NumberFormat;
-import java.util.List;
+import model.Maquina;
 import javax.swing.table.AbstractTableModel;
-import model.CarinhoDeCompra;
+import java.util.List;
 
 /**
- * Classe que define o modelo para tabela contendo dados dos itens da venda
  *
  * @author Nelson Matsinhe
  */
-public class CarinhoDeCompraTableModel extends AbstractTableModel {
 
-    private final NumberFormat NF = NumberFormat.getNumberInstance();
-    
-    private String colunas[] = {"Produto", "Quantidade", "Valor Unitário"};
-    private List<CarinhoDeCompra> dados;
+
+public class MaquinaTableModel extends AbstractTableModel {
+
+    private String colunas[] = {"Id", "Tipo", "Alocada"};
+    private List<Maquina> dados;
 
     @Override
     public int getRowCount() {
-        if(dados == null){
+        if (dados == null) {
             return 0;
         }
         return dados.size();
@@ -32,14 +35,14 @@ public class CarinhoDeCompraTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int l, int c) {
-        CarinhoDeCompra itemVenda = dados.get(l);
+        Maquina maquina = dados.get(l);
         switch (c) {
             case 0:
-                return itemVenda.getProduto().getNome();
+                return maquina.getId();
             case 1:
-                return NF.format(itemVenda.getQuantidade());
+                return maquina.getTipo();
             case 2:
-                return (itemVenda.getValorUnitario());
+                return maquina.isAlocada() ? "Sim" : "Não";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -55,12 +58,12 @@ public class CarinhoDeCompraTableModel extends AbstractTableModel {
         return false;
     }
 
-    public void setDados(List<CarinhoDeCompra> dados) {
+    public void setDados(List<Maquina> dados) {
         this.dados = dados;
         fireTableDataChanged();
     }
 
-    public CarinhoDeCompra getRowValue(int l) {
+    public Maquina getRowValue(int l) {
         return dados.get(l);
     }
 }

@@ -1,27 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package model.tabelas;
 
-
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import model.Funcionario;
 import javax.swing.table.AbstractTableModel;
-import model.Venda;
+import java.util.List;
 
 /**
- * Classe que define o modelo para tabela contendo dados da venda
  *
  * @author Nelson Matsinhe
  */
-public class VendaTableModel extends AbstractTableModel {
+public class FuncionarioTableModel extends AbstractTableModel {
 
-    private final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
-    
-    private String colunas[] = {"Cliente", "Data", "Valor", "Situação"};
-    private List<Venda> dados;
+    private String colunas[] = {"Id", "Nome", "Função", "Estado"}; // Adicionado "Estado"
+    private List<Funcionario> dados;
 
     @Override
     public int getRowCount() {
-        if(dados == null){
+        if (dados == null) {
             return 0;
         }
         return dados.size();
@@ -34,16 +32,16 @@ public class VendaTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int l, int c) {
-        Venda venda = dados.get(l);
+        Funcionario funcionario = dados.get(l);
         switch (c) {
             case 0:
-                return venda.getCliente().getNome();
+                return funcionario.getId();
             case 1:
-                return SDF.format(venda.getDataVenda());
+                return funcionario.getNome();
             case 2:
-                return (venda.getValorTotal());
+                return funcionario.getCargo();
             case 3:
-                return venda.getSituacao();
+                return funcionario. getEstado() ? "Ativo" : "Inativo"; // Retorna o estado
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -59,12 +57,12 @@ public class VendaTableModel extends AbstractTableModel {
         return false;
     }
 
-    public void setDados(List<Venda> dados) {
+    public void setDados(List<Funcionario> dados) {
         this.dados = dados;
         fireTableDataChanged();
     }
 
-    public Venda getRowValue(int l) {
+    public Funcionario getRowValue(int l) {
         return dados.get(l);
     }
 }

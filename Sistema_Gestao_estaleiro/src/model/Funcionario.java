@@ -36,6 +36,9 @@ public class Funcionario {
 
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
+    
+    @Column(name = "estado")
+    private Boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "maquina_id")
@@ -52,6 +55,15 @@ public class Funcionario {
     public Funcionario() {
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    
     public Long getId() {
         return id;
     }
@@ -67,8 +79,7 @@ public class Funcionario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-  
+    
 
     public Maquina getMaquinaAlocada() {
         return maquinaAlocada;
@@ -93,7 +104,8 @@ public class Funcionario {
     public void setMateriaisRecebidos(List<Material> materiaisRecebidos) {
         this.materiaisRecebidos = materiaisRecebidos;
     }
-public void alocarMaquina(Maquina maquina) {
+
+    public void alocarMaquina(Maquina maquina) {
         if (!maquina.isAlocada()) {
             this.maquinaAlocada = maquina;
             maquina.alocar(this);

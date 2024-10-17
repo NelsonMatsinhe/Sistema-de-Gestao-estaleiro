@@ -5,9 +5,9 @@
 
 package model.tabelas;
 
-import model.Produto;
-import javax.swing.table.AbstractTableModel;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
+import model.Fornecedor;
 
 /**
  *
@@ -15,10 +15,15 @@ import java.util.List;
  */
 
 
-public class ProdutoTableModel extends AbstractTableModel {
+/**
+ * Classe que define o modelo para tabela contendo dados do fornecedor.
+ *
+ * @author Nelson Matsinhe
+ */
+public class FornecedorTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome", "Preço"};
-    private List<Produto> dados;
+    private String colunas[] = {"Id", "Nome", "Nuit", "Morada", "Telefone", "Email"};
+    private List<Fornecedor> dados;
 
     @Override
     public int getRowCount() {
@@ -35,14 +40,20 @@ public class ProdutoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int l, int c) {
-        Produto produto = dados.get(l);
+        Fornecedor fornecedor = dados.get(l);
         switch (c) {
             case 0:
-                return produto.getId();
+                return fornecedor.getId();
             case 1:
-                return produto.getNome();
+                return fornecedor.getNome();
             case 2:
-                return produto.getPreco();
+                return fornecedor.getNuit();
+            case 3:
+                return fornecedor.getMorada();
+            case 4:
+                return fornecedor.getTelefone();
+            case 5:
+                return fornecedor.getEmail();
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -58,13 +69,12 @@ public class ProdutoTableModel extends AbstractTableModel {
         return false;
     }
 
-    public void setDados(List<Produto> dados) {
+    public void setDados(List<Fornecedor> dados) {
         this.dados = dados;
         fireTableDataChanged();
     }
 
-    public Produto getRowValue(int l) {
+    public Fornecedor getRowValue(int l) {
         return dados.get(l);
     }
 }
-
