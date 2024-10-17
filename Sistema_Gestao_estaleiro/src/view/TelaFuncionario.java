@@ -475,6 +475,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
 
             habilitarFormulario(false);
             carregarGrade();
+            limpaFormulario();
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
@@ -532,6 +533,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                 try {
                     funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
                     JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                    limpaFormulario();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
