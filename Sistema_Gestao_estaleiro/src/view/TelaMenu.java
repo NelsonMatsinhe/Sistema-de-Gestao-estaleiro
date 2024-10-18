@@ -5,7 +5,7 @@
  */
 package view;
 
-import view.TelaUsuario;
+import view.TelaUsuarios;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +21,7 @@ public class TelaMenu extends javax.swing.JFrame {
     Color DefaultColor, ClickedColor,MouseColor;
      TelaHome Estatisca = new TelaHome ();
       TelaCliente cliente = new TelaCliente();
-       TelaUsuario TelaUsuario;
+       TelaUsuarios TelaUsuario;
           //  TelaViagem TelaEvento = new TelaViagem();
           TelaProduto produto = new TelaProduto();
           TelaVenda venda=new TelaVenda();
@@ -30,7 +30,7 @@ public class TelaMenu extends javax.swing.JFrame {
 
     public TelaMenu() {
         try {
-            this.TelaUsuario = new TelaUsuario();
+            this.TelaUsuario = new TelaUsuarios();
             initComponents();
             
             jDesktopPane.add(Estatisca).setVisible(true);

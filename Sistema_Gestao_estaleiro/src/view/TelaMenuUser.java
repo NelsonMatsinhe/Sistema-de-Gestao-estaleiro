@@ -18,7 +18,7 @@ public class TelaMenuUser extends javax.swing.JFrame {
     Color DefaultColor, ClickedColor, MouseColor;
 
    // TelaCliente cliente = new TelaCliente();
-    TelaUsuario TelaUsuario;
+    TelaUsuarios TelaUsuario;
     TelaProduto TelaProduto= new TelaProduto();
   //  TelaVenda venda = new TelaVenda();
    // TelaStock stock = new TelaStock();

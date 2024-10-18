@@ -47,6 +47,27 @@ public class UsuarioDAO {
         }
     }
 
+    
+    // Método para atualizar um usuário
+    public void atualizar(Usuario usuario) {
+        EntityManager em = JpaUtil.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            em.merge(usuario);  // Atualiza o usuário existente
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Erro ao atualizar o usuário.", e);
+        } finally {
+            em.close();
+        }
+    }
+
+
     // Método para buscar usuário por ID, considerando apenas usuários ativos
     public Usuario buscarPorId(Long id) {
         EntityManager em = JpaUtil.getEntityManager();

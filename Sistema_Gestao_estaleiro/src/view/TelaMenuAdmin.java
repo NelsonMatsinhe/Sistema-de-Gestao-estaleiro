@@ -19,7 +19,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     Color DefaultColor, ClickedColor, MouseColor;
 
     // TelaCliente cliente = new TelaCliente();
-    TelaUsuario TelaUsuario;
+    TelaUsuario TelaUsuario =new TelaUsuario ();
     TelaProduto TelaProduto = new TelaProduto();
     TelaFuncionario TelaFuncionario = new TelaFuncionario();
 //    TelaVenda = new TelaVenda();
@@ -198,8 +198,8 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu3.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-cliente-40 (1).png"))); // NOI18N
-        lblMenu3.setText("              Cliente");
+        lblMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-usuário-de-gênero-neutro-40.png"))); // NOI18N
+        lblMenu3.setText("              Usuario");
         lblMenu3.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -654,10 +654,58 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
     private void lblMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseClicked
         try {
+            // Fecha frames específicos se estiverem abertos
+//        if (TelaCliente != null && !TelaCliente.isClosed()) {
+//            TelaCliente.doDefaultCloseAction();
+//            TelaCliente = null;
+//        }
+//        if (cliente != null && !cliente.isClosed()) {
+//            cliente.doDefaultCloseAction();
+//            cliente = null;
+//        }
+//        if (produto != null && !produto.isClosed()) {
+//            produto.doDefaultCloseAction();
+//            produto = null;
+//        }
+            if ( TelaFuncionario != null && ! TelaFuncionario.isClosed()) {
+                 TelaFuncionario.doDefaultCloseAction();
+                 TelaFuncionario = null;
+            }
+            if (TelaUsuario != null && !TelaUsuario.isClosed()) {
+                TelaUsuario.doDefaultCloseAction();
+                TelaUsuario = null;
+            }
+
+            // Limpa qualquer outro frame que possa estar aberto
+            jDesktopPane.removeAll();
+
+            // Adiciona e configura a tela de venda
+            if (home != null) {
+                home.setClosable(true);
+                home.setMaximizable(true);
+                home.setIconifiable(true);
+                home.setResizable(true);
+
+                jDesktopPane.add(  TelaFuncionario);
+                  TelaFuncionario.setVisible(true);
+
+                try {
+                     TelaFuncionario.setSelected(true);
+                    // Descomente a linha abaixo se quiser que a janela abra maximizada
+                    // venda.setMaximum(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Atualiza o desktop
+            jDesktopPane.revalidate();
+            jDesktopPane.repaint();
 
         } catch (Exception ex) {
             Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_lblMenu1MouseClicked
 
     private void lblMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MousePressed
@@ -833,6 +881,60 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu11MouseEntered
 
     private void lblMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseClicked
+
+  try {
+            // Fecha frames específicos se estiverem abertos
+//        if (TelaCliente != null && !TelaCliente.isClosed()) {
+//            TelaCliente.doDefaultCloseAction();
+//            TelaCliente = null;
+//        }
+//        if (cliente != null && !cliente.isClosed()) {
+//            cliente.doDefaultCloseAction();
+//            cliente = null;
+//        }
+//        if (produto != null && !produto.isClosed()) {
+//            produto.doDefaultCloseAction();
+//            produto = null;
+//        }
+            if (home != null && !home.isClosed()) {
+                home.doDefaultCloseAction();
+                home = null;
+            }
+            if (TelaFuncionario != null && !TelaFuncionario.isClosed()) {
+                TelaFuncionario.doDefaultCloseAction();
+                TelaFuncionario = null;
+            }
+
+            // Limpa qualquer outro frame que possa estar aberto
+            jDesktopPane.removeAll();
+
+            // Adiciona e configura a tela de venda
+            if (TelaUsuario != null) {
+               TelaUsuario.setClosable(true);
+                TelaUsuario.setMaximizable(true);
+                TelaUsuario.setIconifiable(true);
+                TelaUsuario.setResizable(true);
+
+                jDesktopPane.add(TelaUsuario);
+                TelaUsuario.setVisible(true);
+
+                try {
+                   TelaUsuario.setSelected(true);
+                    // Descomente a linha abaixo se quiser que a janela abra maximizada
+                    // venda.setMaximum(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Atualiza o desktop
+            jDesktopPane.revalidate();
+            jDesktopPane.repaint();
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_lblMenu3MouseClicked
 
     private void lblMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseClicked
