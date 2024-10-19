@@ -5,30 +5,27 @@
  */
 package view;
 
-import controller.ClienteDAO;
+import controller.MaterialDAO;
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.HeadlessException;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import model.Cliente;
-import model.tabelas.ClienteTableModel;
+import model.Fornecedor;
+import model.Material;
+import model.tabelas.MaterialTableModel;
 
 //import model.Produto;
 /**
- * class tela de registros das produto
+ * class tela de registros das Material
  *
  * @author Nelson Matsinhe
  */
-public class TelaCliente extends javax.swing.JInternalFrame {
+public class TelaMaterial extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Produto
-     */
-    //GenericDAO prod = new GenericDAO<>(Produto.class);
-    public TelaCliente() {
+   
+    public TelaMaterial() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -55,7 +52,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        TbCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectRegistryTable();
             }
@@ -69,8 +66,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     Color d = new Color(255, 0, 51);
     Color f = new Color(219, 220, 252);
 
-    ClienteDAO clienteDAO = new ClienteDAO();
-    Cliente cliente = new Cliente();
+    MaterialDAO materialDAO = new MaterialDAO();
+    Material material = new Material();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,17 +88,22 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TbCliente = new javax.swing.JTable();
+        TbMaterial = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         lblMessagem = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JFormattedTextField();
+        txtQuantidade = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
+        txtPreco = new javax.swing.JFormattedTextField();
+        txtUnidade = new javax.swing.JFormattedTextField();
+        txtFornecedor = new javax.swing.JFormattedTextField();
+        btnFornecedor = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -118,12 +120,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 txtIDActionPerformed(evt);
             }
         });
-        jPanel6.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 280, -1));
+        jPanel6.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 42, 304, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ID:");
-        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 43, 23, -1));
 
         txtNome.setPreferredSize(new java.awt.Dimension(300, 25));
         txtNome.setSelectionColor(new java.awt.Color(255, 255, 255));
@@ -137,32 +139,31 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 txtNomeKeyPressed(evt);
             }
         });
-        jPanel6.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 280, -1));
+        jPanel6.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 304, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Nome:");
-        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, -1, -1));
+        jLabel2.setText("quantidade");
+        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Indereco");
-        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 70, -1));
+        jLabel5.setText("fornecedro");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 55, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 148, 89, -1));
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 148, 1, -1));
 
-        TbCliente.setModel(new model.tabelas.ClienteTableModel()
-        );
-        TbCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbMaterial.setModel(new MaterialTableModel());
+        TbMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TbClienteMouseClicked(evt);
+                TbMaterialMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TbCliente);
+        jScrollPane1.setViewportView(TbMaterial);
 
-        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 800, 195));
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 203, 761, 252));
 
         btCancelar.setText("Cancelar");
         btCancelar.setFocusable(false);
@@ -246,59 +247,74 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
-                .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
-                .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
-                .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 260, -1, -1));
-        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(575, 119, 529, 23));
+        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 203, -1, -1));
 
-        try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+225#########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtTelefone.setMinimumSize(null);
-        txtTelefone.setPreferredSize(new java.awt.Dimension(200, 28));
-        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefoneActionPerformed(evt);
-            }
-        });
-        txtTelefone.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTelefoneKeyPressed(evt);
-            }
-        });
-        jPanel6.add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 270, 26));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Unidade");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 43, 45, -1));
+        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 529, 23));
+
+        txtQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000000, 1));
+        txtQuantidade.setPreferredSize(new java.awt.Dimension(200, 28));
+        jPanel6.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 300, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nome:");
-        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, -1, -1));
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 89, -1, -1));
 
-        txtEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtEndereco.setText("  ");
-        txtEndereco.setMinimumSize(null);
-        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
+        txtPreco.setColumns(10);
+        txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtPreco.setPreferredSize(new java.awt.Dimension(200, 28));
+        txtPreco.setValue(new Double(0));
+        txtPreco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnderecoActionPerformed(evt);
+                txtPrecoActionPerformed(evt);
             }
         });
-        txtEndereco.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEnderecoKeyPressed(evt);
+        jPanel6.add(txtPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 250, -1));
+
+        txtUnidade.setColumns(10);
+        txtUnidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtUnidade.setPreferredSize(new java.awt.Dimension(200, 28));
+        txtUnidade.setValue(new Double(0));
+        txtUnidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUnidadeActionPerformed(evt);
             }
         });
-        jPanel6.add(txtEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 270, -1));
+        jPanel6.add(txtUnidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 250, -1));
+
+        txtFornecedor.setEditable(false);
+        txtFornecedor.setColumns(25);
+        txtFornecedor.setPreferredSize(new java.awt.Dimension(200, 28));
+        jPanel6.add(txtFornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 250, -1));
+
+        btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
+        btnFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFornecedorActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnFornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 130, 30, 20));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Preco");
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 55, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -306,7 +322,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel8.setBackground(new java.awt.Color(102, 102, 102));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Registro de Cliente");
+        jLabel8.setText("Registro de Material");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -329,12 +345,12 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,61 +390,63 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (validarFormulario()) {
-            // Certifique-se de que o cliente foi instanciado corretamente
-            if (cliente == null) {
-                cliente = new Cliente();
+            // Certifique-se de que o material foi instanciado corretamente
+            if (material == null) {
+                material = new Material();
             }
 
-            cliente.setNome(txtNome.getText());
-            cliente.setTelefone(txtTelefone.getText());
-            cliente.setEndereco(txtEndereco.getText());
+            material.setNome(txtNome.getText());
+            material.setQuantidade(Double.parseDouble((String) txtQuantidade.getValue()));
+            material.setUnidade(txtUnidade.getText());
+            material.setPreco(Double.parseDouble(txtPreco.getText()));
+            material.setFornecedor((Fornecedor) txtFornecedor.getValue());
 
+            // Adicione aqui a lógica para definir o fornecedor, se necessário
             // Verificar se o id é nulo e inicializá-lo se for o caso
-            if (cliente.getId() == 0) {
+            if (material.getId() == null) {
+                material.setId(0L);  // Define o id como 0 (novo material)
+            }
+
+            // Operação de salvar ou atualizar o material
+            if (material.getId() == 0) {
                 try {
-                    clienteDAO.inserir(cliente);
+                    materialDAO.salvar(material);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao inserir o cliente.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao inserir o material.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } else {
-                // Código para atualizar o cliente, caso seja necessário
-                try {
-                    clienteDAO.atualizar(cliente);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o cliente.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // Código para atualizar o material, caso seja necessário
             }
 
             habilitarFormulario(false);
             carregarGrade();
             limpaFormulario();
         }
-
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
 
         if (!txtID.getText().isEmpty()) {
-            int id = Integer.parseInt(txtID.getText());
+            Long id = Long.valueOf(txtID.getText());
 
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este cliente?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este material?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
             if (confirmacao == JOptionPane.YES_OPTION) {
                 try {
-                    clienteDAO.excluir(id);  // Desativa o cliente
-                    JOptionPane.showMessageDialog(this, "Cliente desativado com sucesso.");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao desativar o cliente.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    materialDAO.remover(id);  // Desativa o material
+                    JOptionPane.showMessageDialog(this, "Material desativado com sucesso.");
+                } catch (HeadlessException ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao desativar o material.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 habilitarFormulario(false);
                 carregarGrade();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente para excluir.");
+            JOptionPane.showMessageDialog(this, "Selecione um material para excluir.");
         }
+
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
@@ -436,43 +454,41 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-
         if (validarFormulario()) {
+            Long id;
             try {
-                Long id;
+                id = Long.parseLong(txtID.getText()); // Converte o ID de String para Long
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Material material = materialDAO.buscarPorId(id); // Agora busca usando o ID Long
+            if (material != null) {
+                material.setNome(txtNome.getText());
+                material.setQuantidade(Double.parseDouble(txtQuantidade.getValue().toString())); // Corrigido
+                material.setUnidade(txtUnidade.getText());
+                material.setPreco(Double.parseDouble(txtPreco.getText()));
+                material.setFornecedor((Fornecedor) txtFornecedor.getValue());
+
                 try {
-                    id = Long.parseLong(txtID.getText());
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                    return; // Retorna se o ID não for válido
+                    materialDAO.atualizar(material); // Atualiza o material
+                    JOptionPane.showMessageDialog(this, "Material atualizado com sucesso.");
+                    limpaFormulario();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o material.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
-                Cliente cliente = clienteDAO.buscarPorCodigo(id);
-                if (cliente != null) {
-                    cliente.setNome(txtNome.getText());
-                    cliente.setTelefone(txtTelefone.getText());
-                    cliente.setEndereco(txtEndereco.getText());
-
-                    try {
-                        clienteDAO.atualizar(cliente); // Atualiza o cliente
-                        JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso.");
-                        limpaFormulario();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Erro ao atualizar o cliente.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    habilitarFormulario(false);
-                    carregarGrade();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Cliente não encontrado para edição.");
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(TelaCliente.class.getName()).log(Level.SEVERE, null, ex);
+                habilitarFormulario(false);
+                carregarGrade();
+            } else {
+                JOptionPane.showMessageDialog(this, "Material não encontrado para edição.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
-
         }
+
+
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
@@ -483,41 +499,22 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeKeyPressed
 
-    private void TbClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbClienteMouseClicked
+    private void TbMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbMaterialMouseClicked
 
-    }//GEN-LAST:event_TbClienteMouseClicked
+    }//GEN-LAST:event_TbMaterialMouseClicked
 
-    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
-        validarFormulario();
-    }//GEN-LAST:event_txtTelefoneActionPerformed
-
-    private void txtTelefoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefoneKeyPressed
+    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            validarFormulario();
+    }//GEN-LAST:event_txtPrecoActionPerformed
 
-            // End of variables declaration
-        }
-    }//GEN-LAST:event_txtTelefoneKeyPressed
+    private void txtUnidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUnidadeActionPerformed
 
-    private void txtEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnderecoActionPerformed
-        if (!txtEndereco.getText().contains("@") || !txtEndereco.getText().contains(".") || !txtEndereco.getText().contains("com")) {
-            txtEndereco.setBackground(d);
-            txtEndereco.requestFocus();
-        } else {
-            txtEndereco.setBackground(f);
-            txtTelefone.requestFocus();
-        }
-    }//GEN-LAST:event_txtEnderecoActionPerformed
-
-    private void txtEnderecoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnderecoKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            if (validarFormulario()) {
-                txtTelefone.requestFocusInWindow();
-            }
-
-        }
-    }//GEN-LAST:event_txtEnderecoKeyPressed
+    private void btnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedorActionPerformed
+        BuscaFornecedor buscaUsuario = new BuscaFornecedor(this);
+        buscaUsuario.setVisible(true);
+    }//GEN-LAST:event_btnFornecedorActionPerformed
 
     /**
      * Seleciona o registro da tabela e preenche o formulário.
@@ -529,28 +526,31 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         btExcluir.setEnabled(ativo);             // Botão "Excluir" habilitado quando ativo
         txtID.setEnabled(ativo);                 // Campo ID habilitado/desabilitado
         txtNome.setEnabled(ativo);               // Campo Nome habilitado/desabilitado
-        txtTelefone.setEnabled(ativo);               // Campo NUIT habilitado/desabilitado
-        txtEndereco.setEnabled(ativo);              // Campo Email habilitado/desabilitado
+        txtQuantidade.setEnabled(ativo);               // Campo NUIT habilitado/desabilitado
+        txtUnidade.setEnabled(ativo);              // Campo Email habilitado/desabilitado
+        txtPreco.setEnabled(ativo);
+        txtFornecedor.setEnabled(ativo);
+        btEditar.setEnabled(TbMaterial.getSelectedRow() >= 0 && ativo); // Habilita "Editar" se houver linha selecionada
 
-        btEditar.setEnabled(TbCliente.getSelectedRow() >= 0 && ativo); // Habilita "Editar" se houver linha selecionada
-
-        TbCliente.setEnabled(!ativo);         // Desabilita tabela quando formulário estiver ativo
+        TbMaterial.setEnabled(!ativo);         // Desabilita tabela quando formulário estiver ativo
 
         if (!ativo) {
             limpaFormulario();                   // Limpa o formulário se desativado
         }
     }
 
-    private void habilitarSalvar() {
-        btSalvar.setEnabled(validarFormulario());
-    }
-
     private void limpaFormulario() {
         txtID.setText("");
         txtNome.setText("");
-        txtTelefone.setText("");
-        txtEndereco.setText("");
+        txtQuantidade.setValue("");
+        txtUnidade.setText("");
+        txtPreco.setText("");
+        txtFornecedor.setText("");
         lblMessagem.setText("");
+    }
+
+    private void habilitarSalvar() {
+        btSalvar.setEnabled(validarFormulario());
     }
 
     private boolean validarFormulario() {
@@ -565,85 +565,104 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             lblMessagem.setText("Preencha o campo com um nome.");
             txtNome.requestFocus();
             isValid = false;
-        } else if (txtNome.getText().trim().length() < 2) {
-            txtNome.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um nome válido.");
-            txtNome.requestFocus();
-            isValid = false;
         } else {
             txtNome.setBorder(borderNormal);
         }
 
-        // Validação do campo Telefone
-        if (txtTelefone.getText().isEmpty()) {
-            txtTelefone.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um telefone.");
-            txtTelefone.requestFocus();
+        // Validação do campo Quantidade
+        if (txtQuantidade.getValue() == null || txtQuantidade.getValue().toString().isEmpty()) {
+            txtQuantidade.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com uma quantidade.");
+            txtQuantidade.requestFocus();
             isValid = false;
         } else {
-            txtTelefone.setBorder(borderNormal);
+            txtQuantidade.setBorder(borderNormal);
         }
 
-        // Validação do campo Endereço
-        if (txtEndereco.getText().isEmpty()) {
-            txtEndereco.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um endereço.");
-            txtEndereco.requestFocus();
+        // Validação do campo Unidade
+        if (txtUnidade.getText().isEmpty()) {
+            txtUnidade.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com uma unidade.");
+            txtUnidade.requestFocus();
             isValid = false;
         } else {
-            txtEndereco.setBorder(borderNormal);
+            txtUnidade.setBorder(borderNormal);
+        }
+
+        // Validação do campo Preço
+        if (txtPreco.getText().isEmpty()) {
+            txtPreco.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com um preço.");
+            txtPreco.requestFocus();
+            isValid = false;
+        } else {
+            txtPreco.setBorder(borderNormal);
         }
 
         return isValid;
     }
 
-    private void carregarGrade() {
-        ClienteTableModel tm = (ClienteTableModel) TbCliente.getModel();
-        try {
-            tm.setDados(clienteDAO.listarTodos());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    /**
-     * Seleciona o registro da tabela e preenche o formulário.
-     */
     public void selectRegistryTable() {
-        int selectedRow = TbCliente.getSelectedRow();
+        int selectedRow = TbMaterial.getSelectedRow(); // Referência à tabela de materiais
         if (selectedRow != -1) {
-            txtID.setText(TbCliente.getValueAt(selectedRow, 0).toString());
-            txtNome.setText(TbCliente.getValueAt(selectedRow, 1).toString());
-            txtTelefone.setText(TbCliente.getValueAt(selectedRow, 2).toString());
-            txtEndereco.setText(TbCliente.getValueAt(selectedRow, 3).toString());
+            txtID.setText(TbMaterial.getValueAt(selectedRow, 0).toString());          // ID do material
+            txtNome.setText(TbMaterial.getValueAt(selectedRow, 1).toString());        // Nome do material
+            txtQuantidade.setValue(TbMaterial.getValueAt(selectedRow, 2).toString());  // Quantidade
+            txtUnidade.setText(TbMaterial.getValueAt(selectedRow, 3).toString());     // Unidade de medida
+            txtPreco.setText(TbMaterial.getValueAt(selectedRow, 4).toString());       // Preço
+            txtFornecedor.setText(TbMaterial.getValueAt(selectedRow, 5).toString());  // Fornecedor
 
             habilitarFormulario(true); // Habilita o formulário para edição
         }
     }
 
+    void setFornecedor(Fornecedor funcionario) {
+        if (funcionario != null) {
+            txtFornecedor.setValue(funcionario);
+        } else {
+            txtFornecedor.setText(""); // Caso o usuário seja nulo, limpar o campo
+        }
+    }
+
+    private void carregarGrade() {
+        MaterialTableModel tm = (MaterialTableModel) TbMaterial.getModel();
+        try {
+            tm.setDados(materialDAO.listarTodos());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TbCliente;
+    private javax.swing.JTable TbMaterial;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btnFornecedor;
     private javax.swing.ButtonGroup estadoGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMessagem;
-    private javax.swing.JTextField txtEndereco;
+    private javax.swing.JFormattedTextField txtFornecedor;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JFormattedTextField txtTelefone;
+    private javax.swing.JFormattedTextField txtPreco;
+    private javax.swing.JSpinner txtQuantidade;
+    private javax.swing.JFormattedTextField txtUnidade;
     // End of variables declaration//GEN-END:variables
+
 }

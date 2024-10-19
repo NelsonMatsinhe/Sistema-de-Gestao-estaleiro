@@ -84,4 +84,9 @@ public class Usuario {
         this.funcionario = funcionario;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "funcionario=" + funcionario + '}';
+    }
+
 }

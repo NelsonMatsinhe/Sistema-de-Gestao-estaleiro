@@ -22,6 +22,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     TelaUsuario TelaUsuario =new TelaUsuario ();
     TelaProduto TelaProduto = new TelaProduto();
     TelaFuncionario TelaFuncionario = new TelaFuncionario();
+    TelaFornecedor TelaFornecedor=new TelaFornecedor();
 //    TelaVenda = new TelaVenda();
     // TelaStock stock = new TelaStock();
 
@@ -274,7 +275,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu5.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-usuário-de-gênero-neutro-40.png"))); // NOI18N
-        lblMenu5.setText("              Usuario");
+        lblMenu5.setText("              Fornecedor");
         lblMenu5.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -613,8 +614,60 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
     private void lblMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseClicked
         try {
+             try {
+            // Fecha frames específicos se estiverem abertos
+//        if (TelaCliente != null && !TelaCliente.isClosed()) {
+//            TelaCliente.doDefaultCloseAction();
+//            TelaCliente = null;
+//        }
+//        if (cliente != null && !cliente.isClosed()) {
+//            cliente.doDefaultCloseAction();
+//            cliente = null;
+//        }
+//        if (produto != null && !produto.isClosed()) {
+//            produto.doDefaultCloseAction();
+//            produto = null;
+//        }
+            if (home != null && !home.isClosed()) {
+                home.doDefaultCloseAction();
+                home = null;
+            }
+            if (TelaUsuario != null && !TelaUsuario.isClosed()) {
+                TelaUsuario.doDefaultCloseAction();
+                TelaUsuario = null;
+            }
 
-            jDesktopPane.add(TelaUsuario).setVisible(true);
+            // Limpa qualquer outro frame que possa estar aberto
+            jDesktopPane.removeAll();
+
+            // Adiciona e configura a tela de venda
+            if (TelaFuncionario != null) {
+                TelaFuncionario.setClosable(true);
+                TelaFuncionario.setMaximizable(true);
+                TelaFuncionario.setIconifiable(true);
+                TelaFuncionario.setResizable(true);
+
+                jDesktopPane.add(TelaFornecedor);
+                TelaFornecedor.setVisible(true);
+
+                try {
+                    TelaFuncionario.setSelected(true);
+                    // Descomente a linha abaixo se quiser que a janela abra maximizada
+                    // venda.setMaximum(true);
+                } catch (java.beans.PropertyVetoException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Atualiza o desktop
+            jDesktopPane.revalidate();
+            jDesktopPane.repaint();
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+            jDesktopPane.add(TelaFornecedor).setVisible(true);
 
         } catch (Exception ex) {
             Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
@@ -680,11 +733,11 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
             jDesktopPane.removeAll();
 
             // Adiciona e configura a tela de venda
-            if (home != null) {
-                home.setClosable(true);
-                home.setMaximizable(true);
-                home.setIconifiable(true);
-                home.setResizable(true);
+            if (TelaFuncionario != null) {
+               TelaFuncionario.setClosable(true);
+               TelaFuncionario.setMaximizable(true);
+               TelaFuncionario.setIconifiable(true);
+                TelaFuncionario.setResizable(true);
 
                 jDesktopPane.add(  TelaFuncionario);
                   TelaFuncionario.setVisible(true);

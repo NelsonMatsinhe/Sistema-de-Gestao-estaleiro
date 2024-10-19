@@ -82,4 +82,13 @@ public class Material {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+    
 }

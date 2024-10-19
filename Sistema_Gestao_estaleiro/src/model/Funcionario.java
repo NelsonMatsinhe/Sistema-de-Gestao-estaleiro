@@ -118,4 +118,11 @@ public class Funcionario {
         material.removerEstoque(quantidade);
         this.materiaisRecebidos.add(material);
     }
+
+    @Override
+    public String toString() {
+        return this.getNome();
+    }
+    
+    
 }
