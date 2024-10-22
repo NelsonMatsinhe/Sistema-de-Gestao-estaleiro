@@ -30,9 +30,9 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
     private int tempoCura;
-    
+
     private int quantidade;
-    
+
     @Column(name = "data_registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
@@ -41,14 +41,26 @@ public class Produto {
     @Column(name = "preco", nullable = false)
     private BigDecimal preco;
 
-    // Construtores
-    public Produto() {
-        this.id = 0;
-        this.nome = "";
+    @OneToMany(mappedBy = "produto")
+    private List<Maquina> maquinas;
 
+// Getter e Setter
+    public List<Maquina> getMaquinas() {
+        return maquinas;
+    }
+
+    public void setMaquinas(List<Maquina> maquinas) {
+        this.maquinas = maquinas;
+    }
+
+    public Produto(int id, String nome, Categoria categoria, int tempoCura, int quantidade, Date dataRegistro, BigDecimal preco) {
+        this.id = id;
+        this.nome = "";
+        this.categoria = categoria;
+        this.tempoCura = tempoCura;
+        this.quantidade = 0;
         this.dataRegistro = new Date();
         this.preco = new BigDecimal("0.00");
-
     }
 
     public Produto(int codProduto) {
@@ -59,8 +71,17 @@ public class Produto {
         this.preco = new BigDecimal("0.00");
 
     }
-     public void atualizarEstoque(int quantidade) {
+
+    public void atualizarEstoque(int quantidade) {
         this.quantidade += quantidade;
+    }
+
+    public int getTempoCura() {
+        return tempoCura;
+    }
+
+    public void setTempoCura(int tempoCura) {
+        this.tempoCura = tempoCura;
     }
 
     // Getters e Setters
@@ -119,4 +140,13 @@ public class Produto {
         }
         return false;
     }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
 }

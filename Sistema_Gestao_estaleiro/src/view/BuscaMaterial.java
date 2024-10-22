@@ -1,24 +1,24 @@
 package view;
 
 
-import controller.FornecedorDAO;
+import controller.MaterialDAO;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
-import model.Fornecedor;
-import model.tabelas.FornecedorTableModel;
+import model.Material;
+import model.tabelas.MaterialTableModel;
 
 /**
  * Janela de consulta a dados do fornecedor
  *
  * @author   Nelson Matsinhe
  */
-public class BuscaFornecedor extends javax.swing.JDialog {
+public class BuscaMaterial extends javax.swing.JDialog {
 
     JInternalFrame parent;
 
-    public BuscaFornecedor(JInternalFrame parent) {
+    public BuscaMaterial(JInternalFrame parent) {
         super();
         this.parent = parent;
         initComponents();
@@ -27,9 +27,9 @@ public class BuscaFornecedor extends javax.swing.JDialog {
 
     private void carregarGrade() {
         try {
-            FornecedorDAO funcionarioDAO = new FornecedorDAO();
-            FornecedorTableModel ctm = (FornecedorTableModel) tbGrade.getModel();
-            ctm.setDados(funcionarioDAO.listarTodos());
+            MaterialDAO MaterialDAO = new MaterialDAO();
+            MaterialTableModel ctm = (MaterialTableModel) tbGrade.getModel();
+            ctm.setDados(MaterialDAO.listarTodos());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -68,7 +68,7 @@ public class BuscaFornecedor extends javax.swing.JDialog {
         getContentPane().add(pnFiltro, java.awt.BorderLayout.PAGE_START);
 
         tbGrade.setAutoCreateRowSorter(true);
-        tbGrade.setModel(new FornecedorTableModel());
+        tbGrade.setModel(new MaterialTableModel());
         tbGrade.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbGradeMouseClicked(evt);
@@ -84,13 +84,13 @@ public class BuscaFornecedor extends javax.swing.JDialog {
 
     private void tbGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGradeMouseClicked
         if (evt.getClickCount() == 2) {
-            FornecedorTableModel ctm = (FornecedorTableModel) tbGrade.getModel();
+            MaterialTableModel ctm = (MaterialTableModel) tbGrade.getModel();
             int linhaSelecionada = tbGrade.getRowSorter().convertRowIndexToModel(tbGrade.getSelectedRow());
-            Fornecedor funcionario = ctm.getRowValue(linhaSelecionada);
+            Material Material = ctm.getRowValue(linhaSelecionada);
  
-            if (parent instanceof TelaMaterial) {
-                TelaMaterial lv = (TelaMaterial) parent;
-                lv.setFornecedor(funcionario);
+            if (parent instanceof TelaProducao) {
+                TelaProducao lv = (TelaProducao) parent;
+                lv.setMaterial(Material);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Campo de destino inválido.", "Alerta", JOptionPane.WARNING_MESSAGE);

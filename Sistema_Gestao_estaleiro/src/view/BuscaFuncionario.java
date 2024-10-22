@@ -83,20 +83,23 @@ public class BuscaFuncionario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbGradeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGradeMouseClicked
-        if (evt.getClickCount() == 2) {
-            FuncionarioTableModel ctm = (FuncionarioTableModel) tbGrade.getModel();
-            int linhaSelecionada = tbGrade.getRowSorter().convertRowIndexToModel(tbGrade.getSelectedRow());
-            Funcionario funcionario = ctm.getRowValue(linhaSelecionada);
- 
-            if (parent instanceof TelaUsuario) {
-                TelaUsuario lv = (TelaUsuario) parent;
-                lv.setFuncionario(funcionario);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Campo de destino inválido.", "Alerta", JOptionPane.WARNING_MESSAGE);
-            }
+      if (evt.getClickCount() == 2) {
+        FuncionarioTableModel ctm = (FuncionarioTableModel) tbGrade.getModel();
+        int linhaSelecionada = tbGrade.getRowSorter().convertRowIndexToModel(tbGrade.getSelectedRow());
+        Funcionario funcionario = ctm.getRowValue(linhaSelecionada);
 
+        if (parent instanceof TelaUsuario) {
+            TelaUsuario lv = (TelaUsuario) parent;
+            lv.setFuncionario(funcionario);
+            dispose();
+        } else if (parent instanceof TelaProducao) {
+            TelaProducao lv = (TelaProducao) parent;
+            lv.setFuncionario(funcionario);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Campo de destino inválido.", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
+    }
     }//GEN-LAST:event_tbGradeMouseClicked
 
     private void tfFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfFiltroKeyReleased

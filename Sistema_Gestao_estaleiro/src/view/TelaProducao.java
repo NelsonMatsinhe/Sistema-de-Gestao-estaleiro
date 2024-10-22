@@ -6,22 +6,22 @@
 package view;
 
 import controller.FuncionarioDAO;
+import controller.ProducaoDAO;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import model.Cargo;
 import model.Cliente;
 import model.Funcionario;
+import model.Maquina;
+import model.Material;
+import model.Producao;
+import model.Produto;
 import model.tabelas.FuncionarioTableModel;
+import model.tabelas.ProducaoTableModel;
 import model.tabelas.UsuarioTableModel;
 
 //import model.Produto;
@@ -43,7 +43,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         habilitarFormulario(false);
         carregarGrade();
-         txtNome.requestFocus();
+        txtNome.requestFocus();
 
         // Adicionando os valores da enum Cargo no combo box
         for (Cargo cargo : Cargo.values()) {
@@ -74,7 +74,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         rbtnAtivo.addActionListener(e -> habilitarSalvar());
         rbtnInativo.addActionListener(e -> habilitarSalvar());
 
-        TbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectRegistryTable();
             }
@@ -88,8 +88,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     Color d = new Color(255, 0, 51);
     Color f = new Color(219, 220, 252);
 
-    FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-    Funcionario funcionario = new Funcionario();
+    ProducaoDAO producaoDAO = new ProducaoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,23 +104,32 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         txtID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TbFuncionario = new javax.swing.JTable();
+        TbProducao = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
-        comboCargo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        rbtnAtivo = new javax.swing.JRadioButton();
-        rbtnInativo = new javax.swing.JRadioButton();
         lblMessagem = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        ftfFucionario = new javax.swing.JFormattedTextField();
+        btnUsuario = new javax.swing.JButton();
+        ftfFucionario1 = new javax.swing.JFormattedTextField();
+        btnUsuario1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        ftfMaquina = new javax.swing.JFormattedTextField();
+        btnUsuario2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        txtQuantidadeProduzida = new javax.swing.JFormattedTextField();
+        rbtnInativo = new javax.swing.JRadioButton();
+        rbtnAtivo = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        ftfMaterial = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -130,6 +138,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jPanel6.setBackground(new java.awt.Color(51, 102, 0));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtID.setPreferredSize(new java.awt.Dimension(300, 25));
         txtID.addActionListener(new java.awt.event.ActionListener() {
@@ -137,42 +146,26 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 txtIDActionPerformed(evt);
             }
         });
+        jPanel6.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 260, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ID:");
-
-        txtNome.setPreferredSize(new java.awt.Dimension(300, 25));
-        txtNome.setSelectionColor(new java.awt.Color(255, 255, 255));
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNomeKeyPressed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Nome:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Estado:");
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 10, 53, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 148, 31, -1));
 
-        TbFuncionario.setModel(new FuncionarioTableModel());
-        TbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbProducao.setModel(new ProducaoTableModel());
+        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TbFuncionarioMouseClicked(evt);
+                TbProducaoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TbFuncionario);
+        jScrollPane1.setViewportView(TbProducao);
+
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 203, 761, 252));
 
         btCancelar.setText("Cancelar");
         btCancelar.setFocusable(false);
@@ -268,105 +261,119 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        comboCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCargoActionPerformed(evt);
-            }
-        });
+        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 203, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Cargo:");
+        jLabel7.setText("Produto:");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 60, -1));
+        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 529, 23));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Maquina:");
+        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+
+        ftfFucionario.setEditable(false);
+        ftfFucionario.setColumns(25);
+        ftfFucionario.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfFucionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 260, -1));
+
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, -1, 20));
+
+        ftfFucionario1.setEditable(false);
+        ftfFucionario1.setColumns(25);
+        ftfFucionario1.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfFucionario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 260, -1));
+
+        btnUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
+        btnUsuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuario1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, 20));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Funcionario:");
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+
+        ftfMaquina.setEditable(false);
+        ftfMaquina.setColumns(25);
+        ftfMaquina.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 260, -1));
+
+        btnUsuario2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
+        btnUsuario2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuario2ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Material:");
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
+
+        txtQuantidadeProduzida.setColumns(10);
+        txtQuantidadeProduzida.setPreferredSize(new java.awt.Dimension(300, 25));
+        txtQuantidadeProduzida.setValue(new Double(0));
+        txtQuantidadeProduzida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQuantidadeProduzidaActionPerformed(evt);
+            }
+        });
+        txtQuantidadeProduzida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQuantidadeProduzidaKeyPressed(evt);
+            }
+        });
+        jPanel6.add(txtQuantidadeProduzida, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 95, 260, -1));
+
+        rbtnInativo.setBackground(new java.awt.Color(51, 102, 0));
+        estadoGroup.add(rbtnInativo);
+        rbtnInativo.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnInativo.setText("Disalocar");
+        rbtnInativo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnInativoActionPerformed(evt);
+            }
+        });
+        jPanel6.add(rbtnInativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
 
         rbtnAtivo.setBackground(new java.awt.Color(51, 102, 0));
         estadoGroup.add(rbtnAtivo);
         rbtnAtivo.setForeground(new java.awt.Color(255, 255, 255));
-        rbtnAtivo.setText("Activo");
+        rbtnAtivo.setText("Alocar");
         rbtnAtivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnAtivoActionPerformed(evt);
             }
         });
+        jPanel6.add(rbtnAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 70, -1));
 
-        rbtnInativo.setBackground(new java.awt.Color(51, 102, 0));
-        estadoGroup.add(rbtnInativo);
-        rbtnInativo.setForeground(new java.awt.Color(255, 255, 255));
-        rbtnInativo.setText("inactivo");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Alocar:");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1)
-                .addGap(41, 41, 41))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
-                        .addGap(403, 403, 403))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtnAtivo)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtnInativo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(239, 239, 239)
-                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(rbtnAtivo)
-                    .addComponent(rbtnInativo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addGap(55, 55, 55)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(2, 2, 2)))
-                .addGap(31, 31, 31))
-        );
+        ftfMaterial.setEditable(false);
+        ftfMaterial.setColumns(25);
+        ftfMaterial.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 260, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Quantidade :");
+        jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 90, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -374,7 +381,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jLabel8.setBackground(new java.awt.Color(102, 102, 102));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Registro de Funçionario");
+        jLabel8.setText("Registro de Produção");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -432,51 +439,39 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
 
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (validarFormulario()) {
-            // Certifique-se de que o funcionário foi instanciado corretamente
-            if (funcionario == null) {
-                funcionario = new Funcionario();
+            Producao producao = new Producao();
+
+            // Definir o funcionário
+            producao.setFuncionario((Funcionario) ftfFucionario.getValue());
+            producao.setProduto((Produto) ftfMaquina.getValue());
+
+            // Definir a máquina selecionada
+            producao.setMaquina((Maquina) ftfMaquina.getValue());
+            producao.setProduto((Produto) ftfMaquina.getValue());
+            // Definir a quantidade produzida
+            producao.setQuantidadeProduzida(Integer.parseInt(txtQuantidadeProduzida.getText()));
+
+            // Definir a data da produção (data do sistema)
+            producao.setDataProducao(new Date());
+
+            try {
+                producaoDAO.salvar(producao);
+                JOptionPane.showMessageDialog(this, "Produção salva com sucesso.");
+                limpaFormulario();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
 
-            funcionario.setNome(txtNome.getText());
-            funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
-
-            if (rbtnAtivo.isSelected()) {
-                funcionario.setEstado(true);  // Ativo
-            } else if (rbtnInativo.isSelected()) {
-                funcionario.setEstado(false); // Inativo
-            }
-
-            // Verificar se o id é nulo e inicializá-lo se for o caso
-            if (funcionario.getId() == null) {
-                funcionario.setId(0L);  // Define o id como 0 (novo funcionário)
-            }
-
-            // Operação de salvar ou atualizar o funcionário
-            if (funcionario.getId() == 0) {
-                try {
-                    funcionarioDAO.salvar(funcionario);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao inserir o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else {
-                // Código para atualizar o funcionário, caso seja necessário
-            }
-
-            habilitarFormulario(false);
             carregarGrade();
-            limpaFormulario();
         }
+
+
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
@@ -484,21 +479,20 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         if (!txtID.getText().isEmpty()) {
             Long id = Long.parseLong(txtID.getText());
 
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este funcionário?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir esta produção?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
             if (confirmacao == JOptionPane.YES_OPTION) {
                 try {
-                    funcionarioDAO.remover(id);  // Desativa o funcionário
-                    JOptionPane.showMessageDialog(this, "Funcionário desativado com sucesso.");
+                    producaoDAO.remover(id);
+                    JOptionPane.showMessageDialog(this, "Produção excluída com sucesso.");
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao desativar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
-                habilitarFormulario(false);
                 carregarGrade();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionário para excluir.");
+            JOptionPane.showMessageDialog(this, "Selecione uma produção para excluir.");
         }
 
 
@@ -509,39 +503,33 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-
         if (validarFormulario()) {
-            System.out.println("Formulário validado com sucesso."); // Adicione esta linha
-
             Long id;
             try {
                 id = Long.parseLong(txtID.getText());
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return; // Retorna se o ID não for válido
+                return;
             }
 
-            Funcionario funcionario = funcionarioDAO.buscarPorId(id);
-            if (funcionario != null) {
-                System.out.println("Funcionário encontrado: " + funcionario.getNome()); // Adicione esta linha
-
-                funcionario.setNome(txtNome.getText());
-                funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
-
-                funcionario.setEstado(rbtnAtivo.isSelected());
+            Producao producao = producaoDAO.buscarPorId(id);
+            if (producao != null) {
+                producao.setFuncionario(funcionario);
+                producao.setProduto(obterProdutoSelecionado());
+                producao.setMaquina(obterMaquinaSelecionada());
+                producao.setQuantidadeProduzida(Integer.parseInt(txtQuantidadeProduzida.getText()));
 
                 try {
-                    funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
-                    JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                    producaoDAO.atualizar(producao);
+                    JOptionPane.showMessageDialog(this, "Produção atualizada com sucesso.");
                     limpaFormulario();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
-                habilitarFormulario(false);
                 carregarGrade();
             } else {
-                JOptionPane.showMessageDialog(this, "Funcionário não encontrado para edição.");
+                JOptionPane.showMessageDialog(this, "Produção não encontrada para edição.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
@@ -550,51 +538,61 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btEditarActionPerformed
 
-    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+    private void TbProducaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbProducaoMouseClicked
+
+    }//GEN-LAST:event_TbProducaoMouseClicked
+
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
+        BuscaFuncionario buscaUsuario = new BuscaFuncionario(this);
+        buscaUsuario.setVisible(true);
+    }//GEN-LAST:event_btnUsuarioActionPerformed
+
+    private void btnUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuario1ActionPerformed
+
+    private void btnUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuario2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuario2ActionPerformed
+
+    private void txtQuantidadeProduzidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeProduzidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQuantidadeProduzidaActionPerformed
+
+    private void txtQuantidadeProduzidaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeProduzidaKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
             validarFormulario();
 
-            // End of variables declaration                 
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeKeyPressed
-
-    private void TbFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbFuncionarioMouseClicked
-
-    }//GEN-LAST:event_TbFuncionarioMouseClicked
-
-    private void comboCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCargoActionPerformed
+            // End of variables declaration
+        }           // TODO add your handling code here:
+    }//GEN-LAST:event_txtQuantidadeProduzidaKeyPressed
 
     private void rbtnAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAtivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtnAtivoActionPerformed
 
+    private void rbtnInativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnInativoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnInativoActionPerformed
+
     /**
      * Seleciona o registro da tabela e preenche o formulário.
      */
     public void selectRegistryTable() {
-        int selectedRow = TbFuncionario.getSelectedRow();
+        int selectedRow = TbProducao.getSelectedRow();
         if (selectedRow != -1) {
-            txtID.setText(TbFuncionario.getValueAt(selectedRow, 0).toString());
-            txtNome.setText(TbFuncionario.getValueAt(selectedRow, 1).toString());
+            txtID.setText(TbProducao.getValueAt(selectedRow, 0).toString());
+            txtNome.setText(TbProducao.getValueAt(selectedRow, 1).toString());
 
-            String cargo = TbFuncionario.getValueAt(selectedRow, 2).toString();
-            for (int i = 0; i < comboCargo.getItemCount(); i++) {
-                if (comboCargo.getItemAt(i).toString().equals(cargo)) {
-                    comboCargo.setSelectedIndex(i);
-                    break;
-                }
-            }
+            Produto produto = (Produto) TbProducao.getValueAt(selectedRow, 2);
+            comboProduto.setSelectedItem(produto);
 
-            String estado = TbFuncionario.getValueAt(selectedRow, 3).toString();
-            if (estado.equalsIgnoreCase("Ativo")) {
-                rbtnAtivo.setSelected(true);
-            } else {
-                rbtnInativo.setSelected(true);
-            }
+            Maquina maquina = (Maquina) TbProducao.getValueAt(selectedRow, 3);
+            comboMaquina.setSelectedItem(maquina);
 
-            habilitarFormulario(true); // Habilita o formulário para edição
+            txtQuantidadeProduzida.setText(TbProducao.getValueAt(selectedRow, 4).toString());
+
+            habilitarFormulario(true);
         }
     }
 
@@ -603,18 +601,18 @@ public class TelaProducao extends javax.swing.JInternalFrame {
      */
     private void habilitarFormulario(boolean ativo) {
         btNovo.setEnabled(!ativo);
-        btSalvar.setEnabled(ativo && validarFormulario()); // Habilitado apenas se for válido
+        btSalvar.setEnabled(ativo && validarFormulario());
         btCancelar.setEnabled(ativo);
         btExcluir.setEnabled(ativo);
         txtID.setEnabled(ativo);
         txtNome.setEnabled(ativo);
-        comboCargo.setEnabled(ativo);
-        rbtnAtivo.setEnabled(ativo);
-        rbtnInativo.setEnabled(ativo);
+        comboProduto.setEnabled(ativo);
+        comboMaquina.setEnabled(ativo);
+        txtQuantidadeProduzida.setEnabled(ativo);
 
-        btEditar.setEnabled(TbFuncionario.getSelectedRow() >= 0 && ativo); // Habilitado se houver uma linha selecionada
+        btEditar.setEnabled(TbProducao.getSelectedRow() >= 0 && ativo);
 
-        TbFuncionario.setEnabled(!ativo);
+        TbProducao.setEnabled(!ativo);
 
         if (!ativo) {
             limpaFormulario();
@@ -634,8 +632,9 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private void limpaFormulario() {
         txtID.setText("");
         txtNome.setText("");
-        comboCargo.setSelectedIndex(-1); // Nenhum cargo selecionado
-        estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
+        comboProduto.setSelectedIndex(-1);
+        comboMaquina.setSelectedIndex(-1);
+        txtQuantidadeProduzida.setText("");
         lblMessagem.setText("");
     }
 
@@ -643,8 +642,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
      * Validação do formulário.
      */
     private boolean validarFormulario() {
-        Border borderError = BorderFactory.createLineBorder(Color.RED, 2);  // Borda vermelha para erros
-        Border borderNormal = BorderFactory.createLineBorder(Color.GRAY, 1); // Borda normal
+        Border borderError = BorderFactory.createLineBorder(Color.RED, 2);
+        Border borderNormal = BorderFactory.createLineBorder(Color.GRAY, 1);
 
         boolean isValid = true;
 
@@ -654,57 +653,98 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             lblMessagem.setText("Preencha o campo com um nome.");
             txtNome.requestFocus();
             isValid = false;
-        } else if (txtNome.getText().trim().length() < 2) {
-            txtNome.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um nome válido.");
-            txtNome.requestFocus();
-            isValid = false;
         } else {
             txtNome.setBorder(borderNormal);
         }
 
-        // Validação do combo Cargo
-        if (comboCargo.getSelectedItem() == null) {
-            comboCargo.setBorder(borderError);
-            lblMessagem.setText("Selecione um cargo.");
+        // Validação do combo Produto
+        if (comboProduto.getSelectedItem() == null) {
+            comboProduto.setBorder(borderError);
+            lblMessagem.setText("Selecione um produto.");
             isValid = false;
         } else {
-            comboCargo.setBorder(borderNormal);
+            comboProduto.setBorder(borderNormal);
         }
 
-        // Validação dos botões de rádio (estado)
-        if (!rbtnAtivo.isSelected() && !rbtnInativo.isSelected()) {
-            lblMessagem.setText("Selecione o estado (Ativo ou Inativo).");
+        // Validação do combo Máquina
+        if (comboMaquina.getSelectedItem() == null) {
+            comboMaquina.setBorder(borderError);
+            lblMessagem.setText("Selecione uma máquina.");
             isValid = false;
+        } else {
+            comboMaquina.setBorder(borderNormal);
+        }
+
+        // Validação do campo Quantidade Produzida
+        if (txtQuantidadeProduzida.getText().isEmpty()) {
+            txtQuantidadeProduzida.setBorder(borderError);
+            lblMessagem.setText("Preencha a quantidade produzida.");
+            isValid = false;
+        } else {
+            txtQuantidadeProduzida.setBorder(borderNormal);
         }
 
         return isValid;
     }
 
     private void carregarGrade() {
-        FuncionarioTableModel tm = (FuncionarioTableModel) TbFuncionario.getModel();
+        ProducaoTableModel tm = (ProducaoTableModel) TbProducao.getModel();
         try {
-            tm.setDados(funcionarioDAO.listarTodos());
+            tm.setDados(producaoDAO.listarTodos());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    void setMaquina(Maquina Maquina) {
+        if (Maquina != null) {
+            ftfMaquina.setValue(Maquina);
+        } else {
+            ftfMaquina.setText(""); // Caso o usuário seja nulo, limpar o campo
+        }
+    }
+
+    void setMaterial(Material Material) {
+        if (Material != null) {
+            ftfMaterial.setValue(Material);
+        } else {
+            ftfMaterial.setText(""); // Caso o usuário seja nulo, limpar o campo
+        }
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        // Vamos supor que ftfUsuario seja um JTextField ou similar
+        if (funcionario != null) {
+            ftfFucionario.setValue(funcionario);
+        } else {
+            ftfFucionario.setText(""); // Caso o usuário seja nulo, limpar o campo
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TbFuncionario;
+    private javax.swing.JTable TbProducao;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JComboBox<String> comboCargo;
+    private javax.swing.JButton btnUsuario;
+    private javax.swing.JButton btnUsuario1;
+    private javax.swing.JButton btnUsuario2;
     private javax.swing.ButtonGroup estadoGroup;
+    private javax.swing.JFormattedTextField ftfFucionario;
+    private javax.swing.JFormattedTextField ftfFucionario1;
+    private javax.swing.JFormattedTextField ftfMaquina;
+    private javax.swing.JFormattedTextField ftfMaterial;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
@@ -714,6 +754,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbtnAtivo;
     private javax.swing.JRadioButton rbtnInativo;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JFormattedTextField txtQuantidadeProduzida;
     // End of variables declaration//GEN-END:variables
+
 }

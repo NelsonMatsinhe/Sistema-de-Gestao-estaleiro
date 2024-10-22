@@ -26,7 +26,9 @@ public class Maquina {
 
     @OneToMany(mappedBy = "maquinaAlocada")
     private List<Funcionario> funcionarios;
-
+@ManyToOne
+    @JoinColumn(name = "produto_id", nullable = false)
+    private Produto produto;
     public Maquina() {
     }
 
@@ -49,6 +51,10 @@ public class Maquina {
         }
     }
 
+     // Método para verificar se a máquina está disponível
+    public boolean isDisponivel() {
+        return !this.alocada;  // Retorna true se a máquina não estiver alocada
+    }
     public void desalocar() {
         this.alocada = false;
         this.funcionarios.clear();
@@ -96,6 +102,13 @@ public class Maquina {
 
     public List<Funcionario> getFuncionarios() {
         return funcionarios;
+    }
+      public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public void setFuncionarios(List<Funcionario> funcionarios) {

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import javax.persistence.EntityManager;
@@ -10,11 +6,17 @@ import javax.persistence.TypedQuery;
 import model.Usuario;
 
 /**
- *
- * @author Nelson Matsinhe
+ * Classe responsável pela autenticação de usuários.
  */
 public class LoginDAO {
 
+    /**
+     * Método para autenticar o usuário com base no nome de usuário e senha.
+     * 
+     * @param userName Nome de usuário
+     * @param senha Senha do usuário
+     * @return O objeto Usuario autenticado ou null se falhar
+     */
     public Usuario autenticar(String userName, String senha) {
         EntityManager em = JpaUtil.getEntityManager();
         Usuario usuario = null;
@@ -38,7 +40,17 @@ public class LoginDAO {
         return usuario;
     }
 
+    /**
+     * Método para verificar o perfil do usuário com base no cargo do funcionário.
+     * 
+     * @param usuario O usuário autenticado
+     * @return Uma string representando o perfil do usuário
+     */
     public String verificarPerfil(Usuario usuario) {
+        if (usuario == null || usuario.getFuncionario() == null) {
+            return "Perfil desconhecido";
+        }
+
         String perfil = usuario.getFuncionario().getCargo().name();
 
         switch (perfil.toLowerCase()) {
