@@ -22,7 +22,7 @@ import model.Usuario;
  */
 public class UsuarioTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome de Usuário", "Email", "Status"};
+    private String colunas[] = {"Id", "Nome de Funcionário", "Nome de Usuário", "Senha", "Estado"};
     private List<Usuario> dados;
 
     @Override
@@ -43,13 +43,15 @@ public class UsuarioTableModel extends AbstractTableModel {
         Usuario usuario = dados.get(l);
         switch (c) {
             case 0:
-                return usuario.getId();
+                return usuario.getCodigoUsuario(); // Código do usuário
             case 1:
-                return usuario.getNomeUsuario();
+                return usuario.getFuncionario() != null ? usuario.getFuncionario().getNome() : "Sem Funcionário"; // Nome do funcionário
             case 2:
-                return usuario.getEmail();
+                return usuario.getUserName(); // Nome de usuário
             case 3:
-                return usuario.isAtivo() ? "Ativo" : "Inativo"; // Supondo que tenha um método isAtivo()
+                return usuario.getSenha(); // Senha
+            case 4:
+                return usuario.getEstado() ? "Ativo" : "Inativo"; // Estado (Ativo/Inativo)
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }
@@ -74,4 +76,3 @@ public class UsuarioTableModel extends AbstractTableModel {
         return dados.get(l);
     }
 }
-

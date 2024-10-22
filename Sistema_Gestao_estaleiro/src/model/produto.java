@@ -29,6 +29,7 @@ public class Produto {
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+    private int tempoCura;
     
     private int quantidade;
     

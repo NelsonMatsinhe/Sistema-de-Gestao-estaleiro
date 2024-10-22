@@ -82,4 +82,20 @@ public class MaquinaDAO {
             em.close();
         }
     }
+     public void atualizar(Maquina maquina) {
+        EntityManager em = JpaUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            em.merge(maquina); // Atualiza o material existente no banco de dados
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

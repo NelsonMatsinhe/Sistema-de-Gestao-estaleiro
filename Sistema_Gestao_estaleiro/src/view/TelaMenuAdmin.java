@@ -5,9 +5,11 @@
  */
 package view;
 
+import teste.TelaProduto;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 import view.TelaHome;
 
 /**
@@ -17,13 +19,6 @@ import view.TelaHome;
 public class TelaMenuAdmin extends javax.swing.JFrame {
 
     Color DefaultColor, ClickedColor, MouseColor;
-
-    // TelaCliente cliente = new TelaCliente();
-    TelaUsuario TelaUsuario;
-    TelaProduto TelaProduto = new TelaProduto();
-    TelaFuncionario TelaFuncionario = new TelaFuncionario();
-//    TelaVenda = new TelaVenda();
-    // TelaStock stock = new TelaStock();
 
     TelaHome home = new TelaHome();
 
@@ -198,8 +193,8 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu3.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-cliente-40 (1).png"))); // NOI18N
-        lblMenu3.setText("              Cliente");
+        lblMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-usuário-de-gênero-neutro-40.png"))); // NOI18N
+        lblMenu3.setText("              Usuario");
         lblMenu3.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -237,7 +232,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu4.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-carrinho-de-compras-40.png"))); // NOI18N
-        lblMenu4.setText("              Vendas");
+        lblMenu4.setText("              Material");
         lblMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu4MouseClicked(evt);
@@ -274,7 +269,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu5.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-usuário-de-gênero-neutro-40.png"))); // NOI18N
-        lblMenu5.setText("              Usuario");
+        lblMenu5.setText("              Fornecedor");
         lblMenu5.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -314,7 +309,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu6.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu6.setText("              Relatorio ");
+        lblMenu6.setText("              Produto ");
         lblMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu6MouseClicked(evt);
@@ -388,7 +383,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu7.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu7.setText("              stock ");
+        lblMenu7.setText("              Produção");
         lblMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu7MouseClicked(evt);
@@ -426,7 +421,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu8.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu8.setText("              Material ");
+        lblMenu8.setText("              Maquina ");
         lblMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu8MouseClicked(evt);
@@ -464,7 +459,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu9.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu9.setText("              Produção ");
+        lblMenu9.setText("              Relatorio ");
         lblMenu9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu9MouseClicked(evt);
@@ -502,7 +497,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu10.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
-        lblMenu10.setText("              Forcenecedor ");
+        lblMenu10.setText("              Stock ");
         lblMenu10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenu10MouseClicked(evt);
@@ -589,12 +584,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu4MousePressed
 
     private void lblMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu4MouseClicked
-
-        try {
-
-        } catch (Exception ex) {
-            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        abrirTela(TelaMaterial);
     }//GEN-LAST:event_lblMenu4MouseClicked
 
     private void lblMenu5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MousePressed
@@ -612,13 +602,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu5MousePressed
 
     private void lblMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu5MouseClicked
-        try {
-
-            jDesktopPane.add(TelaUsuario).setVisible(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        abrirTela(TelaFornecedor);
     }//GEN-LAST:event_lblMenu5MouseClicked
 
     private void lblMenu3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MousePressed
@@ -653,12 +637,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu1MousePressed
 
     private void lblMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu1MouseClicked
-        try {
-
-        } catch (Exception ex) {
-            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_lblMenu1MouseClicked
+        abrirTela(TelaHome);    }//GEN-LAST:event_lblMenu1MouseClicked
 
     private void lblMenu2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MousePressed
 
@@ -676,63 +655,12 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu2MousePressed
 
     private void lblMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu2MouseClicked
-        try {
-            // Fecha frames específicos se estiverem abertos
-//        if (TelaCliente != null && !TelaCliente.isClosed()) {
-//            TelaCliente.doDefaultCloseAction();
-//            TelaCliente = null;
-//        }
-//        if (cliente != null && !cliente.isClosed()) {
-//            cliente.doDefaultCloseAction();
-//            cliente = null;
-//        }
-//        if (produto != null && !produto.isClosed()) {
-//            produto.doDefaultCloseAction();
-//            produto = null;
-//        }
-            if (home != null && !home.isClosed()) {
-                home.doDefaultCloseAction();
-                home = null;
-            }
-            if (TelaUsuario != null && !TelaUsuario.isClosed()) {
-                TelaUsuario.doDefaultCloseAction();
-                TelaUsuario = null;
-            }
-
-            // Limpa qualquer outro frame que possa estar aberto
-            jDesktopPane.removeAll();
-
-            // Adiciona e configura a tela de venda
-            if (TelaFuncionario != null) {
-                TelaFuncionario.setClosable(true);
-                TelaFuncionario.setMaximizable(true);
-                TelaFuncionario.setIconifiable(true);
-                TelaFuncionario.setResizable(true);
-
-                jDesktopPane.add(TelaFuncionario);
-                TelaFuncionario.setVisible(true);
-
-                try {
-                    TelaFuncionario.setSelected(true);
-                    // Descomente a linha abaixo se quiser que a janela abra maximizada
-                    // venda.setMaximum(true);
-                } catch (java.beans.PropertyVetoException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            // Atualiza o desktop
-            jDesktopPane.revalidate();
-            jDesktopPane.repaint();
-
-        } catch (Exception ex) {
-            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        abrirTela(TelaFuncionario);
 
     }//GEN-LAST:event_lblMenu2MouseClicked
 
     private void lblMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MouseClicked
-
+        abrirTela(TelaProduto);
     }//GEN-LAST:event_lblMenu6MouseClicked
 
     private void lblMenu6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu6MousePressed
@@ -833,10 +761,12 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu11MouseEntered
 
     private void lblMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu3MouseClicked
+        abrirTela(TelaUsuario);
+
     }//GEN-LAST:event_lblMenu3MouseClicked
 
     private void lblMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseClicked
-        // TODO add your handling code here:
+        abrirTela(TelaProducao);        // TODO add your handling code here:
     }//GEN-LAST:event_lblMenu7MouseClicked
 
     private void lblMenu7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu7MouseEntered
@@ -864,7 +794,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenu7MousePressed
 
     private void lblMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MouseClicked
-        // TODO add your handling code here:
+        abrirTela(TelaMaquina);        // TODO add your handling code here:
     }//GEN-LAST:event_lblMenu8MouseClicked
 
     private void lblMenu8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu8MouseEntered
@@ -893,6 +823,8 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
     private void lblMenu9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseClicked
         // TODO add your handling code here:
+        abrirTela(TelaMaterial);
+
     }//GEN-LAST:event_lblMenu9MouseClicked
 
     private void lblMenu9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseEntered
@@ -920,6 +852,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
     private void lblMenu10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MouseClicked
         // TODO add your handling code here:
+        abrirTela(TelaStock);
     }//GEN-LAST:event_lblMenu10MouseClicked
 
     private void lblMenu10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu10MouseEntered
@@ -945,6 +878,100 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         Menu10.setBackground(ClickedColor);
         Menu11.setBackground(DefaultColor);
     }//GEN-LAST:event_lblMenu10MousePressed
+
+    // Declaração e inicialização de todas as telas
+//TelaCliente TelaCliente = new TelaCliente();
+    TelaHome TelaHome = new TelaHome();
+    TelaMaquina TelaMaquina = new TelaMaquina();
+    TelaFornecedor TelaFornecedor = new TelaFornecedor();
+    TelaMaterial TelaMaterial = new TelaMaterial();
+    TelaProducao TelaProducao = new TelaProducao();
+    TelaProduto TelaProduto = new TelaProduto();
+    TelaStock TelaStock = new TelaStock();
+    TelaFuncionario TelaFuncionario = new TelaFuncionario();
+    TelaUsuario TelaUsuario = new TelaUsuario();
+    TelaRelatorio TelaRelatorio = new TelaRelatorio();
+
+    //TelaVenda TelaVenda = new TelaVenda();
+    // Método para abrir uma tela e fechar as outras
+    public void abrirTela(JInternalFrame tela) {
+        try {
+            //         Fecha todas as outras telas abertas
+            //        if (TelaCliente != null && TelaCliente.isVisible()) {
+            //            TelaCliente.setDefaultCloseOperation(TelaCliente.DISPOSE_ON_CLOSE);
+            //            TelaCliente.doDefaultCloseAction();
+            //        }
+           
+            if ( TelaRelatorio  != null &&  TelaRelatorio .isVisible()) {
+                 TelaRelatorio .setDefaultCloseOperation( TelaRelatorio .DISPOSE_ON_CLOSE);
+                TelaRelatorio .doDefaultCloseAction();
+            }
+            if (TelaHome != null && TelaHome.isVisible()) {
+                TelaHome.setDefaultCloseOperation(TelaHome.DISPOSE_ON_CLOSE);
+                TelaHome.doDefaultCloseAction();
+            }
+
+            if (TelaMaquina != null && TelaMaquina.isVisible()) {
+                TelaMaquina.setDefaultCloseOperation(TelaMaquina.DISPOSE_ON_CLOSE);
+                TelaMaquina.doDefaultCloseAction();
+            }
+            if (TelaFornecedor != null && TelaFornecedor.isVisible()) {
+                TelaFornecedor.setDefaultCloseOperation(TelaFornecedor.DISPOSE_ON_CLOSE);
+                TelaFornecedor.doDefaultCloseAction();
+            }
+
+            if (TelaMaterial != null && TelaMaterial.isVisible()) {
+                TelaMaterial.setDefaultCloseOperation(TelaMaterial.DISPOSE_ON_CLOSE);
+                TelaMaterial.doDefaultCloseAction();
+            }
+
+            if (TelaProducao != null && TelaProducao.isVisible()) {
+                TelaProducao.setDefaultCloseOperation(TelaProducao.DISPOSE_ON_CLOSE);
+                TelaProducao.doDefaultCloseAction();
+            }
+
+            if (TelaProduto != null && TelaProduto.isVisible()) {
+                TelaProduto.setDefaultCloseOperation(TelaProduto.DISPOSE_ON_CLOSE);
+                TelaProduto.doDefaultCloseAction();
+            }
+
+            if (TelaStock != null && TelaStock.isVisible()) {
+                TelaStock.setDefaultCloseOperation(TelaStock.DISPOSE_ON_CLOSE);
+                TelaStock.doDefaultCloseAction();
+            }
+            if (TelaFuncionario != null && TelaFuncionario.isVisible()) {
+                TelaFuncionario.setDefaultCloseOperation(TelaFuncionario.DISPOSE_ON_CLOSE);
+                TelaFuncionario.doDefaultCloseAction();
+            }
+
+            if (TelaUsuario != null && TelaUsuario.isVisible()) {
+                TelaUsuario.setDefaultCloseOperation(TelaUsuario.DISPOSE_ON_CLOSE);
+                TelaUsuario.doDefaultCloseAction();
+            }
+
+//        if (TelaVenda != null && TelaVenda.isVisible()) {
+//            TelaVenda.setDefaultCloseOperation(TelaVenda.DISPOSE_ON_CLOSE);
+//            TelaVenda.doDefaultCloseAction();
+//        }
+            // Limpa o jDesktopPane
+            jDesktopPane.removeAll();
+            jDesktopPane.repaint();
+
+            // Adiciona e exibe a nova tela
+            if (tela != null) {
+                jDesktopPane.add(tela);
+                tela.setVisible(true);
+                tela.setSelected(true);
+            }
+
+            // Atualiza o desktop
+            jDesktopPane.revalidate();
+            jDesktopPane.repaint();
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments

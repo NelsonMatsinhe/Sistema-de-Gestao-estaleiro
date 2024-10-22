@@ -5,24 +5,14 @@
  */
 package view;
 
-import controller.FuncionarioDAO;
+import controller.MaquinaDAO;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import model.Cargo;
-import model.Cliente;
-import model.Funcionario;
-import model.tabelas.FuncionarioTableModel;
-import model.tabelas.UsuarioTableModel;
+import model.Maquina;
+import model.tabelas.MaquinaTableModel;
 
 //import model.Produto;
 /**
@@ -30,29 +20,25 @@ import model.tabelas.UsuarioTableModel;
  *
  * @author Nelson Matsinhe
  */
-public class TelaStock extends javax.swing.JInternalFrame {
+public class TelaMaquina extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Produto
+     * Creates new form Maquina
      */
     //GenericDAO prod = new GenericDAO<>(Produto.class);
-    public TelaStock() {
+    public TelaMaquina() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         habilitarFormulario(false);
         carregarGrade();
-         txtNome.requestFocus();
-
-        // Adicionando os valores da enum Cargo no combo box
-        for (Cargo cargo : Cargo.values()) {
-            comboCargo.addItem(cargo.name());
-        }
+        //  txtNome.requestFocus();
 
         // Botão Novo habilita o formulário
         btNovo.addActionListener(e -> habilitarFormulario(true));
-
+        rbtnAtivo.addActionListener(e -> habilitarSalvar());
+        rbtnInativo.addActionListener(e -> habilitarSalvar());
         // Ação do botão Salvar
         btSalvar.addActionListener(e -> {
             if (validarFormulario()) {
@@ -69,12 +55,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
             }
         });
 
-        comboCargo.addActionListener(e -> habilitarSalvar());
-
-        rbtnAtivo.addActionListener(e -> habilitarSalvar());
-        rbtnInativo.addActionListener(e -> habilitarSalvar());
-
-        TbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbMaquina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectRegistryTable();
             }
@@ -88,8 +69,8 @@ public class TelaStock extends javax.swing.JInternalFrame {
     Color d = new Color(255, 0, 51);
     Color f = new Color(219, 220, 252);
 
-    FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-    Funcionario funcionario = new Funcionario();
+    MaquinaDAO maquinaDAO = new MaquinaDAO();
+    Maquina maquina = new Maquina();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,18 +91,18 @@ public class TelaStock extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TbFuncionario = new javax.swing.JTable();
+        TbMaquina = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
-        comboCargo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         rbtnAtivo = new javax.swing.JRadioButton();
         rbtnInativo = new javax.swing.JRadioButton();
         lblMessagem = new javax.swing.JLabel();
+        txtTipo = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -166,13 +147,13 @@ public class TelaStock extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
 
-        TbFuncionario.setModel(new FuncionarioTableModel());
-        TbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+        TbMaquina.setModel(new MaquinaTableModel());
+        TbMaquina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TbFuncionarioMouseClicked(evt);
+                TbMaquinaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TbFuncionario);
+        jScrollPane1.setViewportView(TbMaquina);
 
         btCancelar.setText("Cancelar");
         btCancelar.setFocusable(false);
@@ -268,15 +249,9 @@ public class TelaStock extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        comboCargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCargoActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Cargo:");
+        jLabel7.setText("Tipo");
 
         rbtnAtivo.setBackground(new java.awt.Color(51, 102, 0));
         estadoGroup.add(rbtnAtivo);
@@ -292,6 +267,19 @@ public class TelaStock extends javax.swing.JInternalFrame {
         estadoGroup.add(rbtnInativo);
         rbtnInativo.setForeground(new java.awt.Color(255, 255, 255));
         rbtnInativo.setText("inactivo");
+
+        txtTipo.setPreferredSize(new java.awt.Dimension(300, 25));
+        txtTipo.setSelectionColor(new java.awt.Color(255, 255, 255));
+        txtTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTipoActionPerformed(evt);
+            }
+        });
+        txtTipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTipoKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -323,9 +311,9 @@ public class TelaStock extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                        .addGap(35, 35, 35))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,8 +334,8 @@ public class TelaStock extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -374,7 +362,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
         jLabel8.setBackground(new java.awt.Color(102, 102, 102));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Registro de Stock");
+        jLabel8.setText("Registro de Maquina");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -382,7 +370,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(296, 296, 296)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -442,35 +430,32 @@ public class TelaStock extends javax.swing.JInternalFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (validarFormulario()) {
-            // Certifique-se de que o funcionário foi instanciado corretamente
-            if (funcionario == null) {
-                funcionario = new Funcionario();
+            // Certifique-se de que a máquina foi instanciada corretamente
+            if (maquina == null) {
+                maquina = new Maquina();
             }
-
-            funcionario.setNome(txtNome.getText());
-            funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
+            maquina.setNome(txtNome.getText());
+            maquina.setTipo(txtTipo.getText());
 
             if (rbtnAtivo.isSelected()) {
-                funcionario.setEstado(true);  // Ativo
+                maquina.setEstado(true);  // Ativo
             } else if (rbtnInativo.isSelected()) {
-                funcionario.setEstado(false); // Inativo
+                maquina.setEstado(false); // Inativo
             }
 
             // Verificar se o id é nulo e inicializá-lo se for o caso
-            if (funcionario.getId() == null) {
-                funcionario.setId(0L);  // Define o id como 0 (novo funcionário)
+            if (maquina.getId() == null) {
+                maquina.setId(0L);  // Define o id como 0 (nova máquina)
             }
 
-            // Operação de salvar ou atualizar o funcionário
-            if (funcionario.getId() == 0) {
+            // Operação de salvar ou atualizar a máquina
+            if (maquina.getId() == 0) {
                 try {
-                    funcionarioDAO.salvar(funcionario);
+                    maquinaDAO.salvar(maquina);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao inserir o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao inserir a máquina.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            } else {
-                // Código para atualizar o funcionário, caso seja necessário
             }
 
             habilitarFormulario(false);
@@ -480,28 +465,25 @@ public class TelaStock extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-
         if (!txtID.getText().isEmpty()) {
             Long id = Long.parseLong(txtID.getText());
 
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este funcionário?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir esta máquina?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
             if (confirmacao == JOptionPane.YES_OPTION) {
                 try {
-                    funcionarioDAO.remover(id);  // Desativa o funcionário
-                    JOptionPane.showMessageDialog(this, "Funcionário desativado com sucesso.");
+                    maquinaDAO.remover(id);  // Desativa a máquina
+                    JOptionPane.showMessageDialog(this, "Máquina desativada com sucesso.");
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao desativar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao desativar a máquina.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 habilitarFormulario(false);
                 carregarGrade();
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionário para excluir.");
+            JOptionPane.showMessageDialog(this, "Selecione uma máquina para excluir.");
         }
-
-
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
@@ -509,10 +491,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-
         if (validarFormulario()) {
-            System.out.println("Formulário validado com sucesso."); // Adicione esta linha
-
             Long id;
             try {
                 id = Long.parseLong(txtID.getText());
@@ -521,33 +500,32 @@ public class TelaStock extends javax.swing.JInternalFrame {
                 return; // Retorna se o ID não for válido
             }
 
-            Funcionario funcionario = funcionarioDAO.buscarPorId(id);
-            if (funcionario != null) {
-                System.out.println("Funcionário encontrado: " + funcionario.getNome()); // Adicione esta linha
-
-                funcionario.setNome(txtNome.getText());
-                funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
-
-                funcionario.setEstado(rbtnAtivo.isSelected());
+            Maquina maquina = maquinaDAO.buscarPorId(id);
+            if (maquina != null) {
+                maquina.setNome(txtNome.getText());
+                maquina.setTipo(txtTipo.getText());
+                if (rbtnAtivo.isSelected()) {
+                    maquina.setEstado(true);  // Ativo
+                } else if (rbtnInativo.isSelected()) {
+                    maquina.setEstado(false); // Inativo
+                }
 
                 try {
-                    funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
-                    JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                    maquinaDAO.atualizar(maquina); // Atualiza a máquina
+                    JOptionPane.showMessageDialog(this, "Máquina atualizada com sucesso.");
                     limpaFormulario();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar a máquina.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 habilitarFormulario(false);
                 carregarGrade();
             } else {
-                JOptionPane.showMessageDialog(this, "Funcionário não encontrado para edição.");
+                JOptionPane.showMessageDialog(this, "Máquina não encontrada para edição.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
         }
-
-
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
@@ -558,36 +536,58 @@ public class TelaStock extends javax.swing.JInternalFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeKeyPressed
 
-    private void TbFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbFuncionarioMouseClicked
+    private void TbMaquinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbMaquinaMouseClicked
 
-    }//GEN-LAST:event_TbFuncionarioMouseClicked
-
-    private void comboCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboCargoActionPerformed
+    }//GEN-LAST:event_TbMaquinaMouseClicked
 
     private void rbtnAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAtivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtnAtivoActionPerformed
 
-    /**
-     * Seleciona o registro da tabela e preenche o formulário.
-     */
+    private void txtTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTipoActionPerformed
+
+    private void txtTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTipoKeyPressed
+
+    private void limpaFormulario() {
+        txtID.setText("");
+        txtTipo.setText("");
+        txtNome.setText("");
+        estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
+        lblMessagem.setText("");
+    }
+
+    private void habilitarSalvar() {
+        btSalvar.setEnabled(validarFormulario());
+    }
+
+    private void habilitarFormulario(boolean ativo) {
+        btNovo.setEnabled(!ativo);               // Botão "Novo" desativado quando ativo
+        btSalvar.setEnabled(ativo && validarFormulario()); // "Salvar" habilitado apenas se o formulário for válido
+        btCancelar.setEnabled(ativo);            // Botão "Cancelar" habilitado quando ativo
+        btExcluir.setEnabled(ativo);
+        btEditar.setEnabled(ativo);
+        txtID.setEnabled(ativo);                 // Campo ID habilitado/desabilitado
+        txtNome.setEnabled(ativo);               // Campo Nome habilitado/desabilitado
+        txtTipo.setEnabled(ativo);               // Campo NUIT habilitado/desabilitado
+        TbMaquina.setEnabled(!ativo);         // Desabilita tabela quando formulário estiver ativo
+        rbtnAtivo.setEnabled(ativo);
+        rbtnInativo.setEnabled(ativo);
+        if (!ativo) {
+            limpaFormulario();                   // Limpa o formulário se desativado
+        }
+    }
+
     public void selectRegistryTable() {
-        int selectedRow = TbFuncionario.getSelectedRow();
+        int selectedRow = TbMaquina.getSelectedRow();
         if (selectedRow != -1) {
-            txtID.setText(TbFuncionario.getValueAt(selectedRow, 0).toString());
-            txtNome.setText(TbFuncionario.getValueAt(selectedRow, 1).toString());
-
-            String cargo = TbFuncionario.getValueAt(selectedRow, 2).toString();
-            for (int i = 0; i < comboCargo.getItemCount(); i++) {
-                if (comboCargo.getItemAt(i).toString().equals(cargo)) {
-                    comboCargo.setSelectedIndex(i);
-                    break;
-                }
-            }
-
-            String estado = TbFuncionario.getValueAt(selectedRow, 3).toString();
+            txtID.setText(TbMaquina.getValueAt(selectedRow, 0).toString());
+            txtNome.setText(TbMaquina.getValueAt(selectedRow, 1).toString());
+            txtTipo.setText(TbMaquina.getValueAt(selectedRow, 2).toString());
+            String estado = TbMaquina.getValueAt(selectedRow, 3).toString();
             if (estado.equalsIgnoreCase("Ativo")) {
                 rbtnAtivo.setSelected(true);
             } else {
@@ -598,81 +598,31 @@ public class TelaStock extends javax.swing.JInternalFrame {
         }
     }
 
-    /**
-     * Método para habilitar ou desabilitar o formulário.
-     */
-    private void habilitarFormulario(boolean ativo) {
-        btNovo.setEnabled(!ativo);
-        btSalvar.setEnabled(ativo && validarFormulario()); // Habilitado apenas se for válido
-        btCancelar.setEnabled(ativo);
-        btExcluir.setEnabled(ativo);
-        txtID.setEnabled(ativo);
-        txtNome.setEnabled(ativo);
-        comboCargo.setEnabled(ativo);
-        rbtnAtivo.setEnabled(ativo);
-        rbtnInativo.setEnabled(ativo);
-
-        btEditar.setEnabled(TbFuncionario.getSelectedRow() >= 0 && ativo); // Habilitado se houver uma linha selecionada
-
-        TbFuncionario.setEnabled(!ativo);
-
-        if (!ativo) {
-            limpaFormulario();
-        }
-    }
-
-    /**
-     * Habilita o botão salvar se o formulário for válido.
-     */
-    private void habilitarSalvar() {
-        btSalvar.setEnabled(validarFormulario());
-    }
-
-    /**
-     * Limpa os campos do formulário.
-     */
-    private void limpaFormulario() {
-        txtID.setText("");
-        txtNome.setText("");
-        comboCargo.setSelectedIndex(-1); // Nenhum cargo selecionado
-        estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
-        lblMessagem.setText("");
-    }
-
-    /**
-     * Validação do formulário.
-     */
     private boolean validarFormulario() {
         Border borderError = BorderFactory.createLineBorder(Color.RED, 2);  // Borda vermelha para erros
         Border borderNormal = BorderFactory.createLineBorder(Color.GRAY, 1); // Borda normal
 
         boolean isValid = true;
 
-        // Validação do campo Nome
+        // Validação do campo Tipo
         if (txtNome.getText().isEmpty()) {
             txtNome.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um nome.");
-            txtNome.requestFocus();
-            isValid = false;
-        } else if (txtNome.getText().trim().length() < 2) {
-            txtNome.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um nome válido.");
+            lblMessagem.setText("Preencha o campo com o tipo.");
             txtNome.requestFocus();
             isValid = false;
         } else {
-            txtNome.setBorder(borderNormal);
+            txtTipo.setBorder(borderNormal);
         }
-
-        // Validação do combo Cargo
-        if (comboCargo.getSelectedItem() == null) {
-            comboCargo.setBorder(borderError);
-            lblMessagem.setText("Selecione um cargo.");
+        // Validação do campo Tipo
+        if (txtTipo.getText().isEmpty()) {
+            txtTipo.setBorder(borderError);
+            lblMessagem.setText("Preencha o campo com o tipo.");
+            txtTipo.requestFocus();
             isValid = false;
         } else {
-            comboCargo.setBorder(borderNormal);
+            txtTipo.setBorder(borderNormal);
         }
-
-        // Validação dos botões de rádio (estado)
+// Validação dos botões de rádio (estado)
         if (!rbtnAtivo.isSelected() && !rbtnInativo.isSelected()) {
             lblMessagem.setText("Selecione o estado (Ativo ou Inativo).");
             isValid = false;
@@ -682,22 +632,21 @@ public class TelaStock extends javax.swing.JInternalFrame {
     }
 
     private void carregarGrade() {
-        FuncionarioTableModel tm = (FuncionarioTableModel) TbFuncionario.getModel();
+        MaquinaTableModel tm = (MaquinaTableModel) TbMaquina.getModel();
         try {
-            tm.setDados(funcionarioDAO.listarTodos());
+            tm.setDados(maquinaDAO.listarTodos());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TbFuncionario;
+    private javax.swing.JTable TbMaquina;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JComboBox<String> comboCargo;
     private javax.swing.ButtonGroup estadoGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -715,5 +664,6 @@ public class TelaStock extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbtnInativo;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,7 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model.tabelas;
 
 import model.Maquina;
@@ -13,11 +12,9 @@ import java.util.List;
  *
  * @author Nelson Matsinhe
  */
-
-
 public class MaquinaTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Tipo", "Alocada"};
+    private String colunas[] = {"Id", "Nome ", "Tipo", "Alocada"};
     private List<Maquina> dados;
 
     @Override
@@ -40,9 +37,11 @@ public class MaquinaTableModel extends AbstractTableModel {
             case 0:
                 return maquina.getId();
             case 1:
-                return maquina.getTipo();
+                return maquina.getNome();
             case 2:
-                return maquina.isAlocada() ? "Sim" : "Não";
+                return maquina.getTipo();
+            case 3:
+                return maquina.isEstado() ? "Activo" : "Não Acivo";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }

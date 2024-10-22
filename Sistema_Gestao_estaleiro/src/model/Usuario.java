@@ -2,8 +2,6 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +17,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_usuario")
     private long codigoUsuario;
-    
+
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
@@ -33,8 +31,6 @@ public class Usuario {
     @Column(name = "estado")
     private Boolean estado;
 
-    
-    
     public Usuario() {
         this.codigoUsuario = 0;
         this.userName = "";
@@ -86,6 +82,11 @@ public class Usuario {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "funcionario=" + funcionario + '}';
     }
 
 }
