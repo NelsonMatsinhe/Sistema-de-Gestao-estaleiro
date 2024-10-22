@@ -17,16 +17,30 @@ public class Maquina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String nome;
     private String tipo;
-
+    @Column(name = "estado")
+    private boolean estado;
     @Column(nullable = false)
     private boolean alocada;
 
     @OneToMany(mappedBy = "maquinaAlocada")
     private List<Funcionario> funcionarios;
 
-      public void alocar(Funcionario funcionario) {
+    public Maquina() {
+    }
+
+    
+    public Maquina(Long id, String nome, String tipo, boolean estado, boolean alocada, List<Funcionario> funcionarios) {
+        this.id = id;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.estado = true;
+        this.alocada = false;
+        this.funcionarios = funcionarios;
+    }
+
+    public void alocar(Funcionario funcionario) {
         if (!this.alocada) {
             this.alocada = true;
             this.funcionarios.add(funcionario);
@@ -39,7 +53,7 @@ public class Maquina {
         this.alocada = false;
         this.funcionarios.clear();
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -54,6 +68,22 @@ public class Maquina {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public boolean isAlocada() {

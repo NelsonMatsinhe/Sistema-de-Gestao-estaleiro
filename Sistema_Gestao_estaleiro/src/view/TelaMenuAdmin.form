@@ -318,7 +318,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-carrinho-de-compras-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              Vendas"/>
+                <Property name="text" type="java.lang.String" value="              Material"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu4MouseClicked"/>
@@ -431,7 +431,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              Relatorio "/>
+                <Property name="text" type="java.lang.String" value="              Produto "/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu6MouseClicked"/>
@@ -534,7 +534,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              stock "/>
+                <Property name="text" type="java.lang.String" value="              Produ&#xe7;&#xe3;o"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu7MouseClicked"/>
@@ -587,7 +587,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              Material "/>
+                <Property name="text" type="java.lang.String" value="              Maquina "/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu8MouseClicked"/>
@@ -640,7 +640,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              Produ&#xe7;&#xe3;o "/>
+                <Property name="text" type="java.lang.String" value="              Relatorio "/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu9MouseClicked"/>
@@ -693,7 +693,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              Forcenecedor "/>
+                <Property name="text" type="java.lang.String" value="              Stock "/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMenu10MouseClicked"/>

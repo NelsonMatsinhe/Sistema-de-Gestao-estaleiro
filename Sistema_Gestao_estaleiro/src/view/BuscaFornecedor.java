@@ -88,8 +88,8 @@ public class BuscaFornecedor extends javax.swing.JDialog {
             int linhaSelecionada = tbGrade.getRowSorter().convertRowIndexToModel(tbGrade.getSelectedRow());
             Fornecedor funcionario = ctm.getRowValue(linhaSelecionada);
  
-            if (parent instanceof TelaMaterial) {
-                TelaMaterial lv = (TelaMaterial) parent;
+            if (parent instanceof TelaMaterialjjj) {
+                TelaMaterialjjj lv = (TelaMaterialjjj) parent;
                 lv.setFornecedor(funcionario);
                 dispose();
             } else {

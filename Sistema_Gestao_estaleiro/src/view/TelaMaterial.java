@@ -5,26 +5,42 @@
  */
 package view;
 
+import controller.FuncionarioDAO;
 import controller.MaterialDAO;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.Cargo;
+import model.Cliente;
 import model.Fornecedor;
+import model.Funcionario;
 import model.Material;
+import model.tabelas.FuncionarioTableModel;
 import model.tabelas.MaterialTableModel;
+import model.tabelas.UsuarioTableModel;
 
 //import model.Produto;
 /**
- * class tela de registros das Material
+ * class tela de registros das produto
  *
  * @author Nelson Matsinhe
  */
 public class TelaMaterial extends javax.swing.JInternalFrame {
 
-   
+    /**
+     * Creates new form Produto
+     */
+    //GenericDAO prod = new GenericDAO<>(Produto.class);
     public TelaMaterial() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -33,6 +49,9 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         habilitarFormulario(false);
         carregarGrade();
         txtNome.requestFocus();
+
+       
+
         // Botão Novo habilita o formulário
         btNovo.addActionListener(e -> habilitarFormulario(true));
 
@@ -52,6 +71,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             }
         });
 
+       
         TbMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectRegistryTable();
@@ -65,7 +85,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
      */
     Color d = new Color(255, 0, 51);
     Color f = new Color(219, 220, 252);
-
     MaterialDAO materialDAO = new MaterialDAO();
     Material material = new Material();
 
@@ -81,11 +100,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         estadoGroup = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        txtID = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TbMaterial = new javax.swing.JTable();
@@ -93,17 +107,22 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
-        btEditar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        btEditar = new javax.swing.JButton();
         lblMessagem = new javax.swing.JLabel();
-        txtQuantidade = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
+        txtFornecedor = new javax.swing.JFormattedTextField();
         txtPreco = new javax.swing.JFormattedTextField();
         txtUnidade = new javax.swing.JFormattedTextField();
-        txtFornecedor = new javax.swing.JFormattedTextField();
-        btnFornecedor = new javax.swing.JButton();
+        txtQuantidade = new javax.swing.JSpinner();
+        txtNome = new javax.swing.JTextField();
+        txtID = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnFornecedor = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -112,58 +131,18 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
 
         jPanel6.setBackground(new java.awt.Color(51, 102, 0));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtID.setPreferredSize(new java.awt.Dimension(300, 25));
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
-        jPanel6.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 42, 304, -1));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("ID:");
-        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 43, 23, -1));
-
-        txtNome.setPreferredSize(new java.awt.Dimension(300, 25));
-        txtNome.setSelectionColor(new java.awt.Color(255, 255, 255));
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNomeKeyPressed(evt);
-            }
-        });
-        jPanel6.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 304, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("quantidade");
-        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("fornecedro");
-        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 55, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(538, 148, 1, -1));
 
-        TbMaterial.setModel(new MaterialTableModel());
+        TbMaterial.setModel(new MaterialTableModel()
+        );
         TbMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TbMaterialMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(TbMaterial);
-
-        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 203, 761, 252));
 
         btCancelar.setText("Cancelar");
         btCancelar.setFocusable(false);
@@ -203,19 +182,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             }
         });
 
-        btEditar.setText("Editar");
-        btEditar.setFocusable(false);
-        btEditar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btEditar.setMargin(new java.awt.Insets(2, 8, 2, 8));
-        btEditar.setPreferredSize(new java.awt.Dimension(64, 22));
-        btEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btEditarActionPerformed(evt);
-            }
-        });
-
         btExcluir.setText("Excluir");
         btExcluir.setFocusable(false);
         btExcluir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -229,19 +195,35 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             }
         });
 
+        btEditar.setText("Editar");
+        btEditar.setFocusable(false);
+        btEditar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btEditar.setMargin(new java.awt.Insets(2, 8, 2, 8));
+        btEditar.setPreferredSize(new java.awt.Dimension(64, 22));
+        btEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addComponent(btEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                            .addComponent(btSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,58 +232,85 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
                 .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addGap(6, 6, 6)
                 .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 203, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Unidade");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 43, 45, -1));
-        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 529, 23));
-
-        txtQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000000, 1));
-        txtQuantidade.setPreferredSize(new java.awt.Dimension(200, 28));
-        jPanel6.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 300, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nome:");
-        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 89, -1, -1));
+        txtFornecedor.setEditable(false);
+        txtFornecedor.setColumns(25);
+        txtFornecedor.setPreferredSize(new java.awt.Dimension(250, 30));
 
         txtPreco.setColumns(10);
         txtPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        txtPreco.setPreferredSize(new java.awt.Dimension(200, 28));
+        txtPreco.setPreferredSize(new java.awt.Dimension(250, 30));
         txtPreco.setValue(new Double(0));
         txtPreco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecoActionPerformed(evt);
             }
         });
-        jPanel6.add(txtPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 250, -1));
 
         txtUnidade.setColumns(10);
         txtUnidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        txtUnidade.setPreferredSize(new java.awt.Dimension(200, 28));
+        txtUnidade.setPreferredSize(new java.awt.Dimension(250, 30));
         txtUnidade.setValue(new Double(0));
         txtUnidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUnidadeActionPerformed(evt);
             }
         });
-        jPanel6.add(txtUnidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 250, -1));
 
-        txtFornecedor.setEditable(false);
-        txtFornecedor.setColumns(25);
-        txtFornecedor.setPreferredSize(new java.awt.Dimension(200, 28));
-        jPanel6.add(txtFornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 250, -1));
+        txtQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000000, 1));
+        txtQuantidade.setPreferredSize(new java.awt.Dimension(250, 30));
+
+        txtNome.setPreferredSize(new java.awt.Dimension(250, 30));
+        txtNome.setSelectionColor(new java.awt.Color(255, 255, 255));
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
+            }
+        });
+
+        txtID.setPreferredSize(new java.awt.Dimension(250, 30));
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ID:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Nome:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("quantidade");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("fornecedro");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Preco");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Unidade");
 
         btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnFornecedor.addActionListener(new java.awt.event.ActionListener() {
@@ -309,12 +318,112 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
                 btnFornecedorActionPerformed(evt);
             }
         });
-        jPanel6.add(btnFornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 130, 30, 20));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Preco");
-        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 55, -1));
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(5, 5, 5)
+                                .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(16, 16, 16)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17)
+                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(282, 282, 282))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtUnidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtPreco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(txtFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(403, 403, 403))))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(186, 186, 186)
+                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(jLabel6)
+                        .addGap(55, 55, 55))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(txtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3)))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2))
+                            .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
+                .addGap(31, 31, 31))
+        );
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -331,7 +440,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(296, 296, 296)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,12 +454,12 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,14 +484,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
 
         setBounds(0, 0, 960, 620);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDActionPerformed
-
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
 
@@ -453,52 +554,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         habilitarFormulario(false);
     }//GEN-LAST:event_btCancelarActionPerformed
 
-    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        if (validarFormulario()) {
-            Long id;
-            try {
-                id = Long.parseLong(txtID.getText()); // Converte o ID de String para Long
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Material material = materialDAO.buscarPorId(id); // Agora busca usando o ID Long
-            if (material != null) {
-                material.setNome(txtNome.getText());
-                material.setQuantidade(Double.parseDouble(txtQuantidade.getValue().toString())); // Corrigido
-                material.setUnidade(txtUnidade.getText());
-                material.setPreco(Double.parseDouble(txtPreco.getText()));
-                material.setFornecedor((Fornecedor) txtFornecedor.getValue());
-
-                try {
-                    materialDAO.atualizar(material); // Atualiza o material
-                    JOptionPane.showMessageDialog(this, "Material atualizado com sucesso.");
-                    limpaFormulario();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o material.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-
-                habilitarFormulario(false);
-                carregarGrade();
-            } else {
-                JOptionPane.showMessageDialog(this, "Material não encontrado para edição.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
-        }
-
-
-    }//GEN-LAST:event_btEditarActionPerformed
-
-    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            validarFormulario();
-
-            // End of variables declaration                 
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeKeyPressed
-
     private void TbMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbMaterialMouseClicked
 
     }//GEN-LAST:event_TbMaterialMouseClicked
@@ -511,14 +566,68 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUnidadeActionPerformed
 
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            validarFormulario();
+
+            // End of variables declaration
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeKeyPressed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
+
     private void btnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedorActionPerformed
         BuscaFornecedor buscaUsuario = new BuscaFornecedor(this);
         buscaUsuario.setVisible(true);
     }//GEN-LAST:event_btnFornecedorActionPerformed
 
-    /**
-     * Seleciona o registro da tabela e preenche o formulário.
-     */
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+
+        if (validarFormulario()) {
+            System.out.println("Formulário validado com sucesso."); // Adicione esta linha
+
+            Long id;
+            try {
+                id = Long.parseLong(txtID.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return; // Retorna se o ID não for válido
+            }
+
+            Funcionario funcionario = funcionarioDAO.buscarPorId(id);
+            if (funcionario != null) {
+                System.out.println("Funcionário encontrado: " + funcionario.getNome()); // Adicione esta linha
+
+                funcionario.setNome(txtNome.getText());
+                funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
+
+                funcionario.setEstado(rbtnAtivo.isSelected());
+
+                try {
+                    funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
+                    JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                    limpaFormulario();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
+                habilitarFormulario(false);
+                carregarGrade();
+            } else {
+                JOptionPane.showMessageDialog(this, "Funcionário não encontrado para edição.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
+        }
+
+    }//GEN-LAST:event_btEditarActionPerformed
+
     private void habilitarFormulario(boolean ativo) {
         btNovo.setEnabled(!ativo);               // Botão "Novo" desativado quando ativo
         btSalvar.setEnabled(ativo && validarFormulario()); // "Salvar" habilitado apenas se o formulário for válido
@@ -542,7 +651,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
     private void limpaFormulario() {
         txtID.setText("");
         txtNome.setText("");
-        txtQuantidade.setValue("");
+        //  txtQuantidade.setValue("");
         txtUnidade.setText("");
         txtPreco.setText("");
         txtFornecedor.setText("");
@@ -633,7 +742,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         }
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TbMaterial;
     private javax.swing.JButton btCancelar;
@@ -664,5 +772,4 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
     private javax.swing.JSpinner txtQuantidade;
     private javax.swing.JFormattedTextField txtUnidade;
     // End of variables declaration//GEN-END:variables
-
 }

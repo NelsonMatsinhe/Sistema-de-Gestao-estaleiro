@@ -14,7 +14,7 @@ public class UsuarioDAO {
         boolean existe = false;
         try {
             TypedQuery<Long> query = em.createQuery(
-                "SELECT COUNT(u) FROM Usuario u WHERE u.userName = :userName AND u.estado = true", Long.class
+                    "SELECT COUNT(u) FROM Usuario u WHERE u.userName = :userName AND u.estado = true", Long.class
             );
             query.setParameter("userName", userName);
             Long count = query.getSingleResult();
@@ -47,7 +47,6 @@ public class UsuarioDAO {
         }
     }
 
-    
     // Método para atualizar um usuário
     public void atualizar(Usuario usuario) {
         EntityManager em = JpaUtil.getEntityManager();
@@ -67,14 +66,13 @@ public class UsuarioDAO {
         }
     }
 
-
     // Método para buscar usuário por ID, considerando apenas usuários ativos
     public Usuario buscarPorId(Long id) {
         EntityManager em = JpaUtil.getEntityManager();
         Usuario usuario = null;
         try {
             usuario = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.codigoUsuario = :id AND u.estado = true", Usuario.class
+                    "SELECT u FROM Usuario u WHERE u.codigoUsuario = :id AND u.estado = true", Usuario.class
             ).setParameter("id", id).getSingleResult();
         } finally {
             em.close();
@@ -88,7 +86,7 @@ public class UsuarioDAO {
         List<Usuario> usuarios = null;
         try {
             TypedQuery<Usuario> query = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.estado = true", Usuario.class
+                    "SELECT u FROM Usuario u WHERE u.estado = true", Usuario.class
             );
             usuarios = query.getResultList();
         } finally {
@@ -118,6 +116,22 @@ public class UsuarioDAO {
             em.close();
         }
     }
+// Método para listar todos os usuários ativos com as associações carregadas
+
+    public List<Usuario> listarTodosAtivosComDetalhes() {
+        EntityManager em = JpaUtil.getEntityManager();
+        List<Usuario> usuarios = null;
+        try {
+            // Usar JOIN FETCH para garantir que a associação com Funcionario seja carregada
+            TypedQuery<Usuario> query = em.createQuery(
+                    "SELECT u FROM Usuario u LEFT JOIN FETCH u.funcionario WHERE u.estado = true", Usuario.class
+            );
+            usuarios = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return usuarios;
+    }
 
     // Método para pesquisar usuário por nome, apenas ativos
     public List<Usuario> pesquisarPorNome(String nome) {
@@ -125,7 +139,7 @@ public class UsuarioDAO {
         List<Usuario> usuarios = null;
         try {
             TypedQuery<Usuario> query = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.nome LIKE :nome AND u.estado = true", Usuario.class
+                    "SELECT u FROM Usuario u WHERE u.nome LIKE :nome AND u.estado = true", Usuario.class
             );
             query.setParameter("nome", "%" + nome + "%");
             usuarios = query.getResultList();
@@ -141,7 +155,7 @@ public class UsuarioDAO {
         long count = 0;
         try {
             TypedQuery<Long> query = em.createQuery(
-                "SELECT COUNT(u) FROM Usuario u WHERE u.estado = true", Long.class
+                    "SELECT COUNT(u) FROM Usuario u WHERE u.estado = true", Long.class
             );
             count = query.getSingleResult();
         } finally {

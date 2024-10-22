@@ -9,7 +9,7 @@ import javax.persistence.*;
  *
  * @author Nelson Matsinhe
  */
-
+@Entity
 
 @Table(name = "clientes")
 public class Cliente {
