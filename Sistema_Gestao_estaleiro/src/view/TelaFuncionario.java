@@ -681,14 +681,17 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         return isValid;
     }
 
-    private void carregarGrade() {
-        FuncionarioTableModel tm = (FuncionarioTableModel) TbFuncionario.getModel();
-        try {
-            tm.setDados(funcionarioDAO.listarTodos());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+   private void carregarGrade() {
+    FuncionarioTableModel tm = (FuncionarioTableModel) TbFuncionario.getModel();
+    try {
+        List<Funcionario> funcionarios = funcionarioDAO.listarTodos();
+        System.out.println("Funcionários encontrados: " + funcionarios.size()); // Verifica quantos funcionários foram retornados
+        tm.setDados(funcionarios);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TbFuncionario;

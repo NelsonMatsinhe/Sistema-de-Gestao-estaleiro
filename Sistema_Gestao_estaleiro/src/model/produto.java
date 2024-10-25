@@ -33,6 +33,20 @@ public class Produto {
 
     private int quantidade;
 
+    public Produto() {
+    }
+
+    public Produto(int id, String nome, Categoria categoria, int tempoCura, int quantidade, Date dataRegistro, BigDecimal preco, List<Maquina> maquinas) {
+        this.id = id;
+        this.nome = nome;
+        this.categoria = categoria;
+        this.tempoCura = tempoCura;
+        this.quantidade = quantidade;
+        this.dataRegistro = dataRegistro;
+        this.preco = preco;
+        this.maquinas = maquinas;
+    }
+
     @Column(name = "data_registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;

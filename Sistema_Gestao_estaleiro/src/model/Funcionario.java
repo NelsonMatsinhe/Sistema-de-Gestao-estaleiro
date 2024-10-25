@@ -52,6 +52,14 @@ public class Funcionario {
     )
     private List<Material> materiaisRecebidos = new ArrayList<>();
 
+    public Funcionario(Long id, String nome, Cargo cargo, Boolean estado, Maquina maquinaAlocada) {
+        this.id = id;
+        this.nome = nome;
+        this.cargo = cargo;
+        this.estado = estado;
+        this.maquinaAlocada = maquinaAlocada;
+    }
+
     public Funcionario() {
     }
 

@@ -114,7 +114,7 @@ public class ProducaoDAO {
             tx.begin();
             Producao producao = em.find(Producao.class, id);
             if (producao != null) {
-                producao.setAtiva(false);  // Atualiza o estado para desativado
+                producao.setEstado(false);  // Atualiza o estado para desativado
                 em.merge(producao);        // Salva a alteração no banco
             }
             tx.commit();

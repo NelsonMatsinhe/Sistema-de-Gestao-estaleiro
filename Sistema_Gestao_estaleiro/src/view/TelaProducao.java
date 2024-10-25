@@ -6,9 +6,11 @@
 package view;
 
 import controller.FuncionarioDAO;
+import controller.MaquinaDAO;
 import controller.ProducaoDAO;
 import java.awt.Color;
 import java.util.Date;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
@@ -43,12 +45,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         habilitarFormulario(false);
         carregarGrade();
-        txtNome.requestFocus();
-
-        // Adicionando os valores da enum Cargo no combo box
-        for (Cargo cargo : Cargo.values()) {
-            comboCargo.addItem(cargo.name());
-        }
+        configurarListeners();
 
         // Botão Novo habilita o formulário
         btNovo.addActionListener(e -> habilitarFormulario(true));
@@ -60,19 +57,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             }
         });
 
-        // Ação do botão Editar
-        // btEditar.addActionListener(e -> btEditarActionPerformed());
-        // Validação ao mudar os campos
-        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                habilitarSalvar();
-            }
-        });
-
-        comboCargo.addActionListener(e -> habilitarSalvar());
-
-        rbtnAtivo.addActionListener(e -> habilitarSalvar());
-        rbtnInativo.addActionListener(e -> habilitarSalvar());
+        rbtAlocar.addActionListener(e -> habilitarSalvar());
+        rbtdesalocar.addActionListener(e -> habilitarSalvar());
 
         TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -89,6 +75,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     Color f = new Color(219, 220, 252);
 
     ProducaoDAO producaoDAO = new ProducaoDAO();
+    MaquinaDAO maquinaDAO = new MaquinaDAO();
+    FuncionarioDAO funcionarioDAO= new FuncionarioDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,20 +104,24 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         lblMessagem = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        ftfFucionario = new javax.swing.JFormattedTextField();
+        ftfProduto = new javax.swing.JFormattedTextField();
         btnUsuario = new javax.swing.JButton();
-        ftfFucionario1 = new javax.swing.JFormattedTextField();
+        ftfFuncionario = new javax.swing.JFormattedTextField();
         btnUsuario1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         ftfMaquina = new javax.swing.JFormattedTextField();
         btnUsuario2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        txtQuantidadeProduzida = new javax.swing.JFormattedTextField();
-        rbtnInativo = new javax.swing.JRadioButton();
-        rbtnAtivo = new javax.swing.JRadioButton();
+        rbtdesalocar = new javax.swing.JRadioButton();
+        rbtAlocar = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         ftfMaterial = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
+        btAdicionarItem1 = new javax.swing.JButton();
+        btRemoverItem1 = new javax.swing.JButton();
+        spQuantidadeMaterial = new javax.swing.JSpinner();
+        jLabel11 = new javax.swing.JLabel();
+        txtQuantidadeProduzida = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -266,18 +258,18 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Produto:");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 60, -1));
-        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 529, 23));
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 60, -1));
+        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 529, 23));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Maquina:");
         jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
-        ftfFucionario.setEditable(false);
-        ftfFucionario.setColumns(25);
-        ftfFucionario.setPreferredSize(new java.awt.Dimension(260, 25));
-        jPanel6.add(ftfFucionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 260, -1));
+        ftfProduto.setEditable(false);
+        ftfProduto.setColumns(25);
+        ftfProduto.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 260, -1));
 
         btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -287,10 +279,10 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         });
         jPanel6.add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, -1, 20));
 
-        ftfFucionario1.setEditable(false);
-        ftfFucionario1.setColumns(25);
-        ftfFucionario1.setPreferredSize(new java.awt.Dimension(260, 25));
-        jPanel6.add(ftfFucionario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 260, -1));
+        ftfFuncionario.setEditable(false);
+        ftfFuncionario.setColumns(25);
+        ftfFuncionario.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 260, -1));
 
         btnUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnUsuario1.addActionListener(new java.awt.event.ActionListener() {
@@ -320,45 +312,30 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Material:");
-        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
+        jLabel9.setText("  Quant Material:");
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 120, -1));
 
-        txtQuantidadeProduzida.setColumns(10);
-        txtQuantidadeProduzida.setPreferredSize(new java.awt.Dimension(300, 25));
-        txtQuantidadeProduzida.setValue(new Double(0));
-        txtQuantidadeProduzida.addActionListener(new java.awt.event.ActionListener() {
+        rbtdesalocar.setBackground(new java.awt.Color(51, 102, 0));
+        estadoGroup.add(rbtdesalocar);
+        rbtdesalocar.setForeground(new java.awt.Color(255, 255, 255));
+        rbtdesalocar.setText("Disalocar");
+        rbtdesalocar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQuantidadeProduzidaActionPerformed(evt);
+                rbtdesalocarActionPerformed(evt);
             }
         });
-        txtQuantidadeProduzida.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtQuantidadeProduzidaKeyPressed(evt);
-            }
-        });
-        jPanel6.add(txtQuantidadeProduzida, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 95, 260, -1));
+        jPanel6.add(rbtdesalocar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
 
-        rbtnInativo.setBackground(new java.awt.Color(51, 102, 0));
-        estadoGroup.add(rbtnInativo);
-        rbtnInativo.setForeground(new java.awt.Color(255, 255, 255));
-        rbtnInativo.setText("Disalocar");
-        rbtnInativo.addActionListener(new java.awt.event.ActionListener() {
+        rbtAlocar.setBackground(new java.awt.Color(51, 102, 0));
+        estadoGroup.add(rbtAlocar);
+        rbtAlocar.setForeground(new java.awt.Color(255, 255, 255));
+        rbtAlocar.setText("Alocar");
+        rbtAlocar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnInativoActionPerformed(evt);
+                rbtAlocarActionPerformed(evt);
             }
         });
-        jPanel6.add(rbtnInativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
-
-        rbtnAtivo.setBackground(new java.awt.Color(51, 102, 0));
-        estadoGroup.add(rbtnAtivo);
-        rbtnAtivo.setForeground(new java.awt.Color(255, 255, 255));
-        rbtnAtivo.setText("Alocar");
-        rbtnAtivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnAtivoActionPerformed(evt);
-            }
-        });
-        jPanel6.add(rbtnAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 70, -1));
+        jPanel6.add(rbtAlocar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 70, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -372,8 +349,37 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Quantidade :");
-        jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 90, -1));
+        jLabel10.setText("Quantidade  Produzida:");
+        jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 160, -1));
+
+        btAdicionarItem1.setToolTipText("Adicionar item");
+        btAdicionarItem1.setPreferredSize(new java.awt.Dimension(35, 30));
+        btAdicionarItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAdicionarItem1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btAdicionarItem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, -1, -1));
+
+        btRemoverItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-menos-16.png"))); // NOI18N
+        btRemoverItem1.setToolTipText("Remover item");
+        btRemoverItem1.setPreferredSize(new java.awt.Dimension(35, 30));
+        btRemoverItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverItem1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btRemoverItem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, -1, -1));
+
+        spQuantidadeMaterial.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000000, 1));
+        spQuantidadeMaterial.setPreferredSize(new java.awt.Dimension(200, 28));
+        jPanel6.add(spQuantidadeMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 150, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Material:");
+        jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
+        jPanel6.add(txtQuantidadeProduzida, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 260, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -445,33 +451,72 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (validarFormulario()) {
-            Producao producao = new Producao();
-
-            // Definir o funcionário
-            producao.setFuncionario((Funcionario) ftfFucionario.getValue());
-            producao.setProduto((Produto) ftfMaquina.getValue());
-
-            // Definir a máquina selecionada
-            producao.setMaquina((Maquina) ftfMaquina.getValue());
-            producao.setProduto((Produto) ftfMaquina.getValue());
-            // Definir a quantidade produzida
-            producao.setQuantidadeProduzida(Integer.parseInt(txtQuantidadeProduzida.getText()));
-
-            // Definir a data da produção (data do sistema)
-            producao.setDataProducao(new Date());
-
             try {
+                Producao producao = new Producao();
+
+                // Obter funcionário selecionado
+                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+                if (funcionarioSelecionado == null) {
+                    throw new Exception("Selecione um funcionário");
+                }
+
+                // Obter máquina selecionada
+                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+                if (maquinaSelecionada == null) {
+                    throw new Exception("Selecione uma máquina");
+                }
+
+                // Verificar se a máquina está disponível
+                if (!maquinaSelecionada.isDisponivel()) {
+                    throw new Exception("Máquina já está alocada para outro funcionário");
+                }
+
+                // Atualizar campo do Produto com o produto associado à máquina
+                ftfProduto.setValue(maquinaSelecionada.getProduto());
+
+                // Obter quantidade de produção
+                int quantidadeProduzida = Integer.parseInt((String) txtQuantidadeProduzida.getValue());
+
+                int QuantidadeMaterial = Integer.parseInt((String) spQuantidadeMaterial.getValue());
+                // Obter e verificar materiais
+//            List<Material> materiaisNecessarios = obterMateriaisNecessarios(maquinaSelecionada.getProduto());
+//            for (Material material : materiaisNecessarios) {
+//                double quantidadeNecessaria = calcularQuantidadeMaterial(material, quantidadeProduzida);
+//                if (material.getQuantidade() < quantidadeNecessaria) {
+//                    throw new Exception("Estoque insuficiente do material: " + material.getNome());
+//                }
+//                material.removerEstoque(quantidadeNecessaria);
+//              //  materialDAO.atualizar(material);
+//            }
+//            
+                // Configurar a produção
+                producao.setFuncionario(funcionarioSelecionado);
+                producao.setMaquina(maquinaSelecionada);
+                producao.setProduto(maquinaSelecionada.getProduto());
+                producao.setQuantidadeProduzida(quantidadeProduzida);
+                producao.setDataProducao(new Date());
+//            producao.setMateriais(materiaisNecessarios);
+                producao.setEstado(true);
+                // producao.setLote(lote);
+
+                // Alocar máquina ao funcionário
+                maquinaSelecionada.alocar(funcionarioSelecionado);
+                funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+
+                // Salvar as alterações
+                //  maquinaDAO.atualizar(maquinaSelecionada);
+                // funcionarioDAO.atualizar(funcionarioSelecionado);
                 producaoDAO.salvar(producao);
-                JOptionPane.showMessageDialog(this, "Produção salva com sucesso.");
+
+                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
                 limpaFormulario();
+                carregarGrade();
+
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
             }
-
-            carregarGrade();
         }
-
-
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
@@ -504,35 +549,71 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
         if (validarFormulario()) {
-            Long id;
             try {
-                id = Long.parseLong(txtID.getText());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+                Producao producao = new Producao();
 
-            Producao producao = producaoDAO.buscarPorId(id);
-            if (producao != null) {
-                producao.setFuncionario(funcionario);
-                producao.setProduto(obterProdutoSelecionado());
-                producao.setMaquina(obterMaquinaSelecionada());
-                producao.setQuantidadeProduzida(Integer.parseInt(txtQuantidadeProduzida.getText()));
-
-                try {
-                    producaoDAO.atualizar(producao);
-                    JOptionPane.showMessageDialog(this, "Produção atualizada com sucesso.");
-                    limpaFormulario();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // Obter funcionário selecionado
+                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+                if (funcionarioSelecionado == null) {
+                    throw new Exception("Selecione um funcionário");
                 }
 
+                // Obter máquina selecionada
+                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+                if (maquinaSelecionada == null) {
+                    throw new Exception("Selecione uma máquina");
+                }
+
+                // Verificar se a máquina está disponível
+                if (!maquinaSelecionada.isDisponivel()) {
+                    throw new Exception("Máquina já está alocada para outro funcionário");
+                }
+
+                // Atualizar campo do Produto com o produto associado à máquina
+                ftfProduto.setValue(maquinaSelecionada.getProduto());
+
+                // Obter quantidade de produção
+                int quantidadeProduzida = Integer.parseInt((String) txtQuantidadeProduzida.getValue());
+
+                int QuantidadeMaterial = Integer.parseInt((String) spQuantidadeMaterial.getValue());
+                // Obter e verificar materiais
+//            List<Material> materiaisNecessarios = obterMateriaisNecessarios(maquinaSelecionada.getProduto());
+//            for (Material material : materiaisNecessarios) {
+//                double quantidadeNecessaria = calcularQuantidadeMaterial(material, quantidadeProduzida);
+//                if (material.getQuantidade() < quantidadeNecessaria) {
+//                    throw new Exception("Estoque insuficiente do material: " + material.getNome());
+//                }
+//                material.removerEstoque(quantidadeNecessaria);
+//              //  materialDAO.atualizar(material);
+//            }
+//            
+                // Configurar a produção
+                producao.setFuncionario(funcionarioSelecionado);
+                producao.setMaquina(maquinaSelecionada);
+                producao.setProduto(maquinaSelecionada.getProduto());
+                producao.setQuantidadeProduzida(quantidadeProduzida);
+                producao.setDataProducao(new Date());
+//            producao.setMateriais(materiaisNecessarios);
+                producao.setEstado(true);
+                // producao.setLote(lote);
+
+                // Alocar máquina ao funcionário
+                maquinaSelecionada.alocar(funcionarioSelecionado);
+                funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+
+                // Salvar as alterações
+                //  maquinaDAO.atualizar(maquinaSelecionada);
+                // funcionarioDAO.atualizar(funcionarioSelecionado);
+                producaoDAO.salvar(producao);
+
+                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
+                limpaFormulario();
                 carregarGrade();
-            } else {
-                JOptionPane.showMessageDialog(this, "Produção não encontrada para edição.");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
+                        "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
         }
 
 
@@ -543,37 +624,38 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_TbProducaoMouseClicked
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        BuscaFuncionario buscaUsuario = new BuscaFuncionario(this);
-        buscaUsuario.setVisible(true);
+        BuscaMaterial BuscaMaterial = new BuscaMaterial(this);
+        BuscaMaterial.setVisible(true);
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     private void btnUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuario1ActionPerformed
-        // TODO add your handling code here:
+        BuscaFuncionario buscaUsuario = new BuscaFuncionario(this);
+        buscaUsuario.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnUsuario1ActionPerformed
 
     private void btnUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuario2ActionPerformed
-        // TODO add your handling code here:
+        BuscaMaquina BuscaMaquina = new BuscaMaquina(this);
+        BuscaMaquina.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnUsuario2ActionPerformed
 
-    private void txtQuantidadeProduzidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeProduzidaActionPerformed
+    private void rbtAlocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtAlocarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantidadeProduzidaActionPerformed
+    }//GEN-LAST:event_rbtAlocarActionPerformed
 
-    private void txtQuantidadeProduzidaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeProduzidaKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
-            validarFormulario();
-
-            // End of variables declaration
-        }           // TODO add your handling code here:
-    }//GEN-LAST:event_txtQuantidadeProduzidaKeyPressed
-
-    private void rbtnAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAtivoActionPerformed
+    private void rbtdesalocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtdesalocarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnAtivoActionPerformed
+    }//GEN-LAST:event_rbtdesalocarActionPerformed
 
-    private void rbtnInativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnInativoActionPerformed
+    private void btAdicionarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarItem1ActionPerformed
+        if (validarFormularioItens()) {
+
+        }
+
+    }//GEN-LAST:event_btAdicionarItem1ActionPerformed
+
+    private void btRemoverItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverItem1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnInativoActionPerformed
+    }//GEN-LAST:event_btRemoverItem1ActionPerformed
 
     /**
      * Seleciona o registro da tabela e preenche o formulário.
@@ -582,15 +664,12 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         int selectedRow = TbProducao.getSelectedRow();
         if (selectedRow != -1) {
             txtID.setText(TbProducao.getValueAt(selectedRow, 0).toString());
-            txtNome.setText(TbProducao.getValueAt(selectedRow, 1).toString());
-
-            Produto produto = (Produto) TbProducao.getValueAt(selectedRow, 2);
-            comboProduto.setSelectedItem(produto);
-
-            Maquina maquina = (Maquina) TbProducao.getValueAt(selectedRow, 3);
-            comboMaquina.setSelectedItem(maquina);
-
-            txtQuantidadeProduzida.setText(TbProducao.getValueAt(selectedRow, 4).toString());
+            ftfFuncionario.setText(TbProducao.getValueAt(selectedRow, 1).toString());
+            ftfMaquina.setText(TbProducao.getValueAt(selectedRow, 2).toString());
+            ftfMaterial.setText(TbProducao.getValueAt(selectedRow, 3).toString());
+            ftfProduto.setText(TbProducao.getValueAt(selectedRow, 4).toString());
+            spQuantidadeMaterial.setValue(TbProducao.getValueAt(selectedRow, 5).toString());
+            txtQuantidadeProduzida.setValue(TbProducao.getValueAt(selectedRow, 6).toString());
 
             habilitarFormulario(true);
         }
@@ -605,9 +684,11 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         btCancelar.setEnabled(ativo);
         btExcluir.setEnabled(ativo);
         txtID.setEnabled(ativo);
-        txtNome.setEnabled(ativo);
-        comboProduto.setEnabled(ativo);
-        comboMaquina.setEnabled(ativo);
+        ftfFuncionario.setEnabled(ativo);
+        ftfMaquina.setEnabled(ativo);
+        ftfMaterial.setEnabled(ativo);
+        ftfProduto.setEnabled(ativo);
+        spQuantidadeMaterial.setEnabled(ativo);
         txtQuantidadeProduzida.setEnabled(ativo);
 
         btEditar.setEnabled(TbProducao.getSelectedRow() >= 0 && ativo);
@@ -631,10 +712,14 @@ public class TelaProducao extends javax.swing.JInternalFrame {
      */
     private void limpaFormulario() {
         txtID.setText("");
-        txtNome.setText("");
-        comboProduto.setSelectedIndex(-1);
-        comboMaquina.setSelectedIndex(-1);
-        txtQuantidadeProduzida.setText("");
+        ftfFuncionario.setText("");
+        ftfMaquina.setText("");
+        ftfMaterial.setText("");
+        ftfProduto.setText("");
+        spQuantidadeMaterial.setValue(0);
+        txtQuantidadeProduzida.setValue(0);
+        txtQuantidadeProduzida.setValue(0);
+         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
     }
 
@@ -647,44 +732,119 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         boolean isValid = true;
 
-        // Validação do campo Nome
-        if (txtNome.getText().isEmpty()) {
-            txtNome.setBorder(borderError);
-            lblMessagem.setText("Preencha o campo com um nome.");
-            txtNome.requestFocus();
-            isValid = false;
-        } else {
-            txtNome.setBorder(borderNormal);
-        }
-
-        // Validação do combo Produto
-        if (comboProduto.getSelectedItem() == null) {
-            comboProduto.setBorder(borderError);
-            lblMessagem.setText("Selecione um produto.");
-            isValid = false;
-        } else {
-            comboProduto.setBorder(borderNormal);
-        }
-
-        // Validação do combo Máquina
-        if (comboMaquina.getSelectedItem() == null) {
-            comboMaquina.setBorder(borderError);
-            lblMessagem.setText("Selecione uma máquina.");
-            isValid = false;
-        } else {
-            comboMaquina.setBorder(borderNormal);
-        }
-
-        // Validação do campo Quantidade Produzida
-        if (txtQuantidadeProduzida.getText().isEmpty()) {
-            txtQuantidadeProduzida.setBorder(borderError);
-            lblMessagem.setText("Preencha a quantidade produzida.");
-            isValid = false;
-        } else {
-            txtQuantidadeProduzida.setBorder(borderNormal);
-        }
-
+//        // Validação do campo Quantidade Produzida
+//        if (txtQuantidadeProduzida.getText().isEmpty()) {
+//            txtQuantidadeProduzida.setBorder(borderError);
+//            lblMessagem.setText("Preencha a quantidade produzida.");
+//            isValid = false;
+//        } else {
+//            txtQuantidadeProduzida.setBorder(borderNormal);
+//        }
         return isValid;
+    }
+
+    // Adicione esses métodos à sua classe de interface
+    private void configurarListeners() {
+        // Listener para o campo de máquina
+        ftfMaquina.addPropertyChangeListener("value", evt -> {
+            Maquina maquinaSelecionada = (Maquina) evt.getNewValue();
+            if (maquinaSelecionada != null) {
+                // Atualiza o produto automaticamente
+                ftfProduto.setValue(maquinaSelecionada.getProduto());
+            }
+        });
+
+        // Listener para o radio button Alocar
+        rbtAlocar.addActionListener(e -> {
+            if (rbtAlocar.isSelected()) {
+                try {
+                    Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+                    Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+
+                    if (funcionarioSelecionado != null && maquinaSelecionada != null) {
+                        if (!maquinaSelecionada.isDisponivel()) {
+                            JOptionPane.showMessageDialog(this,
+                                    "Máquina já está alocada para outro funcionário",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE);
+                            
+                            rbtAlocar.setSelected(false);
+                            return;
+                        }
+
+                        // Realizar alocação
+                        maquinaSelecionada.alocar(funcionarioSelecionado);
+                        funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+
+                        // Atualizar no banco de dados
+                        maquinaDAO.atualizar(maquinaSelecionada);
+                        funcionarioDAO.atualizar(funcionarioSelecionado);
+
+                        JOptionPane.showMessageDialog(this,
+                                "Máquina " + maquinaSelecionada.getNome()
+                                + " alocada ao funcionário " + funcionarioSelecionado.getNome());
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao alocar máquina: " + ex.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                      System.out.println("Erro ao desalocar máquina: " + ex.getMessage()+"Erro");
+                    rbtAlocar.setSelected(false);
+                }
+            }
+        });
+
+        // Listener para o radio button Desalocar
+        rbtdesalocar.addActionListener(e -> {
+            if (rbtdesalocar.isSelected()) {
+                try {
+                    Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+                    Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+
+                    if (funcionarioSelecionado != null && maquinaSelecionada != null) {
+                        // Verificar se a máquina está realmente alocada para este funcionário
+                        if (funcionarioSelecionado.getMaquinaAlocada() != maquinaSelecionada) {
+                            JOptionPane.showMessageDialog(this,
+                                    "Esta máquina não está alocada para este funcionário",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE);
+                            
+                            rbtdesalocar.setSelected(false);
+                            return;
+                        }
+
+                        // Realizar desalocação
+                        maquinaSelecionada.desalocar();
+                        funcionarioSelecionado.setMaquinaAlocada(null);
+
+                        // Atualizar no banco de dados
+                        maquinaDAO.atualizar(maquinaSelecionada);
+                        funcionarioDAO.atualizar(funcionarioSelecionado);
+
+                        JOptionPane.showMessageDialog(this,
+                                "Máquina " + maquinaSelecionada.getNome()
+                                + " desalocada do funcionário " + funcionarioSelecionado.getNome());
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao desalocar máquina: " + ex.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Erro ao desalocar máquina: " + ex.getMessage()+"Erro");
+                    rbtdesalocar.setSelected(false);
+                }
+            }
+        });
+    }
+
+    private boolean validarFormularioItens() {
+        if (ftfMaterial.getValue() == null) {
+            JOptionPane.showMessageDialog(this, "Produto inválido.", "Alerta", JOptionPane.WARNING_MESSAGE);
+            ftfMaterial.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     private void carregarGrade() {
@@ -715,29 +875,32 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     public void setFuncionario(Funcionario funcionario) {
         // Vamos supor que ftfUsuario seja um JTextField ou similar
         if (funcionario != null) {
-            ftfFucionario.setValue(funcionario);
+            ftfFuncionario.setValue(funcionario);
         } else {
-            ftfFucionario.setText(""); // Caso o usuário seja nulo, limpar o campo
+            ftfFuncionario.setText(""); // Caso o usuário seja nulo, limpar o campo
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TbProducao;
+    private javax.swing.JButton btAdicionarItem1;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
+    private javax.swing.JButton btRemoverItem1;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btnUsuario;
     private javax.swing.JButton btnUsuario1;
     private javax.swing.JButton btnUsuario2;
     private javax.swing.ButtonGroup estadoGroup;
-    private javax.swing.JFormattedTextField ftfFucionario;
-    private javax.swing.JFormattedTextField ftfFucionario1;
+    private javax.swing.JFormattedTextField ftfFuncionario;
     private javax.swing.JFormattedTextField ftfMaquina;
     private javax.swing.JFormattedTextField ftfMaterial;
+    private javax.swing.JFormattedTextField ftfProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -751,10 +914,11 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMessagem;
-    private javax.swing.JRadioButton rbtnAtivo;
-    private javax.swing.JRadioButton rbtnInativo;
+    private javax.swing.JRadioButton rbtAlocar;
+    private javax.swing.JRadioButton rbtdesalocar;
+    private javax.swing.JSpinner spQuantidadeMaterial;
     private javax.swing.JTextField txtID;
-    private javax.swing.JFormattedTextField txtQuantidadeProduzida;
+    private javax.swing.JSpinner txtQuantidadeProduzida;
     // End of variables declaration//GEN-END:variables
 
 }

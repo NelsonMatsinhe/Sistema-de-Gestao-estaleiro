@@ -34,14 +34,29 @@ public class Producao {
 
     @ManyToMany
     @JoinTable(
-        name = "producao_material",
-        joinColumns = @JoinColumn(name = "producao_id"),
-        inverseJoinColumns = @JoinColumn(name = "material_id")
+            name = "producao_material",
+            joinColumns = @JoinColumn(name = "producao_id"),
+            inverseJoinColumns = @JoinColumn(name = "material_id")
     )
     private List<Material> materiais;  // Lista de materiais usados na produção
+    @Column(name = "estado")
+    private Boolean estado;
 
     // Construtor padrão
     public Producao() {
+    }
+
+    public Producao(Long id, Produto produto, Funcionario funcionario, Maquina maquina, int quantidadeProduzida, Date dataProducao, boolean prontaParaUso, int diasParaCura, List<Material> materiais, Boolean estado) {
+        this.id = id;
+        this.produto = produto;
+        this.funcionario = funcionario;
+        this.maquina = maquina;
+        this.quantidadeProduzida = quantidadeProduzida;
+        this.dataProducao = dataProducao;
+        this.prontaParaUso = prontaParaUso;
+        this.diasParaCura = diasParaCura;
+        this.materiais = materiais;
+        this.estado = true;
     }
 
     // Método para alocar a máquina antes de iniciar a produção
@@ -157,5 +172,13 @@ public class Producao {
 
     public void setMateriais(List<Material> materiais) {
         this.materiais = materiais;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 }

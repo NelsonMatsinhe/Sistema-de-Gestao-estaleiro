@@ -115,4 +115,9 @@ public class Maquina {
         this.funcionarios = funcionarios;
     }
 
+    @Override
+    public String toString() {
+        return  nome ;
+    }
+
 }

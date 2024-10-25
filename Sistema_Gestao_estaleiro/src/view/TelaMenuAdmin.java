@@ -152,7 +152,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
         lblMenu2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu2.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-cliente-40.png"))); // NOI18N
+        lblMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-convidado-masculino-40.png"))); // NOI18N
         lblMenu2.setText("              Funcionario");
         lblMenu2.setPreferredSize(new java.awt.Dimension(250, 50));
         lblMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,7 +230,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu4.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-carrinho-de-compras-40.png"))); // NOI18N
+        lblMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-parede-de-tijolo-40.png"))); // NOI18N
         lblMenu4.setText("              Material");
         lblMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -307,7 +307,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu6.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
+        lblMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-produtos-40.png"))); // NOI18N
         lblMenu6.setText("              Produto ");
         lblMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -381,7 +381,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu7.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
+        lblMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-trabalho-40.png"))); // NOI18N
         lblMenu7.setText("              Produção");
         lblMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -419,7 +419,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu8.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
+        lblMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-maquinaria-40.png"))); // NOI18N
         lblMenu8.setText("              Maquina ");
         lblMenu8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -495,7 +495,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
         lblMenu10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblMenu10.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-folha-40.png"))); // NOI18N
+        lblMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-armazém-40.png"))); // NOI18N
         lblMenu10.setText("              Stock ");
         lblMenu10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
