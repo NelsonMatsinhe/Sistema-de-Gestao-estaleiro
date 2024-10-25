@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class MaquinaTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome ", "Tipo", "Alocada"};
+    private String colunas[] = {"Id", "Nome ", "Tipo", "estado", "Sintuação"};
     private List<Maquina> dados;
 
     @Override
@@ -42,6 +42,8 @@ public class MaquinaTableModel extends AbstractTableModel {
                 return maquina.getTipo();
             case 3:
                 return maquina.isEstado() ? "Activo" : "Não Acivo";
+            case 4:
+                return maquina.isAlocada()? "Alocado " : "Não Alocado";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }

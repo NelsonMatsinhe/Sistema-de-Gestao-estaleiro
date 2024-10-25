@@ -10,21 +10,15 @@ import controller.MaquinaDAO;
 import controller.ProducaoDAO;
 import java.awt.Color;
 import java.util.Date;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import model.Cargo;
-import model.Cliente;
 import model.Funcionario;
 import model.Maquina;
 import model.Material;
 import model.Producao;
-import model.Produto;
-import model.tabelas.FuncionarioTableModel;
 import model.tabelas.ProducaoTableModel;
-import model.tabelas.UsuarioTableModel;
 
 //import model.Produto;
 /**
@@ -76,7 +70,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     ProducaoDAO producaoDAO = new ProducaoDAO();
     MaquinaDAO maquinaDAO = new MaquinaDAO();
-    FuncionarioDAO funcionarioDAO= new FuncionarioDAO();
+    FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,9 +113,9 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         btAdicionarItem1 = new javax.swing.JButton();
         btRemoverItem1 = new javax.swing.JButton();
-        spQuantidadeMaterial = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
         txtQuantidadeProduzida = new javax.swing.JSpinner();
+        spQuantidadeMaterial = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -371,15 +365,12 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         });
         jPanel6.add(btRemoverItem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, -1, -1));
 
-        spQuantidadeMaterial.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000000, 1));
-        spQuantidadeMaterial.setPreferredSize(new java.awt.Dimension(200, 28));
-        jPanel6.add(spQuantidadeMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 150, -1));
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Material:");
         jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
         jPanel6.add(txtQuantidadeProduzida, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 260, -1));
+        jPanel6.add(spQuantidadeMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 150, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -466,18 +457,34 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                     throw new Exception("Selecione uma máquina");
                 }
 
-                // Verificar se a máquina está disponível
-                if (!maquinaSelecionada.isDisponivel()) {
-                    throw new Exception("Máquina já está alocada para outro funcionário");
-                }
-
+//                // Verificar se a máquina está disponível
+//                if (!maquinaSelecionada.isDisponivel()) {
+//                    throw new Exception("Máquina já está alocada para outro funcionário");
+//                }
                 // Atualizar campo do Produto com o produto associado à máquina
                 ftfProduto.setValue(maquinaSelecionada.getProduto());
+                int quantidadeProduzida;
+                int QuantidadeMaterial;
 
-                // Obter quantidade de produção
-                int quantidadeProduzida = Integer.parseInt((String) txtQuantidadeProduzida.getValue());
+                // Para txtQuantidadeProduzida
+                Object quantidadeValue = txtQuantidadeProduzida.getValue();
+                if (quantidadeValue instanceof Integer) {
+                    quantidadeProduzida = (Integer) quantidadeValue;
+                } else if (quantidadeValue instanceof String) {
+                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
+                } else {
+                    throw new Exception("Quantidade produzida inválida");
+                }
 
-                int QuantidadeMaterial = Integer.parseInt((String) spQuantidadeMaterial.getValue());
+// Para spQuantidadeMaterial
+                Object materialValue = spQuantidadeMaterial.getValue();
+                if (materialValue instanceof Integer) {
+                    QuantidadeMaterial = (Integer) materialValue;
+                } else if (materialValue instanceof String) {
+                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
+                } else {
+                    throw new Exception("Quantidade de material inválida");
+                }
                 // Obter e verificar materiais
 //            List<Material> materiaisNecessarios = obterMateriaisNecessarios(maquinaSelecionada.getProduto());
 //            for (Material material : materiaisNecessarios) {
@@ -500,8 +507,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 // producao.setLote(lote);
 
                 // Alocar máquina ao funcionário
-                maquinaSelecionada.alocar(funcionarioSelecionado);
-                funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+              //  maquinaSelecionada.alocar(funcionarioSelecionado);
+              //  funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
 
                 // Salvar as alterações
                 //  maquinaDAO.atualizar(maquinaSelecionada);
@@ -571,11 +578,30 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
                 // Atualizar campo do Produto com o produto associado à máquina
                 ftfProduto.setValue(maquinaSelecionada.getProduto());
+int quantidadeProduzida;
+                int QuantidadeMaterial;
 
                 // Obter quantidade de produção
-                int quantidadeProduzida = Integer.parseInt((String) txtQuantidadeProduzida.getValue());
+                // Modifique essas linhas para:
+// Para txtQuantidadeProduzida
+                Object quantidadeValue = txtQuantidadeProduzida.getValue();
+                if (quantidadeValue instanceof Integer) {
+                    quantidadeProduzida = (Integer) quantidadeValue;
+                } else if (quantidadeValue instanceof String) {
+                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
+                } else {
+                    throw new Exception("Quantidade produzida inválida");
+                }
 
-                int QuantidadeMaterial = Integer.parseInt((String) spQuantidadeMaterial.getValue());
+// Para spQuantidadeMaterial
+                Object materialValue = spQuantidadeMaterial.getValue();
+                if (materialValue instanceof Integer) {
+                    QuantidadeMaterial = (Integer) materialValue;
+                } else if (materialValue instanceof String) {
+                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
+                } else {
+                    throw new Exception("Quantidade de material inválida");
+                }
                 // Obter e verificar materiais
 //            List<Material> materiaisNecessarios = obterMateriaisNecessarios(maquinaSelecionada.getProduto());
 //            for (Material material : materiaisNecessarios) {
@@ -719,7 +745,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         spQuantidadeMaterial.setValue(0);
         txtQuantidadeProduzida.setValue(0);
         txtQuantidadeProduzida.setValue(0);
-         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
+        estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
     }
 
@@ -767,7 +793,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                                     "Máquina já está alocada para outro funcionário",
                                     "Erro",
                                     JOptionPane.ERROR_MESSAGE);
-                            
+
                             rbtAlocar.setSelected(false);
                             return;
                         }
@@ -789,7 +815,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                             "Erro ao alocar máquina: " + ex.getMessage(),
                             "Erro",
                             JOptionPane.ERROR_MESSAGE);
-                      System.out.println("Erro ao desalocar máquina: " + ex.getMessage()+"Erro");
+                    System.out.println("Erro ao desalocar máquina: " + ex.getMessage() + "Erro");
                     rbtAlocar.setSelected(false);
                 }
             }
@@ -809,7 +835,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                                     "Esta máquina não está alocada para este funcionário",
                                     "Erro",
                                     JOptionPane.ERROR_MESSAGE);
-                            
+
                             rbtdesalocar.setSelected(false);
                             return;
                         }
@@ -831,7 +857,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                             "Erro ao desalocar máquina: " + ex.getMessage(),
                             "Erro",
                             JOptionPane.ERROR_MESSAGE);
-                    System.out.println("Erro ao desalocar máquina: " + ex.getMessage()+"Erro");
+                    System.out.println("Erro ao desalocar máquina: " + ex.getMessage() + "Erro");
                     rbtdesalocar.setSelected(false);
                 }
             }
