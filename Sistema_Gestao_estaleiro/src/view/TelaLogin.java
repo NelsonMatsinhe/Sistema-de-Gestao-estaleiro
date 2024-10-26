@@ -19,8 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import view.TelaMenuAdmin;
-import view.TelaMenuUser;
-
 /**
  *
  * @author Nelson Matsinhe
@@ -287,7 +285,7 @@ public void iniciarFormulario() {
                 } else if (perfil.equals("User")) {
                   
                     lblMessagem1.setText("Bem-vindo User");
-                    TelaMenuUser U = new TelaMenuUser ();
+                    TelaMenuAdmin U = new TelaMenuAdmin();
                      U.setVisible(true);
                        this.dispose();
                 }
@@ -340,7 +338,7 @@ public void iniciarFormulario() {
                 } else if (perfil.equals("User")) {
                   
                     lblMessagem1.setText("Bem-vindo User");
-                    TelaMenuUser U = new TelaMenuUser ();
+                    TelaMenuAdmin U = new TelaMenuAdmin ();
                      U.setVisible(true);
                        this.dispose();
                 }

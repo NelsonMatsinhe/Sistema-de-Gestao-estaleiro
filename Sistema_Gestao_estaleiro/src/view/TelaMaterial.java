@@ -588,43 +588,40 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnFornecedorActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-
-        if (validarFormulario()) {
-            System.out.println("Formulário validado com sucesso."); // Adicione esta linha
-
+ if (validarFormulario()) {
             Long id;
             try {
-                id = Long.parseLong(txtID.getText());
+                id = Long.parseLong(txtID.getText()); // Converte o ID de String para Long
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                return; // Retorna se o ID não for válido
+                return;
             }
 
-            Funcionario funcionario = funcionarioDAO.buscarPorId(id);
-            if (funcionario != null) {
-                System.out.println("Funcionário encontrado: " + funcionario.getNome()); // Adicione esta linha
-
-                funcionario.setNome(txtNome.getText());
-                funcionario.setCargo(Cargo.valueOf(comboCargo.getSelectedItem().toString()));
-
-                funcionario.setEstado(rbtnAtivo.isSelected());
+            Material material = materialDAO.buscarPorId(id); // Agora busca usando o ID Long
+            if (material != null) {
+                material.setNome(txtNome.getText());
+                material.setQuantidade(Double.parseDouble(txtQuantidade.getValue().toString())); // Corrigido
+                material.setUnidade(txtUnidade.getText());
+                material.setPreco(Double.parseDouble(txtPreco.getText()));
+                material.setFornecedor((Fornecedor) txtFornecedor.getValue());
 
                 try {
-                    funcionarioDAO.atualizar(funcionario); // Atualiza o funcionário
-                    JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso.");
+                    materialDAO.atualizar(material); // Atualiza o material
+                    JOptionPane.showMessageDialog(this, "Material atualizado com sucesso.");
                     limpaFormulario();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o funcionário.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o material.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 habilitarFormulario(false);
                 carregarGrade();
             } else {
-                JOptionPane.showMessageDialog(this, "Funcionário não encontrado para edição.");
+                JOptionPane.showMessageDialog(this, "Material não encontrado para edição.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Formulário inválido. Verifique os campos.");
         }
+
 
     }//GEN-LAST:event_btEditarActionPerformed
 

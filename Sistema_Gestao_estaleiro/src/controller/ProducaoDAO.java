@@ -4,6 +4,7 @@
  */
 
 package controller;
+
 import model.Producao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -11,36 +12,38 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- *
- * @author Nelson Matsinhe
+ * DAO para gerenciar operações CRUD da entidade Producao
+ * 
+ * @author Nelson
  */
-
 public class ProducaoDAO {
 
-    // Método para salvar uma produção
+    // Método para salvar uma produção no banco de dados
     public void salvar(Producao producao) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.persist(producao);
+            em.persist(producao);  // Persiste a entidade Producao
             tx.commit();
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
-                tx.rollback();
+                tx.rollback();  // Faz rollback se ocorrer algum erro
             }
             e.printStackTrace();
         } finally {
-            em.close();
+            em.close();  // Fecha o EntityManager
         }
     }
 
-    // Método para buscar produção por ID
+    // Método para buscar uma produção pelo ID
     public Producao buscarPorId(Long id) {
         EntityManager em = JpaUtil.getEntityManager();
         Producao producao = null;
         try {
-            producao = em.find(Producao.class, id);
+            producao = em.find(Producao.class, id);  // Busca uma produção por ID
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -54,21 +57,23 @@ public class ProducaoDAO {
         try {
             TypedQuery<Producao> query = em.createQuery(
                 "SELECT p FROM Producao p", Producao.class
-            );
+            );  // Query JPQL para listar todas as produções
             producoes = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             em.close();
         }
         return producoes;
     }
-    
-    // Método para atualizar uma produção
+
+    // Método para atualizar uma produção existente
     public void atualizar(Producao producao) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.merge(producao);
+            em.merge(producao);  // Atualiza a entidade Producao
             tx.commit();
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -79,16 +84,38 @@ public class ProducaoDAO {
             em.close();
         }
     }
-    
-    // Método para remover uma produção
+
+    // Método para remover uma produção pelo ID
     public void remover(Long id) {
+        EntityManager em = JpaUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Producao producao = em.find(Producao.class, id);  // Busca a produção pelo ID
+            if (producao != null) {
+                em.remove(producao);  // Remove a produção se ela existir
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    // Método para remover uma produção, mas apenas atualizando seu estado (não excluir diretamente)
+    public void desativar(Long id) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
             Producao producao = em.find(Producao.class, id);
             if (producao != null) {
-                em.remove(producao);
+                producao.setEstado(false);  // Atualiza o estado para desativado
+                em.merge(producao);        // Salva a alteração no banco
             }
             tx.commit();
         } catch (Exception e) {
@@ -101,4 +128,3 @@ public class ProducaoDAO {
         }
     }
 }
-

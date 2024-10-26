@@ -204,7 +204,7 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-cliente-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-convidado-masculino-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Funcionario"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -316,7 +316,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-carrinho-de-compras-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-parede-de-tijolo-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Material"/>
               </Properties>
@@ -429,7 +429,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-produtos-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Produto "/>
               </Properties>
@@ -532,7 +532,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-trabalho-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Produ&#xe7;&#xe3;o"/>
               </Properties>
@@ -585,7 +585,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-maquinaria-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Maquina "/>
               </Properties>
@@ -691,7 +691,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagem/icons8-folha-40.png"/>
+                  <Image iconType="3" name="/imagem/icons8-armaz&#xe9;m-40.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="              Stock "/>
               </Properties>

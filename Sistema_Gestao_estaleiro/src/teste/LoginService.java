@@ -4,8 +4,7 @@ import controller.LoginDAO;
 import model.Usuario;
 
 /**
- *
- * @author Nelson Matsinhe
+ * Classe de teste para autenticação de usuários.
  */
 public class LoginService {
     public static void main(String[] args) {
@@ -25,14 +24,14 @@ public class LoginService {
 
                 // Ações com base no perfil
                 switch (perfil) {
-                    case "Admin":
-                        System.out.println("Bem-vindo Admin");
+                    case "operador":
+                        System.out.println("Bem-vindo Operador");
                         break;
-                    case "SuperAdmin":
-                        System.out.println("Bem-vindo SuperAdmin");
+                    case "gerente":
+                        System.out.println("Bem-vindo Gerente");
                         break;
-                    case "User":
-                        System.out.println("Bem-vindo User");
+                    case "administrador":
+                        System.out.println("Bem-vindo Administrador");
                         break;
                     default:
                         System.out.println("Perfil desconhecido.");
