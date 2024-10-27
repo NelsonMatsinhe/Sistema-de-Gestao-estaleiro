@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package teste;
 
+import view.*;
 import controller.FuncionarioDAO;
 import controller.MaquinaDAO;
 import controller.MaterialDAO;
@@ -47,7 +48,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         habilitarFormulario(false);
         carregarGrade();
         configurarListeners();
-        inicializarTabela();
 
         // Botão Novo habilita o formulário
         btNovo.addActionListener(e -> habilitarFormulario(true));
@@ -80,11 +80,9 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     MaquinaDAO maquinaDAO = new MaquinaDAO();
     FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
     ProdutoDAO produtoDAO = new ProdutoDAO();
-    MaterialDAO materialDAO = new MaterialDAO();
+    MaterialDAO materialDAO =new MaterialDAO();
     // Na sua tela de produção, adicione uma lista para controlar os materiais
-    private List<ItemMaterial> itensMaterial = new ArrayList<>();
-    private DefaultTableModel tmItemMaterial;
-    private int codigoAtual = 1; // Para gerar códigos únicos
+    private List<ItemMaterial> itensMateriais = new ArrayList<>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,8 +107,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         btSalvar = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
-        lblMessagem = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        lblMessagem = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         ftfProduto = new javax.swing.JFormattedTextField();
         btnUsuario = new javax.swing.JButton();
@@ -130,8 +128,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         txtQuantidadeProduzida = new javax.swing.JSpinner();
         spQuantidadeMaterial = new javax.swing.JSpinner();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbItemMaterial = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -140,20 +136,24 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jPanel6.setBackground(new java.awt.Color(51, 102, 0));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtID.setPreferredSize(new java.awt.Dimension(250, 26));
+        txtID.setPreferredSize(new java.awt.Dimension(300, 25));
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDActionPerformed(evt);
             }
         });
+        jPanel6.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 260, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ID:");
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 10, 53, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 148, 31, -1));
 
         TbProducao.setModel(new ProducaoTableModel());
         TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -162,6 +162,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(TbProducao);
+
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 203, 761, 252));
 
         btCancelar.setText("Cancelar");
         btCancelar.setFocusable(false);
@@ -174,7 +176,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btCancelar);
 
         btNovo.setText("Novo");
         btNovo.setFocusable(false);
@@ -188,7 +189,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btNovoActionPerformed(evt);
             }
         });
-        jPanel2.add(btNovo);
 
         btSalvar.setText("Salvar");
         btSalvar.setFocusable(false);
@@ -202,7 +202,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btSalvarActionPerformed(evt);
             }
         });
-        jPanel2.add(btSalvar);
 
         btEditar.setText("Editar");
         btEditar.setFocusable(false);
@@ -216,7 +215,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btEditarActionPerformed(evt);
             }
         });
-        jPanel2.add(btEditar);
 
         btExcluir.setText("Excluir");
         btExcluir.setFocusable(false);
@@ -230,19 +228,54 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btExcluirActionPerformed(evt);
             }
         });
-        jPanel2.add(btExcluir);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                    .addComponent(btEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSalvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addComponent(btEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 203, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Produto:");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 60, -1));
+        jPanel6.add(lblMessagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 529, 23));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Maquina:");
+        jPanel6.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
         ftfProduto.setEditable(false);
         ftfProduto.setColumns(25);
-        ftfProduto.setPreferredSize(new java.awt.Dimension(250, 26));
+        ftfProduto.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 260, -1));
 
         btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -250,10 +283,12 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btnUsuarioActionPerformed(evt);
             }
         });
+        jPanel6.add(btnUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, -1, 20));
 
         ftfFuncionario.setEditable(false);
         ftfFuncionario.setColumns(25);
-        ftfFuncionario.setPreferredSize(new java.awt.Dimension(250, 26));
+        ftfFuncionario.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 260, -1));
 
         btnUsuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnUsuario1.addActionListener(new java.awt.event.ActionListener() {
@@ -261,14 +296,17 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btnUsuario1ActionPerformed(evt);
             }
         });
+        jPanel6.add(btnUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Funcionario:");
+        jPanel6.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
 
         ftfMaquina.setEditable(false);
         ftfMaquina.setColumns(25);
-        ftfMaquina.setPreferredSize(new java.awt.Dimension(250, 26));
+        ftfMaquina.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfMaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 260, -1));
 
         btnUsuario2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-plus-29.png"))); // NOI18N
         btnUsuario2.addActionListener(new java.awt.event.ActionListener() {
@@ -276,10 +314,12 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btnUsuario2ActionPerformed(evt);
             }
         });
+        jPanel6.add(btnUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("  Quant Material:");
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 120, -1));
 
         rbtdesalocar.setBackground(new java.awt.Color(51, 102, 0));
         estadoGroup.add(rbtdesalocar);
@@ -290,6 +330,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 rbtdesalocarActionPerformed(evt);
             }
         });
+        jPanel6.add(rbtdesalocar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
 
         rbtAlocar.setBackground(new java.awt.Color(51, 102, 0));
         estadoGroup.add(rbtAlocar);
@@ -300,18 +341,22 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 rbtAlocarActionPerformed(evt);
             }
         });
+        jPanel6.add(rbtAlocar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 70, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Alocar:");
+        jPanel6.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
 
         ftfMaterial.setEditable(false);
         ftfMaterial.setColumns(25);
-        ftfMaterial.setPreferredSize(new java.awt.Dimension(250, 26));
+        ftfMaterial.setPreferredSize(new java.awt.Dimension(260, 25));
+        jPanel6.add(ftfMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 260, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Q Produzida:");
+        jLabel10.setText("Quantidade  Produzida:");
+        jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 160, -1));
 
         btAdicionarItem1.setToolTipText("Adicionar item");
         btAdicionarItem1.setPreferredSize(new java.awt.Dimension(35, 30));
@@ -320,6 +365,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btAdicionarItem1ActionPerformed(evt);
             }
         });
+        jPanel6.add(btAdicionarItem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, -1, -1));
 
         btRemoverItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/icons8-menos-16.png"))); // NOI18N
         btRemoverItem1.setToolTipText("Remover item");
@@ -329,166 +375,14 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 btRemoverItem1ActionPerformed(evt);
             }
         });
+        jPanel6.add(btRemoverItem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Material:");
-
-        txtQuantidadeProduzida.setPreferredSize(new java.awt.Dimension(250, 26));
-
-        spQuantidadeMaterial.setPreferredSize(new java.awt.Dimension(250, 26));
-
-        tbItemMaterial.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tbItemMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbItemMaterialMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tbItemMaterial);
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(rbtAlocar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(rbtdesalocar))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnUsuario2)
-                                    .addComponent(btnUsuario1))))
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                                .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                                .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnUsuario))))))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel11)
-                                .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(7, 7, 7)
-                        .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(btnUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnUsuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7)))
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(rbtAlocar)
-                                .addComponent(jLabel5))
-                            .addComponent(rbtdesalocar))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel9)
-                                .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
-                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
+        jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
+        jPanel6.add(txtQuantidadeProduzida, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 260, -1));
+        jPanel6.add(spQuantidadeMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 150, -1));
 
         jPanel1.setBackground(new java.awt.Color(51, 102, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -511,7 +405,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -530,7 +424,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -559,64 +453,29 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (validarFormulario()) {
+         if (validarFormulario()) {
             try {
                 Producao producao = new Producao();
-                // Obter funcionário selecionado
-                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
-                if (funcionarioSelecionado == null) {
-                    throw new Exception("Selecione um funcionário");
-                }
-                // Obter máquina selecionada
-                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
-                if (maquinaSelecionada == null) {
-                    throw new Exception("Selecione uma máquina");
-                }
-                // Obter produto e verificar
-                Produto produto = maquinaSelecionada.getProduto();
-                ftfProduto.setValue(produto);
+                // ... seu código existente para configurar a produção ...
 
-                // Modifique essas linhas para:
-                int quantidadeProduzida;
-                int QuantidadeMaterial;
-
-// Para txtQuantidadeProduzida
-                Object quantidadeValue = txtQuantidadeProduzida.getValue();
-                if (quantidadeValue instanceof Integer) {
-                    quantidadeProduzida = (Integer) quantidadeValue;
-                } else if (quantidadeValue instanceof String) {
-                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
-                } else {
-                    throw new Exception("Quantidade produzida inválida");
+                // Adiciona os materiais à produção e atualiza o estoque
+                List<Material> materiaisProducao = new ArrayList<>();
+                for (ItemMaterial item : itensMateriais) {
+                    Material material = item.getMaterial();
+                    material.removerEstoque(item.getQuantidade());
+                    materiaisProducao.add(material);
+                    materialDAO.atualizar(material); // Atualiza o estoque no banco
                 }
 
-// Para spQuantidadeMaterial
-                Object materialValue = spQuantidadeMaterial.getValue();
-                if (materialValue instanceof Integer) {
-                    QuantidadeMaterial = (Integer) materialValue;
-                } else if (materialValue instanceof String) {
-                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
-                } else {
-                    throw new Exception("Quantidade de material inválida");
-                }
-                // Configurar a produção
-                producao.setFuncionario(funcionarioSelecionado);
-                producao.setMaquina(maquinaSelecionada);
-                producao.setProduto(produto);
-                producao.setQuantidadeProduzida(quantidadeProduzida);
-                producao.setDataProducao(new Date());
-                producao.setEstado(true);
-                // Definir dias para cura baseado no produto
-                producao.setDiasParaCura(produto.getTempoCura());
-                producao.setProntaParaUso(false); // Inicialmente não está pronta
-                // Atualizar o estoque do produto
-                produto.atualizarEstoque(quantidadeProduzida);
-                produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
-                // Salvar a produção
+                producao.setMateriais(materiaisProducao);
+
+                // Salva a produção
                 producaoDAO.salvar(producao);
+
                 JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
                 limpaFormulario();
                 carregarGrade();
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
                         "Erro", JOptionPane.ERROR_MESSAGE);
@@ -773,74 +632,14 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     private void btAdicionarItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarItem1ActionPerformed
         if (validarFormularioItens()) {
-            try {
-                // Pegar o material selecionado e a quantidade
-                Material material = (Material) ftfMaterial.getValue();
-                double quantidade = Double.parseDouble(spQuantidadeMaterial.getValue().toString());
 
-                // Verificar se há estoque suficiente
-                if (material.getQuantidade() < quantidade) {
-                    throw new Exception("Quantidade insuficiente em estoque!");
-                }
-
-                // Criar novo ItemMaterial
-                ItemMaterial item = new ItemMaterial(material, quantidade);
-
-                // Adicionar à lista
-                itensMaterial.add(item);
-
-                // Atualizar a tabela
-                atualizarTabelaMaterial();
-
-                // Limpar os campos de material
-                ftfMaterial.setValue(null);
-                spQuantidadeMaterial.setValue(0);
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this,
-                        "Erro ao adicionar material.\n" + ex.getMessage(),
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE);
-            }
         }
+
     }//GEN-LAST:event_btAdicionarItem1ActionPerformed
 
     private void btRemoverItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverItem1ActionPerformed
-        if (tbItemMaterial.getSelectedRow() != -1) {
-            int linha = tbItemMaterial.getSelectedRow();
-
-            // Remover da lista
-            itensMaterial.remove(linha);
-
-            // Atualizar a tabela
-            atualizarTabelaMaterial();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Selecione um material para remover",
-                    "Atenção",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_btRemoverItem1ActionPerformed
-
-    private void tbItemMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbItemMaterialMouseClicked
-
-    }//GEN-LAST:event_tbItemMaterialMouseClicked
-// Método para atualizar a tabela
-private void atualizarTabelaMaterial() {
-    // Limpar tabela
-    tmItemMaterial.setRowCount(0);
-    
-    // Adicionar itens
-    for (ItemMaterial item : itensMaterial) {
-        tmItemMaterial.addRow(new Object[]{
-            item.getCodigo(),
-            item.getMaterial().getNome(),
-            item.getQuantidade()
-        });
-    }
-}
-
 
     /**
      * Seleciona o registro da tabela e preenche o formulário.
@@ -906,12 +705,97 @@ private void atualizarTabelaMaterial() {
         txtQuantidadeProduzida.setValue(0);
         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
-        //tbItemMaterial.clear();
+        itensMateriais.clear();
+        atualizarTabelaMateriais();
     }
 
     /**
      * Validação do formulário.
      */
+// Método para adicionar material
+    private void adicionarMaterial() {
+        try {
+            // Obtém o material selecionado do seu campo de seleção
+            Material materialSelecionado = (Material) ftfMaterial.getValue();
+            if (materialSelecionado == null) {
+                throw new Exception("Selecione um material");
+            }
+
+            // Obtém a quantidade informada
+            double quantidade;
+            Object quantidadeValue = spQuantidadeMaterial.getValue();
+            if (quantidadeValue instanceof Double) {
+                quantidade = (Double) quantidadeValue;
+            } else if (quantidadeValue instanceof String) {
+                quantidade = Double.parseDouble((String) quantidadeValue);
+            } else {
+                throw new Exception("Quantidade inválida");
+            }
+
+            // Verifica se há estoque suficiente
+            if (quantidade <= 0) {
+                throw new Exception("A quantidade deve ser maior que zero");
+            }
+            if (quantidade > materialSelecionado.getQuantidade()) {
+                throw new Exception("Quantidade maior que o estoque disponível");
+            }
+
+            // Verifica se o material já foi adicionado
+            for (ItemMaterial item : itensMateriais) {
+                if (item.getMaterial().getId().equals(materialSelecionado.getId())) {
+                    throw new Exception("Este material já foi adicionado");
+                }
+            }
+
+            // Adiciona o material à lista
+            itensMateriais.add(new ItemMaterial(materialSelecionado, quantidade));
+
+            // Atualiza a tabela de materiais
+            atualizarTabelaMateriais();
+
+            // Limpa os campos de material
+            ftfMaterial.setValue(null);
+            spQuantidadeMaterial.setValue(null);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao adicionar material.\n" + ex.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+// Método para remover material
+    private void removerMaterial() {
+        try {
+            int linhaSelecionada = tblMateriais.getSelectedRow();
+            if (linhaSelecionada < 0) {
+                throw new Exception("Selecione um material para remover");
+            }
+
+            itensMateriais.remove(linhaSelecionada);
+            atualizarTabelaMateriais();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao remover material.\n" + ex.getMessage(),
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+// Método para atualizar a tabela de materiais
+    private void atualizarTabelaMateriais() {
+        // Assume que você tem um TableModel personalizado
+        DefaultTableModel model = (DefaultTableModel) tblMateriais.getModel();
+        model.setRowCount(0);
+
+        for (ItemMaterial item : itensMateriais) {
+            model.addRow(new Object[]{
+                item.getMaterial().getNome(),
+                item.getQuantidade(),
+                item.getMaterial().getUnidade()
+            });
+        }
+    }
+
+
     private boolean validarFormulario() {
         Border borderError = BorderFactory.createLineBorder(Color.RED, 2);
         Border borderNormal = BorderFactory.createLineBorder(Color.GRAY, 1);
@@ -1023,14 +907,6 @@ private void atualizarTabelaMaterial() {
             }
         });
     }
-    // Método para inicializar o modelo da tabela
-private void inicializarTabela() {
-    tmItemMaterial = new DefaultTableModel();
-    tmItemMaterial.addColumn("Código");
-    tmItemMaterial.addColumn("Material");
-    tmItemMaterial.addColumn("Quantidade");
-    tbItemMaterial.setModel(tmItemMaterial);
-}
 
     private boolean validarFormularioItens() {
         if (ftfMaterial.getValue() == null) {
@@ -1107,12 +983,10 @@ private void inicializarTabela() {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblMessagem;
     private javax.swing.JRadioButton rbtAlocar;
     private javax.swing.JRadioButton rbtdesalocar;
     private javax.swing.JSpinner spQuantidadeMaterial;
-    private javax.swing.JTable tbItemMaterial;
     private javax.swing.JTextField txtID;
     private javax.swing.JSpinner txtQuantidadeProduzida;
     // End of variables declaration//GEN-END:variables
