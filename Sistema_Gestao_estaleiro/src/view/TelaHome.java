@@ -11,8 +11,11 @@ import controller.ProducaoDAO;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import controller.UsuarioDAO;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.Material;
+import model.Produto;
 import model.tabelas.ProducaoTableModel;
 
 /**
@@ -32,6 +35,7 @@ public class TelaHome extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         connta();
         carregarGrade();
+        verificarEstoqueBaixo() ;
     }
 
     DaoStock DaoStock = new DaoStock();
@@ -77,6 +81,47 @@ public class TelaHome extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private void verificarEstoqueBaixo() {
+    int limiteEstoque = 100; // Limite para considerar estoque baixo
+
+    try {
+        List<Produto> produtosBaixoEstoque = DaoStock.listarProdutosComEstoqueBaixo(limiteEstoque);
+        List<Material> materiaisBaixoEstoque = DaoStock.listarMateriaisComEstoqueBaixo(limiteEstoque);
+
+        StringBuilder mensagem = new StringBuilder("Itens com estoque baixo:\n\n");
+
+        boolean temBaixoEstoque = false;
+
+        // Adiciona produtos com estoque baixo na mensagem
+        if (!produtosBaixoEstoque.isEmpty()) {
+            temBaixoEstoque = true;
+            mensagem.append("Produtos:\n");
+            for (Produto produto : produtosBaixoEstoque) {
+                mensagem.append(" - ").append(produto.getNome())
+                        .append(" (Quantidade: ").append(produto.getQuantidade()).append(")\n");
+            }
+        }
+
+        // Adiciona materiais com estoque baixo na mensagem
+        if (!materiaisBaixoEstoque.isEmpty()) {
+            temBaixoEstoque = true;
+            mensagem.append("\nMateriais:\n");
+            for (Material material : materiaisBaixoEstoque) {
+                mensagem.append(" - ").append(material.getNome())
+                        .append(" (Quantidade: ").append(material.getQuantidade()).append(")\n");
+            }
+        }
+
+        // Exibe a mensagem se houver produtos ou materiais com estoque baixo
+        if (temBaixoEstoque) {
+            JOptionPane.showMessageDialog(null, mensagem.toString(), "Aviso de Estoque Baixo", JOptionPane.WARNING_MESSAGE);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Erro ao verificar estoque: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

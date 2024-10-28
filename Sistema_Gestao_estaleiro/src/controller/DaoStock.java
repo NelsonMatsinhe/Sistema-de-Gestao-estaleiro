@@ -89,4 +89,27 @@ public class DaoStock {
             entityManager.close();
         }
     }
+
+    public static List<Produto> listarProdutosComEstoqueBaixo(int limite) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM Produto p WHERE p.quantidade < :limite", Produto.class)
+                    .setParameter("limite", limite)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public static List<Material> listarMateriaisComEstoqueBaixo(int limite) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT m FROM Material m WHERE m.quantidade < :limite", Material.class)
+                    .setParameter("limite", limite)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }
