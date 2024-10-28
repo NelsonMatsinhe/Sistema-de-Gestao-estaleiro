@@ -21,7 +21,7 @@ public class Material {
     private Long id;
 
     private String nome;
-    private double quantidade;
+    private int quantidade;
     private String unidade;
     private double preco;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,11 +59,11 @@ public class Material {
         this.nome = nome;
     }
 
-    public double getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -91,6 +91,8 @@ public class Material {
         this.fornecedor = fornecedor;
     }
 
+    
+    
     @Override
     public String toString() {
         return nome ;

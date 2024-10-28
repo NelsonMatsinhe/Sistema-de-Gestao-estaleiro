@@ -50,8 +50,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
         carregarGrade();
         txtNome.requestFocus();
 
-       
-
         // Botão Novo habilita o formulário
         btNovo.addActionListener(e -> habilitarFormulario(true));
 
@@ -71,7 +69,6 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             }
         });
 
-       
         TbMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectRegistryTable();
@@ -497,7 +494,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             }
 
             material.setNome(txtNome.getText());
-            material.setQuantidade(Double.parseDouble((String) txtQuantidade.getValue()));
+            material.setQuantidade(Integer.parseInt((String) txtQuantidade.getValue()));
             material.setUnidade(txtUnidade.getText());
             material.setPreco(Double.parseDouble(txtPreco.getText()));
             material.setFornecedor((Fornecedor) txtFornecedor.getValue());
@@ -588,7 +585,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnFornecedorActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
- if (validarFormulario()) {
+        if (validarFormulario()) {
             Long id;
             try {
                 id = Long.parseLong(txtID.getText()); // Converte o ID de String para Long
@@ -600,7 +597,7 @@ public class TelaMaterial extends javax.swing.JInternalFrame {
             Material material = materialDAO.buscarPorId(id); // Agora busca usando o ID Long
             if (material != null) {
                 material.setNome(txtNome.getText());
-                material.setQuantidade(Double.parseDouble(txtQuantidade.getValue().toString())); // Corrigido
+                material.setQuantidade(Integer.parseInt((String) txtQuantidade.getValue()));
                 material.setUnidade(txtUnidade.getText());
                 material.setPreco(Double.parseDouble(txtPreco.getText()));
                 material.setFornecedor((Fornecedor) txtFornecedor.getValue());
