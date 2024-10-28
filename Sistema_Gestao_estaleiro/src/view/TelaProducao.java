@@ -599,6 +599,14 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 } else {
                     throw new Exception("Quantidade de material inválida");
                 }
+                
+                            // Atualizar o estoque dos materiais
+            for (ItemMaterial item : itensMaterial) {
+                Material material = item.getMaterial();
+                material.removerEstoque(item.getQuantidade());
+                materialDAO.atualizar(material);
+            }
+
                 // Configurar a produção
                 producao.setFuncionario(funcionarioSelecionado);
                 producao.setMaquina(maquinaSelecionada);
@@ -654,93 +662,84 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        if (validarFormulario()) {
-            try {
-                Producao producao = new Producao();
-
-                // Obter funcionário selecionado
-                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
-                if (funcionarioSelecionado == null) {
-                    throw new Exception("Selecione um funcionário");
-                }
-
-                // Obter máquina selecionada
-                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
-                if (maquinaSelecionada == null) {
-                    throw new Exception("Selecione uma máquina");
-                }
-
-                // Verificar se a máquina está disponível
-                if (!maquinaSelecionada.isDisponivel()) {
-                    throw new Exception("Máquina já está alocada para outro funcionário");
-                }
-
-                // Atualizar campo do Produto com o produto associado à máquina
-                ftfProduto.setValue(maquinaSelecionada.getProduto());
-                int quantidadeProduzida;
-                int QuantidadeMaterial;
-
-                // Obter quantidade de produção
-                // Modifique essas linhas para:
-// Para txtQuantidadeProduzida
-                Object quantidadeValue = txtQuantidadeProduzida.getValue();
-                if (quantidadeValue instanceof Integer) {
-                    quantidadeProduzida = (Integer) quantidadeValue;
-                } else if (quantidadeValue instanceof String) {
-                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
-                } else {
-                    throw new Exception("Quantidade produzida inválida");
-                }
-
-// Para spQuantidadeMaterial
-                Object materialValue = spQuantidadeMaterial.getValue();
-                if (materialValue instanceof Integer) {
-                    QuantidadeMaterial = (Integer) materialValue;
-                } else if (materialValue instanceof String) {
-                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
-                } else {
-                    throw new Exception("Quantidade de material inválida");
-                }
-                // Obter e verificar materiais
-//            List<Material> materiaisNecessarios = obterMateriaisNecessarios(maquinaSelecionada.getProduto());
-//            for (Material material : materiaisNecessarios) {
-//                double quantidadeNecessaria = calcularQuantidadeMaterial(material, quantidadeProduzida);
-//                if (material.getQuantidade() < quantidadeNecessaria) {
-//                    throw new Exception("Estoque insuficiente do material: " + material.getNome());
-//                }
-//                material.removerEstoque(quantidadeNecessaria);
-//              //  materialDAO.atualizar(material);
+//        if (validarFormulario()) {
+//            Long id;
+//            try {
+//                id = Long.parseLong(txtID.getText());
+//            } catch (NumberFormatException e) {
+//                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+//                return; // Retorna se o ID não for válido
 //            }
-//            
-                // Configurar a produção
-                producao.setFuncionario(funcionarioSelecionado);
-                producao.setMaquina(maquinaSelecionada);
-                producao.setProduto(maquinaSelecionada.getProduto());
-                producao.setQuantidadeProduzida(quantidadeProduzida);
-                producao.setDataProducao(new Date());
-//            producao.setMateriais(materiaisNecessarios);
-                producao.setEstado(true);
-                // producao.setLote(lote);
-
-                // Alocar máquina ao funcionário
-                maquinaSelecionada.alocar(funcionarioSelecionado);
-                funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
-
-                // Salvar as alterações
-                //  maquinaDAO.atualizar(maquinaSelecionada);
-                // funcionarioDAO.atualizar(funcionarioSelecionado);
-                producaoDAO.salvar(producao);
-
-                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
-                limpaFormulario();
-                carregarGrade();
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
-                        "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-
+//
+//                Producao producao = producaoDAO.buscarPorId(id);
+//                // Obter funcionário selecionado
+//                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+//                if (funcionarioSelecionado == null) {
+//                    throw new Exception("Selecione um funcionário");
+//                }
+//                // Obter máquina selecionada
+//                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+//                if (maquinaSelecionada == null) {
+//                    throw new Exception("Selecione uma máquina");
+//                }
+//                // Obter produto e verificar
+//                Produto produto = maquinaSelecionada.getProduto();
+//                ftfProduto.setValue(produto);
+//
+//                // Modifique essas linhas para:
+//                int quantidadeProduzida;
+//                int QuantidadeMaterial;
+//
+//// Para txtQuantidadeProduzida
+//                Object quantidadeValue = txtQuantidadeProduzida.getValue();
+//                if (quantidadeValue instanceof Integer) {
+//                    quantidadeProduzida = (Integer) quantidadeValue;
+//                } else if (quantidadeValue instanceof String) {
+//                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
+//                } else {
+//                    throw new Exception("Quantidade produzida inválida");
+//                }
+//
+//// Para spQuantidadeMaterial
+//                Object materialValue = spQuantidadeMaterial.getValue();
+//                if (materialValue instanceof Integer) {
+//                    QuantidadeMaterial = (Integer) materialValue;
+//                } else if (materialValue instanceof String) {
+//                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
+//                } else {
+//                    throw new Exception("Quantidade de material inválida");
+//                }
+//                
+//                            // Atualizar o estoque dos materiais
+//            for (ItemMaterial item : itensMaterial) {
+//                Material material = item.getMaterial();
+//                material.removerEstoque(item.getQuantidade());
+//                materialDAO.atualizar(material);
+//            }
+//
+//                // Configurar a produção
+//                producao.setFuncionario(funcionarioSelecionado);
+//                producao.setMaquina(maquinaSelecionada);
+//                producao.setProduto(produto);
+//                producao.setQuantidadeProduzida(quantidadeProduzida);
+//                producao.setDataProducao(new Date());
+//                producao.setEstado(true);
+//                // Definir dias para cura baseado no produto
+//                producao.setDiasParaCura(produto.getTempoCura());
+//                producao.setProntaParaUso(false); // Inicialmente não está pronta
+//                // Atualizar o estoque do produto
+//                produto.atualizarEstoque(quantidadeProduzida);
+//                produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
+//                // Salvar a produção
+//                producaoDAO.salvar(producao);
+//                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
+//                limpaFormulario();
+//                carregarGrade();
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
+//                        "Erro", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
 
     }//GEN-LAST:event_btEditarActionPerformed
 
@@ -906,7 +905,10 @@ private void atualizarTabelaMaterial() {
         txtQuantidadeProduzida.setValue(0);
         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
-        //tbItemMaterial.clear();
+itensMaterial.clear();
+    
+    // Resetar código
+    codigoAtual = 1;
     }
 
     /**
