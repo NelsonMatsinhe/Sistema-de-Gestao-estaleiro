@@ -12,37 +12,43 @@ public class LoginDAO {
 
     /**
      * Método para autenticar o usuário com base no nome de usuário e senha.
-     * 
+     *
      * @param userName Nome de usuário
      * @param senha Senha do usuário
      * @return O objeto Usuario autenticado ou null se falhar
      */
     public Usuario autenticar(String userName, String senha) {
-        EntityManager em = JpaUtil.getEntityManager();
-        Usuario usuario = null;
+    EntityManager em = JpaUtil.getEntityManager();
+    Usuario usuario = null;
 
-        try {
-            // Consulta para autenticação, verificando se o usuário está ativo (estado = true)
-            TypedQuery<Usuario> query = em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.userName = :userName AND u.senha = :senha AND u.estado = true",
-                    Usuario.class
-            );
-            query.setParameter("userName", userName);
-            query.setParameter("senha", senha);
+    try {
+        // Retrieve the user first to get the stored password (which includes the salt)
+        TypedQuery<Usuario> query = em.createQuery(
+            "SELECT u FROM Usuario u WHERE u.userName = :userName AND u.estado = true",
+            Usuario.class
+        );
+        query.setParameter("userName", userName);
+        usuario = query.getSingleResult();
 
-            usuario = query.getSingleResult();
-        } catch (NoResultException e) {
+        // Verify the password with the stored hash and salt
+        if (!Criptografar.verificarSenha(senha, usuario.getSenha())) {
+            usuario = null; // Invalid password
             System.out.println("Usuário ou senha inválidos, ou usuário inativo.");
-        } finally {
-            em.close();
         }
-
-        return usuario;
+    } catch (NoResultException e) {
+        System.out.println("Usuário ou senha inválidos, ou usuário inativo.");
+    } finally {
+        em.close();
     }
 
+    return usuario;
+}
+
+
     /**
-     * Método para verificar o perfil do usuário com base no cargo do funcionário.
-     * 
+     * Método para verificar o perfil do usuário com base no cargo do
+     * funcionário.
+     *
      * @param usuario O usuário autenticado
      * @return Uma string representando o perfil do usuário
      */

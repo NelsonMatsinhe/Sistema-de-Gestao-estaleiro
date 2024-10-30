@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Criptografar;
 import controller.UsuarioDAO;
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -466,7 +467,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             }
             usuario.setFuncionario((Funcionario) ftfFucionario.getValue());
             usuario.setUserName(txtNome.getText());
-            usuario.setSenha(txsenha.getText());
+            usuario.setSenha(Criptografar.encriptografar(txsenha.getText()));
             if (rbtnAtivo.isSelected()) {
                 usuario.setEstado(true);  // Ativo
             } else if (rbtnInativo.isSelected()) {
@@ -532,7 +533,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             if (usuario != null) {
                 usuario.setFuncionario((Funcionario) ftfFucionario.getValue());
                 usuario.setUserName(txtNome.getText());
-                usuario.setSenha(txsenha.getText());
+                usuario.setSenha(Criptografar.encriptografar(txsenha.getText()));
                 if (rbtnAtivo.isSelected()) {
                     usuario.setEstado(true);  // Ativo
                 } else if (rbtnInativo.isSelected()) {
