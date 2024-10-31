@@ -822,7 +822,7 @@ public class TelaMenuAdmin extends javax.swing.JFrame {
 
     private void lblMenu9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenu9MouseClicked
         // TODO add your handling code here:
-        abrirTela(TelaMaterial);
+        abrirTela(TelaRelatorio);
 
     }//GEN-LAST:event_lblMenu9MouseClicked
 
