@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ProducaoTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Produto", "Funcionário", "Quantidade Produzida", "Data de Produção", "Dias para Cura", "Pronta para Uso"};
+    private String colunas[] = {"Id", "Produto", "Funcionário", "Quantidade Produzida", "Data de Produção", "Dias para Cura"};
     private List<Producao> dados;
 
     @Override
@@ -48,8 +48,8 @@ public class ProducaoTableModel extends AbstractTableModel {
                 return producao.getDataProducao();
             case 5:
                 return producao.getDiasParaCura();
-            case 6:
-                return producao.isProntaParaUso() ? "Sim" : "Não";
+//            case 6:
+//                return producao.isProntaParaUso() ? "Sim" : "Não";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }

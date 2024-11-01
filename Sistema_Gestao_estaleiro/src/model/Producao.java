@@ -1,10 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * @author Nelson Matsinhe
+ */
 @Entity
+@Table(name = "producao")
 public class Producao {
 
     @Id
@@ -25,12 +32,13 @@ public class Producao {
 
     private int quantidadeProduzida;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataProducao;
 
-    private boolean prontaParaUso;
+    private int diasParaCura;
 
-    private int diasParaCura;  // Dias necessários para o produto curar
+    @OneToMany(mappedBy = "producao", cascade = CascadeType.ALL)
+    private List<LoteProducao> lotes;
 
     @ManyToMany
     @JoinTable(
@@ -38,70 +46,124 @@ public class Producao {
             joinColumns = @JoinColumn(name = "producao_id"),
             inverseJoinColumns = @JoinColumn(name = "material_id")
     )
-    private List<Material> materiais;  // Lista de materiais usados na produção
+    private List<Material> materiais;
+
     @Column(name = "estado")
     private Boolean estado;
 
     // Construtor padrão
     public Producao() {
-    }
-
-    public Producao(Long id, Produto produto, Funcionario funcionario, Maquina maquina, int quantidadeProduzida, Date dataProducao, boolean prontaParaUso, int diasParaCura, List<Material> materiais, Boolean estado) {
-        this.id = id;
-        this.produto = produto;
-        this.funcionario = funcionario;
-        this.maquina = maquina;
-        this.quantidadeProduzida = quantidadeProduzida;
-        this.dataProducao = dataProducao;
-        this.prontaParaUso = prontaParaUso;
-        this.diasParaCura = diasParaCura;
-        this.materiais = materiais;
+        this.dataProducao = new Date();
         this.estado = true;
+        this.lotes = new ArrayList<>();
     }
 
-    // Método para alocar a máquina antes de iniciar a produção
+    // Método para criar novo lote
+    public LoteProducao criarLote(int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+        }
+
+        LoteProducao lote = new LoteProducao();
+        lote.setProducao(this);
+        lote.setQuantidadeInicial(quantidade);
+        lote.setQuantidadeAtual(quantidade);
+        lote.setNumeroLote(gerarNumeroLote());
+        lote.setDataFinalCura(calcularDataFinalCura());
+
+        lotes.add(lote);
+        this.quantidadeProduzida += quantidade;
+
+        return lote;
+    }
+
+    // Método para calcular data final de cura
+    private Date calcularDataFinalCura() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_MONTH, this.diasParaCura);
+        return cal.getTime();
+    }
+
+    // Método para gerar número único de lote
+    private String gerarNumeroLote() {
+        return String.format("LOTE-%s-%d-%d",
+                produto.getId(),
+                new Date().getTime(),
+                (int) (Math.random() * 1000));
+    }
+
+    // Método para obter quantidade total pronta para uso
+    public int getQuantidadeProntaParaUso() {
+        return lotes.stream()
+                .filter(LoteProducao::isProntaParaUso)
+                .mapToInt(LoteProducao::getQuantidadeAtual)
+                .sum();
+    }
+
+    // Método para obter quantidade total em cura
+    public int getQuantidadeEmCura() {
+        return lotes.stream()
+                .filter(lote -> !lote.isProntaParaUso())
+                .mapToInt(LoteProducao::getQuantidadeAtual)
+                .sum();
+    }
+
+    // Método para obter total de quebras
+    public int getTotalQuebras() {
+        return lotes.stream()
+                .mapToInt(LoteProducao::getQuantidadeQuebrada)
+                .sum();
+    }
+
+    // Método para calcular percentual total de quebras
+    public double getPercentualTotalQuebras() {
+        if (quantidadeProduzida == 0) {
+            return 0;
+        }
+        return (double) getTotalQuebras() / quantidadeProduzida * 100;
+    }
+
+    // Método para atualizar status de cura de todos os lotes
+    public void atualizarStatusCura() {
+        lotes.forEach(LoteProducao::verificarCura);
+    }
+
+    // Método para alocar máquina
     public void alocarMaquina(Maquina maquina) {
         if (maquina != null && maquina.isDisponivel()) {
             this.maquina = maquina;
-            maquina.setAlocada(true);  // Marcando a máquina como alocada
+            maquina.setAlocada(true);
         } else {
-            throw new IllegalArgumentException("A máquina não está disponível.");
+            throw new IllegalArgumentException("Máquina não disponível");
         }
     }
 
-    // Método para registrar a produção
+    // Método para registrar produção
     public void registrarProducao(Funcionario funcionario, int quantidade, List<Material> materiaisUtilizados) {
         if (this.maquina == null) {
-            throw new IllegalStateException("A máquina não foi alocada para a produção.");
+            throw new IllegalStateException("Máquina não alocada para produção");
         }
+
         this.funcionario = funcionario;
-        this.quantidadeProduzida = quantidade;
-        this.dataProducao = new Date();
-        this.produto.atualizarEstoque(quantidade);  // Atualiza o estoque do produto
         this.materiais = materiaisUtilizados;
+
+        // Atualiza estoque de materiais
         for (Material material : materiaisUtilizados) {
-            material.removerEstoque(calcularQuantidadeNecessaria(material));  // Atualiza o estoque do material
+            material.removerEstoque(calcularQuantidadeNecessaria(material, quantidade));
         }
-        this.prontaParaUso = false;  // Marca inicialmente como não pronta para uso
-        this.diasParaCura = produto.getTempoCura();  // Define os dias de cura do produto
+
+        // Cria lote com a quantidade produzida
+        criarLote(quantidade);
     }
 
-    // Verifica se o produto já passou pelos dias de cura
-    public void verificarCura() {
-        Date hoje = new Date();
-        long diferencaDias = (hoje.getTime() - dataProducao.getTime()) / (1000 * 60 * 60 * 24);
-        if (diferencaDias >= diasParaCura) {  // Verificação com base no tempo de cura do produto
-            this.prontaParaUso = true;
-        }
+    // Método para calcular quantidade necessária de material
+    private double calcularQuantidadeNecessaria(Material material, int quantidade) {
+        // Implementar lógica específica de cálculo baseada no material e quantidade
+        return material.getQuantidade() * quantidade;
     }
 
-    // Método auxiliar para calcular a quantidade de material necessária para a produção
-    private double calcularQuantidadeNecessaria(Material material) {
-        // Implemente a lógica de cálculo da quantidade necessária com base no tipo de material
-        return material.getQuantidade(); // Exemplo simples, pode ser modificado
-    }
-
-    // Getters e setters
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -150,20 +212,20 @@ public class Producao {
         this.dataProducao = dataProducao;
     }
 
-    public boolean isProntaParaUso() {
-        return prontaParaUso;
-    }
-
-    public void setProntaParaUso(boolean prontaParaUso) {
-        this.prontaParaUso = prontaParaUso;
-    }
-
     public int getDiasParaCura() {
         return diasParaCura;
     }
 
     public void setDiasParaCura(int diasParaCura) {
         this.diasParaCura = diasParaCura;
+    }
+
+    public List<LoteProducao> getLotes() {
+        return lotes;
+    }
+
+    public void setLotes(List<LoteProducao> lotes) {
+        this.lotes = lotes;
     }
 
     public List<Material> getMateriais() {
@@ -182,3 +244,4 @@ public class Producao {
         this.estado = estado;
     }
 }
+  

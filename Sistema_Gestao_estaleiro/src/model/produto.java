@@ -52,7 +52,7 @@ public class Produto {
     private Date dataRegistro;
 
     @NotNull
-    @Column(name = "preco", nullable = false)
+    @Column(name = "preco", nullable = true)
     private BigDecimal preco;
 
     @OneToMany(mappedBy = "produto")

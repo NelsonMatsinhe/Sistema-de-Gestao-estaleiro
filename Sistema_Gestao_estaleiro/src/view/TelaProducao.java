@@ -635,13 +635,13 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 } else {
                     throw new Exception("Quantidade de material inválida");
                 }
-                
-                            // Atualizar o estoque dos materiais
-            for (ItemMaterial item : itensMaterial) {
-                Material material = item.getMaterial();
-                material.removerEstoque(item.getQuantidade());
-                materialDAO.atualizar(material);
-            }
+
+                // Atualizar o estoque dos materiais
+                for (ItemMaterial item : itensMaterial) {
+                    Material material = item.getMaterial();
+                    material.removerEstoque(item.getQuantidade());
+                    materialDAO.atualizar(material);
+                }
 
                 // Configurar a produção
                 producao.setFuncionario(funcionarioSelecionado);
@@ -652,7 +652,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 producao.setEstado(true);
                 // Definir dias para cura baseado no produto
                 producao.setDiasParaCura(produto.getTempoCura());
-                producao.setProntaParaUso(false); // Inicialmente não está pronta
                 // Atualizar o estoque do produto
                 produto.atualizarEstoque(quantidadeProduzida);
                 produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
@@ -689,7 +688,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Selecione uma produção para excluir.");
         }
-
 
     }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -862,20 +860,20 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tbItemMaterialMouseClicked
 // Método para atualizar a tabela
-private void atualizarTabelaMaterial() {
-    // Limpar tabela
-    tmItemMaterial.setRowCount(0);
-    
-    // Adicionar itens
-    for (ItemMaterial item : itensMaterial) {
-        tmItemMaterial.addRow(new Object[]{
-            item.getCodigo(),
-            item.getMaterial().getNome(),
-            item.getQuantidade()
-        });
-    }
-}
 
+    private void atualizarTabelaMaterial() {
+        // Limpar tabela
+        tmItemMaterial.setRowCount(0);
+
+        // Adicionar itens
+        for (ItemMaterial item : itensMaterial) {
+            tmItemMaterial.addRow(new Object[]{
+                item.getCodigo(),
+                item.getMaterial().getNome(),
+                item.getQuantidade()
+            });
+        }
+    }
 
     /**
      * Seleciona o registro da tabela e preenche o formulário.
@@ -941,10 +939,10 @@ private void atualizarTabelaMaterial() {
         txtQuantidadeProduzida.setValue(0);
         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
-itensMaterial.clear();
-    
-    // Resetar código
-    codigoAtual = 1;
+        itensMaterial.clear();
+
+        // Resetar código
+        codigoAtual = 1;
     }
 
     /**
@@ -1062,13 +1060,14 @@ itensMaterial.clear();
         });
     }
     // Método para inicializar o modelo da tabela
-private void inicializarTabela() {
-    tmItemMaterial = new DefaultTableModel();
-    tmItemMaterial.addColumn("Código");
-    tmItemMaterial.addColumn("Material");
-    tmItemMaterial.addColumn("Quantidade");
-    tbItemMaterial.setModel(tmItemMaterial);
-}
+
+    private void inicializarTabela() {
+        tmItemMaterial = new DefaultTableModel();
+        tmItemMaterial.addColumn("Código");
+        tmItemMaterial.addColumn("Material");
+        tmItemMaterial.addColumn("Quantidade");
+        tbItemMaterial.setModel(tmItemMaterial);
+    }
 
     private boolean validarFormularioItens() {
         if (ftfMaterial.getValue() == null) {
