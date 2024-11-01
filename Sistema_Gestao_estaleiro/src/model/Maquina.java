@@ -25,15 +25,15 @@ public class Maquina {
     @Column(nullable = false)
     private boolean alocada;
 
-   @OneToMany(mappedBy = "maquinaAlocada", fetch = FetchType.EAGER)
-private List<Funcionario> funcionarios = new ArrayList<>(); 
-@ManyToOne
+    @OneToMany(mappedBy = "maquinaAlocada", fetch = FetchType.EAGER)
+    private List<Funcionario> funcionarios = new ArrayList<>();
+    @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
+
     public Maquina() {
     }
 
-    
     public Maquina(Long id, String nome, String tipo, boolean estado, boolean alocada, List<Funcionario> funcionarios) {
         this.id = id;
         this.nome = nome;
@@ -43,22 +43,23 @@ private List<Funcionario> funcionarios = new ArrayList<>();
         this.funcionarios = funcionarios;
     }
 
- public void alocar(Funcionario funcionario) {
-    if (!this.isAlocada()) {
-        this.setAlocada(true);
-        if (this.funcionarios == null) {
-            this.funcionarios = new ArrayList<>();
+    public void alocar(Funcionario funcionario) {
+        if (!this.isAlocada()) {
+            this.setAlocada(true);
+            if (this.funcionarios == null) {
+                this.funcionarios = new ArrayList<>();
+            }
+            this.funcionarios.add(funcionario);
+        } else {
+            throw new IllegalStateException("Máquina já está alocada.");
         }
-        this.funcionarios.add(funcionario);
-    } else {
-        throw new IllegalStateException("Máquina já está alocada.");
     }
-}
 
-     // Método para verificar se a máquina está disponível
+    // Método para verificar se a máquina está disponível
     public boolean isDisponivel() {
         return !this.alocada;  // Retorna true se a máquina não estiver alocada
     }
+
     public void desalocar() {
         this.alocada = false;
         this.funcionarios.clear();
@@ -107,7 +108,8 @@ private List<Funcionario> funcionarios = new ArrayList<>();
     public List<Funcionario> getFuncionarios() {
         return funcionarios;
     }
-      public Produto getProduto() {
+
+    public Produto getProduto() {
         return produto;
     }
 
@@ -121,7 +123,7 @@ private List<Funcionario> funcionarios = new ArrayList<>();
 
     @Override
     public String toString() {
-        return  nome ;
+        return nome;
     }
 
 }
