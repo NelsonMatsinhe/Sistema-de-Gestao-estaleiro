@@ -32,31 +32,16 @@ public class Produto {
     private int tempoCura;
 
     private int quantidade;
-
-    public Produto() {
-    }
-
-    public Produto(int id, String nome, Categoria categoria, int tempoCura, int quantidade, Date dataRegistro, BigDecimal preco, List<Maquina> maquinas) {
-        this.id = id;
-        this.nome = nome;
-        this.categoria = categoria;
-        this.tempoCura = tempoCura;
-        this.quantidade = quantidade;
-        this.dataRegistro = dataRegistro;
-        this.preco = preco;
-        this.maquinas = maquinas;
-    }
-
+    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+    private List<Maquina> maquinas;
     @Column(name = "data_registro")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataRegistro;
 
-    @NotNull
-    @Column(name = "preco", nullable = true)
-    private BigDecimal preco;
 
-    @OneToMany(mappedBy = "produto")
-    private List<Maquina> maquinas;
+    public Produto() {
+    }
+
 
 // Getter e Setter
     public List<Maquina> getMaquinas() {
@@ -74,7 +59,6 @@ public class Produto {
         this.tempoCura = tempoCura;
         this.quantidade = 0;
         this.dataRegistro = new Date();
-        this.preco = new BigDecimal("0.00");
     }
 
     public Produto(int codProduto) {
@@ -82,7 +66,6 @@ public class Produto {
         this.nome = "";
 
         this.dataRegistro = new Date();
-        this.preco = new BigDecimal("0.00");
 
     }
 
@@ -131,13 +114,6 @@ public class Produto {
         this.dataRegistro = dataRegistro;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
 
     @Override
     public String toString() {

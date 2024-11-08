@@ -5,21 +5,16 @@ package model;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import javax.persistence.*;
-
-
 /**
  *
  * @author Nelson Matsinhe
  */
-
-
 @Entity
 public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
     private int quantidade;
     private String unidade;

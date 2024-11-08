@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model;
+
 import javax.persistence.*;
 import java.util.Date;
+
 /**
  *
  * @author Nelson Matsinhe
@@ -13,6 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "lotes_producao")
 public class LoteProducao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,13 +29,13 @@ public class LoteProducao {
     private int quantidadeInicial;
     private int quantidadeAtual;
     private int quantidadeQuebrada;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinalCura;
-    
+
     private boolean prontaParaUso;
 
     // Construtor padrão
@@ -155,10 +157,10 @@ public class LoteProducao {
 
     @Override
     public String toString() {
-        return "LoteProducao{" +
-                "numeroLote='" + numeroLote + '\'' +
-                ", quantidadeAtual=" + quantidadeAtual +
-                ", prontaParaUso=" + prontaParaUso +
-                '}';
+        return "LoteProducao{"
+                + "numeroLote='" + numeroLote + '\''
+                + ", quantidadeAtual=" + quantidadeAtual
+                + ", prontaParaUso=" + prontaParaUso
+                + '}';
     }
 }

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -35,10 +34,8 @@ public class Producao {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataProducao;
 
-    private int diasParaCura;
-
-    @OneToMany(mappedBy = "producao", cascade = CascadeType.ALL)
-    private List<LoteProducao> lotes;
+    @OneToMany(mappedBy = "producao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LoteProducao> lotes = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -69,20 +66,10 @@ public class Producao {
         lote.setQuantidadeInicial(quantidade);
         lote.setQuantidadeAtual(quantidade);
         lote.setNumeroLote(gerarNumeroLote());
-        lote.setDataFinalCura(calcularDataFinalCura());
-
         lotes.add(lote);
         this.quantidadeProduzida += quantidade;
 
         return lote;
-    }
-
-    // Método para calcular data final de cura
-    private Date calcularDataFinalCura() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.DAY_OF_MONTH, this.diasParaCura);
-        return cal.getTime();
     }
 
     // Método para gerar número único de lote
@@ -212,14 +199,6 @@ public class Producao {
         this.dataProducao = dataProducao;
     }
 
-    public int getDiasParaCura() {
-        return diasParaCura;
-    }
-
-    public void setDiasParaCura(int diasParaCura) {
-        this.diasParaCura = diasParaCura;
-    }
-
     public List<LoteProducao> getLotes() {
         return lotes;
     }
@@ -244,4 +223,3 @@ public class Producao {
         this.estado = estado;
     }
 }
-  

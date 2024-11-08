@@ -21,6 +21,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Funcionario;
 import model.ItemMaterial;
+import model.LoteProducao;
 import model.Maquina;
 import model.Material;
 import model.Producao;
@@ -598,25 +599,42 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         if (validarFormulario()) {
             try {
                 Producao producao = new Producao();
+
                 // Obter funcionário selecionado
                 Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
                 if (funcionarioSelecionado == null) {
                     throw new Exception("Selecione um funcionário");
                 }
+
                 // Obter máquina selecionada
                 Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
                 if (maquinaSelecionada == null) {
                     throw new Exception("Selecione uma máquina");
                 }
+
+                // Verificar se a máquina está alocada para o funcionário correto
+                if (!maquinaSelecionada.isDisponivel()
+                        && funcionarioSelecionado.getMaquinaAlocada() != maquinaSelecionada) {
+                    throw new Exception("Máquina não está alocada para este funcionário");
+                }
+
+                // Verificar se a máquina precisa ser alocada
+                if (maquinaSelecionada.isDisponivel()) {
+                    maquinaSelecionada.alocar(funcionarioSelecionado);
+                    funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+                    maquinaDAO.atualizar(maquinaSelecionada);
+                    funcionarioDAO.atualizar(funcionarioSelecionado);
+                }
+
                 // Obter produto e verificar
                 Produto produto = maquinaSelecionada.getProduto();
                 ftfProduto.setValue(produto);
 
-                // Modifique essas linhas para:
+                // Processar quantidades
                 int quantidadeProduzida;
-                int QuantidadeMaterial;
+                int quantidadeMaterial;
 
-// Para txtQuantidadeProduzida
+                // Para txtQuantidadeProduzida
                 Object quantidadeValue = txtQuantidadeProduzida.getValue();
                 if (quantidadeValue instanceof Integer) {
                     quantidadeProduzida = (Integer) quantidadeValue;
@@ -626,46 +644,62 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                     throw new Exception("Quantidade produzida inválida");
                 }
 
-// Para spQuantidadeMaterial
+                // Para spQuantidadeMaterial
                 Object materialValue = spQuantidadeMaterial.getValue();
                 if (materialValue instanceof Integer) {
-                    QuantidadeMaterial = (Integer) materialValue;
+                    quantidadeMaterial = (Integer) materialValue;
                 } else if (materialValue instanceof String) {
-                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
+                    quantidadeMaterial = Integer.parseInt((String) materialValue);
                 } else {
                     throw new Exception("Quantidade de material inválida");
                 }
 
-                // Atualizar o estoque dos materiais
+                // Configurar a produção básica
+                producao.setProduto(produto);
+                producao.setDiasParaCura(produto.getTempoCura());
+                producao.setMaquina(maquinaSelecionada);
+
+                // Criar lista de materiais utilizados
+                List<Material> materiaisUtilizados = new ArrayList<>();
                 for (ItemMaterial item : itensMaterial) {
                     Material material = item.getMaterial();
-                    material.removerEstoque(item.getQuantidade());
+                    // Verificar se há estoque suficiente
+                    if (material.getQuantidade() < item.getQuantidade()) {
+                        throw new Exception("Estoque insuficiente para o material: " + material.getNome());
+                    }
+                    materiaisUtilizados.add(material);
+                }
+
+                // Registrar a produção com funcionário, quantidade e materiais
+                producao.registrarProducao(funcionarioSelecionado, quantidadeProduzida, materiaisUtilizados);
+
+                // Criar lote inicial
+                LoteProducao loteInicial = producao.criarLote(quantidadeProduzida);
+
+                // Atualizar materiais no banco
+                for (Material material : materiaisUtilizados) {
                     materialDAO.atualizar(material);
                 }
 
-                // Configurar a produção
-                producao.setFuncionario(funcionarioSelecionado);
-                producao.setMaquina(maquinaSelecionada);
-                producao.setProduto(produto);
-                producao.setQuantidadeProduzida(quantidadeProduzida);
-                producao.setDataProducao(new Date());
-                producao.setEstado(true);
-                // Definir dias para cura baseado no produto
-                producao.setDiasParaCura(produto.getTempoCura());
-                // Atualizar o estoque do produto
-                produto.atualizarEstoque(quantidadeProduzida);
-                produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
                 // Salvar a produção
                 producaoDAO.salvar(producao);
-                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
+
+                // Atualizar o produto no banco
+                produtoDAO.atualizar(produto);
+
+                JOptionPane.showMessageDialog(this,
+                        "Produção registrada com sucesso.\nLote criado: " + loteInicial.getNumeroLote());
                 limpaFormulario();
                 carregarGrade();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
-                        "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
 
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao salvar a produção.\n" + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed

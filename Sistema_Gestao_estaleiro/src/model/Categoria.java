@@ -12,9 +12,7 @@ import javax.persistence.*;
  *
  * @author Nelson Matsinhe
  */
-
 public enum Categoria {
-    Bloco,paves,grelha
+    Bloco, paves, grelha
 
-    
 }

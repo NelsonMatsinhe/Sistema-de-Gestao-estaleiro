@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package model;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 /**
  *
  * @author Nelson Matsinhe
  */
-
 
 @Entity
 public class Pedido {
@@ -34,7 +34,8 @@ public class Pedido {
     private double valorTotal;
 
     // Construtor padrão
-    public Pedido() {}
+    public Pedido() {
+    }
 
     public Pedido(Cliente cliente, List<ItemPedido> itens, Date dataPedido) {
         this.cliente = cliente;
@@ -46,8 +47,8 @@ public class Pedido {
 
     public void calcularValorTotal() {
         this.valorTotal = itens.stream()
-                               .mapToDouble(ItemPedido::getSubtotal)
-                               .sum();
+                .mapToDouble(ItemPedido::getSubtotal)
+                .sum();
     }
 
     // Getters e setters
