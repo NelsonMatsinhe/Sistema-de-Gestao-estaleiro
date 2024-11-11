@@ -60,10 +60,8 @@ public class LoginDAO {
         String perfil = usuario.getFuncionario().getCargo().name();
 
         switch (perfil.toLowerCase()) {
-            case "operador":
-                return "Operador";
             case "gerente":
-                return "Gerente";
+                return "gerente";
             case "administrador":
                 return "Administrador";
             default:

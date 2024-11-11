@@ -47,27 +47,26 @@ public class TelaLogin extends javax.swing.JFrame {
         return userName.matches("[a-zA-Z0-9]{2,}");
     }
 
+    // Método para validar os campos
     public boolean camposValidos() {
         String senha = new String(txsenha.getPassword());
         String userName = txtUsuario.getText().trim();
 
         if (userName.isEmpty() || !validarUserName(userName)) {
-            txtUsuario.requestFocus();
-            txtUsuario.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
+            txtUsuario.setBorder(BorderFactory.createLineBorder(Color.red)); // Borda vermelha se inválido
             lblMessagem1.setText("Preencha o campo User Name válido (somente letras e números)");
             return false;
         } else {
-            txtUsuario.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
+            txtUsuario.setBorder(BorderFactory.createLineBorder(Color.green)); // Borda verde se válido
             lblMessagem1.setText("");
         }
 
         if (senha.isEmpty() || senha.length() <= 4) {
-            txsenha.setBorder(BorderFactory.createLineBorder(red)); // Borda vermelha se inválido
+            txsenha.setBorder(BorderFactory.createLineBorder(Color.red)); // Borda vermelha se inválido
             lblMessagem1.setText("A senha deve ter mais de 4 caracteres");
-            txsenha.requestFocus();
             return false;
         } else {
-            txsenha.setBorder(BorderFactory.createLineBorder(green)); // Borda verde se válido
+            txsenha.setBorder(BorderFactory.createLineBorder(Color.green)); // Borda verde se válido
             lblMessagem1.setText("");
         }
 
@@ -90,8 +89,8 @@ public class TelaLogin extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     // evt.consume(); // Impede o comportamento padrão da tecla Enter
-                    if (camposValidos()) {
-                        txsenha.requestFocus(); // Move o foco para a senha APENAS ao pressionar Enter
+                    if (!txtUsuario.getText().trim().isEmpty() && validarUserName(txtUsuario.getText().trim())) {
+                        txsenha.requestFocus(); // Move o foco para a senha
                     }
                 }
                 habilitarBotaoSeValido(); // Verifica a validade a cada tecla pressionada
@@ -103,7 +102,7 @@ public class TelaLogin extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     // evt.consume(); // Impede o comportamento padrão da tecla Enter
-                    if (camposValidos()) {
+                    if (!new String(txsenha.getPassword()).trim().isEmpty() && new String(txsenha.getPassword()).length() > 4) {
                         login.requestFocus(); // Move o foco para o botão APENAS ao pressionar Enter
                     }
                 }
@@ -240,13 +239,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txsenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txsenhaKeyPressed
-        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            evt.consume(); // Impede o comportamento padrão da tecla Enter
-            if (camposValidos()) {
-                login.requestFocus();
-                lblMessagem1.setText("");
-            }
-        }
+
     }//GEN-LAST:event_txsenhaKeyPressed
 
     private void txsenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txsenhaActionPerformed
@@ -284,11 +277,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
                 a.setVisible(true);
                 this.dispose();
-            } else if (perfil.equals("SuperAdmin")) {
-
-                lblMessagem1.setText("Bem-vindo SuperAdmin");
+            } else if (perfil.equals("gerente")) {
+                TelaMenuGerente a = new TelaMenuGerente();
+                lblMessagem1.setText("Bem-vindo gerente");
+                a.setVisible(true);
+                this.dispose();
             } else if (perfil.equals("User")) {
-
                 lblMessagem1.setText("Bem-vindo User");
                 TelaMenuAdmin U = new TelaMenuAdmin();
                 U.setVisible(true);
@@ -302,13 +296,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_loginActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
-        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            evt.consume(); // Impede o comportamento padrão da tecla Enter
-            if (camposValidos()) {
-                txsenha.requestFocus();
-                lblMessagem.setText("");
-            }
-        }
 
 
     }//GEN-LAST:event_txtUsuarioKeyPressed
@@ -337,9 +324,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
                     a.setVisible(true);
                     this.dispose();
-                } else if (perfil.equals("SuperAdmin")) {
-
-                    lblMessagem1.setText("Bem-vindo SuperAdmin");
+                } else if (perfil.equals("GERENTE")) {
+                    TelaMenuGerente a = new TelaMenuGerente();
+                    lblMessagem1.setText("Bem-vindo GERENTE");
                 } else if (perfil.equals("User")) {
 
                     lblMessagem1.setText("Bem-vindo User");
