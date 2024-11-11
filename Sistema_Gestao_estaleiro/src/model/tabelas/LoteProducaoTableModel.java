@@ -10,8 +10,12 @@ import java.util.List;
  */
 public class LoteProducaoTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Número do Lote", "Produto", "Quantidade Inicial", "Quantidade Atual", 
-                                "Quantidade Quebrada", "Data Final de Cura", "Pronto para Uso"};
+    private String colunas[] = {
+        "ID", "Número do Lote", "Produto", "Quantidade Inicial", 
+        "Quantidade Atual", "Quantidade Quebrada", "Data Criação", 
+        "Data Final de Cura", "Percentual de Quebra", "Pronto para Uso"
+    };
+    
     private List<LoteProducao> dados;
 
     @Override
@@ -32,18 +36,24 @@ public class LoteProducaoTableModel extends AbstractTableModel {
         LoteProducao loteProducao = dados.get(l);
         switch (c) {
             case 0:
-                return loteProducao.getNumeroLote();
+                return loteProducao.getId();
             case 1:
-                return loteProducao.getProducao().getProduto().getNome(); // Supondo que Produto tenha um método getNome
+                return loteProducao.getNumeroLote();
             case 2:
-                return loteProducao.getQuantidadeInicial();
+                return loteProducao.getProducao().getProduto().getNome(); // Supondo que Produto tenha um método getNome
             case 3:
-                return loteProducao.getQuantidadeAtual();
+                return loteProducao.getQuantidadeInicial();
             case 4:
-                return loteProducao.getQuantidadeQuebrada();
+                return loteProducao.getQuantidadeAtual();
             case 5:
-                return loteProducao.getDataFinalCura();
+                return loteProducao.getQuantidadeQuebrada();
             case 6:
+                return loteProducao.getDataCriacao();
+            case 7:
+                return loteProducao.getDataFinalCura();
+            case 8:
+                return String.format("%.2f%%", loteProducao.getPercentualQuebra()); // Percentual de Quebra
+            case 9:
                 return loteProducao.isProntaParaUso() ? "Sim" : "Não";
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");

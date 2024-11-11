@@ -45,7 +45,7 @@ public class BuscaMaterial extends javax.swing.JDialog {
         tbGrade = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Busca cliente");
+        setTitle("Busca Material");
 
         pnFiltro.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 

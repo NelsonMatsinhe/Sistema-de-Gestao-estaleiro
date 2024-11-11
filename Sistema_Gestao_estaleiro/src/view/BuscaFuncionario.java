@@ -29,7 +29,7 @@ public class BuscaFuncionario extends javax.swing.JDialog {
         try {
             FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             FuncionarioTableModel ctm = (FuncionarioTableModel) tbGrade.getModel();
-            ctm.setDados(funcionarioDAO.listarTodos());
+            ctm.setDados(funcionarioDAO.listarOperadores());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -45,7 +45,7 @@ public class BuscaFuncionario extends javax.swing.JDialog {
         tbGrade = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Busca cliente");
+        setTitle("Busca Funcionario");
 
         pnFiltro.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
