@@ -70,7 +70,7 @@ public class LoteProducaoDAO {
             e.printStackTrace();
         } finally {
             em.close();
-    }
+    }}
 
     // Método para remover um lote de produção pelo ID
     public void remover(Long id) {

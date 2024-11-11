@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import model.LoteProducao;
 
 /**
  * DAO para gerenciar operações CRUD da entidade Producao
@@ -127,4 +128,48 @@ public class ProducaoDAO {
             em.close();
         }
     }
+   
+   
+    public List<LoteProducao> listarProducoesComAtributos() {
+        EntityManager em = JpaUtil.getEntityManager();
+        List<LoteProducao> resultado = null;
+        try {
+            // Query JPQL modificada para retornar objetos LoteProducao
+            resultado = em.createQuery(
+                "SELECT DISTINCT l FROM LoteProducao l " +
+                "JOIN FETCH l.producao p " +
+                "JOIN FETCH p.produto " +
+                "JOIN FETCH p.funcionario " +
+                "JOIN FETCH p.maquina", 
+                LoteProducao.class
+            ).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return resultado;
+}
+
+//    // Método para listar todas as produções com todos os atributos e seus lotes
+//    public List<Object[]> listarProducoesComAtributos() {
+//        EntityManager em = JpaUtil.getEntityManager();
+//        List<Object[]> resultado = null;
+//        try {
+//            // Query JPQL para listar todos os atributos de produções e seus lotes
+//            resultado = em.createQuery(
+//                "SELECT p.id, p.produto.nome, p.produto.categoria, p.quantidadeProduzida, p.dataProducao, " +
+//                "p.funcionario.nome, p.maquina.nome, p.estado, " +
+//                "l.id, l.numeroLote, l.quantidadeInicial, l.quantidadeAtual, l.dataCriacao, l.dataFinalCura, l.prontaParaUso " +
+//                "FROM Producao p JOIN p.lotes l", Object[].class
+//            ).getResultList();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//        }
+//        return resultado;
+//    }
+
+
 }

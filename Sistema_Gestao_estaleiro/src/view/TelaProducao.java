@@ -6,13 +6,13 @@
 package view;
 
 import controller.FuncionarioDAO;
+import controller.LoteProducaoDAO;
 import controller.MaquinaDAO;
 import controller.MaterialDAO;
 import controller.ProducaoDAO;
 import controller.ProdutoDAO;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -26,6 +26,8 @@ import model.Maquina;
 import model.Material;
 import model.Producao;
 import model.Produto;
+import model.tabelas.LoteProducaoProducaoTableModel;
+import model.tabelas.LoteProducaoTableModel;
 import model.tabelas.ProducaoTableModel;
 
 //import model.Produto;
@@ -82,6 +84,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
     ProdutoDAO produtoDAO = new ProdutoDAO();
     MaterialDAO materialDAO = new MaterialDAO();
+    LoteProducaoDAO LoteProducaoDAO=new LoteProducaoDAO();
     // Na sua tela de produção, adicione uma lista para controlar os materiais
     private List<ItemMaterial> itensMaterial = new ArrayList<>();
     private DefaultTableModel tmItemMaterial;
@@ -102,8 +105,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         txtID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TbProducao = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
@@ -133,6 +134,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         spQuantidadeMaterial = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbItemMaterial = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TbProducao = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -156,14 +159,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-
-        TbProducao.setModel(new ProducaoTableModel());
-        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TbProducaoMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(TbProducao);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 245));
 
@@ -385,76 +380,88 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tbItemMaterial);
 
+        TbProducao.setModel(new LoteProducaoProducaoTableModel());
+        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TbProducaoMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(TbProducao);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3)
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel5)))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(rbtAlocar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(rbtdesalocar)))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnUsuario1)
+                            .addComponent(btnUsuario2))
+                        .addGap(42, 42, 42)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
+                        .addGap(508, 508, 508)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel5)))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnUsuario))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(rbtAlocar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(rbtdesalocar)))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUsuario1)
-                    .addComponent(btnUsuario2))
-                .addGap(42, 42, 42)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(508, 508, 508)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnUsuario))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(154, 154, 154)
+                        .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(118, 118, 118)
+                                        .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(12, 12, 12)
+                                .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,8 +528,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -627,7 +634,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 }
 
                 // Obter produto e verificar
-                Produto produto = maquinaSelecionada.getProduto();
+                 Produto produto = maquinaSelecionada.getProduto();
                 ftfProduto.setValue(produto);
 
                 // Processar quantidades
@@ -656,7 +663,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
                 // Configurar a produção básica
                 producao.setProduto(produto);
-                producao.setDiasParaCura(produto.getTempoCura());
+               // producao.setDiasParaCura(produto.getTempoCura());
                 producao.setMaquina(maquinaSelecionada);
 
                 // Criar lista de materiais utilizados
@@ -687,9 +694,9 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                 // Atualizar o produto no banco
                 produtoDAO.atualizar(produto);
 
-                JOptionPane.showMessageDialog(this,
-                        "Produção registrada com sucesso.\nLote criado: " + loteInicial.getNumeroLote());
-                limpaFormulario();
+//                JOptionPane.showMessageDialog(this,
+//                        "Produção registrada com sucesso.\nLote criado: " + loteInicial.getNumeroLote());
+//                limpaFormulario();
                 carregarGrade();
 
             } catch (Exception ex) {
@@ -811,10 +818,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btEditarActionPerformed
 
-    private void TbProducaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbProducaoMouseClicked
-
-    }//GEN-LAST:event_TbProducaoMouseClicked
-
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         BuscaMaterial BuscaMaterial = new BuscaMaterial(this);
         BuscaMaterial.setVisible(true);
@@ -893,6 +896,10 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private void tbItemMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbItemMaterialMouseClicked
 
     }//GEN-LAST:event_tbItemMaterialMouseClicked
+
+    private void TbProducaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbProducaoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TbProducaoMouseClicked
 // Método para atualizar a tabela
 
     private void atualizarTabelaMaterial() {
@@ -1112,14 +1119,16 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         return true;
     }
 
-    private void carregarGrade() {
-        ProducaoTableModel tm = (ProducaoTableModel) TbProducao.getModel();
-        try {
-            tm.setDados(producaoDAO.listarTodos());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+private void carregarGrade() {
+    LoteProducaoProducaoTableModel tm = (LoteProducaoProducaoTableModel)TbProducao.getModel();
+    try {
+        tm.setDados(producaoDAO.listarProducoesComAtributos());
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), 
+            "Erro", JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     void setMaquina(Maquina Maquina) {
         if (Maquina != null) {
@@ -1177,8 +1186,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMessagem;
     private javax.swing.JRadioButton rbtAlocar;
     private javax.swing.JRadioButton rbtdesalocar;

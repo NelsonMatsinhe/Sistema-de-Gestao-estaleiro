@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,8 @@ public class Producao {
     private Maquina maquina;
 
     private int quantidadeProduzida;
-
+    // Variável estática para manter um contador de lotes
+    private static int contadorLote = 1;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataProducao;
 
@@ -60,25 +62,33 @@ public class Producao {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser maior que zero");
         }
-
         LoteProducao lote = new LoteProducao();
         lote.setProducao(this);
         lote.setQuantidadeInicial(quantidade);
         lote.setQuantidadeAtual(quantidade);
         lote.setNumeroLote(gerarNumeroLote());
+
+        // Calcula a data de final de cura com base no tempoCura do produto
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_YEAR, produto.getTempoCura());
+        lote.setDataFinalCura(calendar.getTime());
+
         lotes.add(lote);
         this.quantidadeProduzida += quantidade;
-
         return lote;
     }
 
-    // Método para gerar número único de lote
-    private String gerarNumeroLote() {
-        return String.format("LOTE-%s-%d-%d",
-                produto.getId(),
-                new Date().getTime(),
-                (int) (Math.random() * 1000));
-    }
+// Método para gerar número de lote de forma simples
+    // Variável estática para manter um contador de lotes
+
+
+// Método para gerar número de lote com o nome do produto
+private String gerarNumeroLote() {
+    String nomeProdutoFormatado = produto.getNome().replace(" ", "_");
+    return String.format("LOTE-%s-%d-%03d", nomeProdutoFormatado, produto.getId(), contadorLote++);
+}
+
 
     // Método para obter quantidade total pronta para uso
     public int getQuantidadeProntaParaUso() {
