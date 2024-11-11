@@ -6,13 +6,13 @@
 package view;
 
 import controller.FuncionarioDAO;
+import controller.LoteProducaoDAO;
 import controller.MaquinaDAO;
 import controller.MaterialDAO;
 import controller.ProducaoDAO;
 import controller.ProdutoDAO;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -21,10 +21,13 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Funcionario;
 import model.ItemMaterial;
+import model.LoteProducao;
 import model.Maquina;
 import model.Material;
 import model.Producao;
 import model.Produto;
+import model.tabelas.LoteProducaoProducaoTableModel;
+import model.tabelas.LoteProducaoTableModel;
 import model.tabelas.ProducaoTableModel;
 
 //import model.Produto;
@@ -81,6 +84,7 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
     ProdutoDAO produtoDAO = new ProdutoDAO();
     MaterialDAO materialDAO = new MaterialDAO();
+    LoteProducaoDAO LoteProducaoDAO=new LoteProducaoDAO();
     // Na sua tela de produção, adicione uma lista para controlar os materiais
     private List<ItemMaterial> itensMaterial = new ArrayList<>();
     private DefaultTableModel tmItemMaterial;
@@ -101,8 +105,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         txtID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TbProducao = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         btNovo = new javax.swing.JButton();
@@ -132,6 +134,8 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         spQuantidadeMaterial = new javax.swing.JSpinner();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbItemMaterial = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TbProducao = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -155,14 +159,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-
-        TbProducao.setModel(new ProducaoTableModel());
-        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TbProducaoMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(TbProducao);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 245));
 
@@ -384,76 +380,90 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tbItemMaterial);
 
+        TbProducao.setModel(new LoteProducaoProducaoTableModel());
+        TbProducao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TbProducaoMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(TbProducao);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3)
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel5)))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(rbtAlocar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(rbtdesalocar)))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUsuario1)
-                    .addComponent(btnUsuario2))
-                .addGap(42, 42, 42)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(508, 508, 508)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnUsuario))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(jLabel2))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(38, 38, 38)
+                                        .addComponent(jLabel5)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ftfFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ftfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(rbtAlocar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(rbtdesalocar)))
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnUsuario1)
+                                    .addComponent(btnUsuario2))
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(508, 508, 508)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(ftfProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(ftfMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(btnUsuario))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addGap(118, 118, 118)
+                                        .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(12, 12, 12)
+                                .addComponent(btAdicionarItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(btRemoverItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(154, 154, 154)
+                                .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 53, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,16 +522,16 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(txtQuantidadeProduzida, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jLabel9)))))
+                                .addComponent(jLabel9))
+                            .addComponent(spQuantidadeMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(6, 6, 6)
                 .addComponent(lblMessagem, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -598,25 +608,42 @@ public class TelaProducao extends javax.swing.JInternalFrame {
         if (validarFormulario()) {
             try {
                 Producao producao = new Producao();
+
                 // Obter funcionário selecionado
                 Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
                 if (funcionarioSelecionado == null) {
                     throw new Exception("Selecione um funcionário");
                 }
+
                 // Obter máquina selecionada
                 Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
                 if (maquinaSelecionada == null) {
                     throw new Exception("Selecione uma máquina");
                 }
+
+                // Verificar se a máquina está alocada para o funcionário correto
+                if (!maquinaSelecionada.isDisponivel()
+                        && funcionarioSelecionado.getMaquinaAlocada() != maquinaSelecionada) {
+                    throw new Exception("Máquina não está alocada para este funcionário");
+                }
+
+                // Verificar se a máquina precisa ser alocada
+                if (maquinaSelecionada.isDisponivel()) {
+                    maquinaSelecionada.alocar(funcionarioSelecionado);
+                    funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+                    maquinaDAO.atualizar(maquinaSelecionada);
+                    funcionarioDAO.atualizar(funcionarioSelecionado);
+                }
+
                 // Obter produto e verificar
-                Produto produto = maquinaSelecionada.getProduto();
+                 Produto produto = maquinaSelecionada.getProduto();
                 ftfProduto.setValue(produto);
 
-                // Modifique essas linhas para:
+                // Processar quantidades
                 int quantidadeProduzida;
-                int QuantidadeMaterial;
+                int quantidadeMaterial;
 
-// Para txtQuantidadeProduzida
+                // Para txtQuantidadeProduzida
                 Object quantidadeValue = txtQuantidadeProduzida.getValue();
                 if (quantidadeValue instanceof Integer) {
                     quantidadeProduzida = (Integer) quantidadeValue;
@@ -626,47 +653,62 @@ public class TelaProducao extends javax.swing.JInternalFrame {
                     throw new Exception("Quantidade produzida inválida");
                 }
 
-// Para spQuantidadeMaterial
+                // Para spQuantidadeMaterial
                 Object materialValue = spQuantidadeMaterial.getValue();
                 if (materialValue instanceof Integer) {
-                    QuantidadeMaterial = (Integer) materialValue;
+                    quantidadeMaterial = (Integer) materialValue;
                 } else if (materialValue instanceof String) {
-                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
+                    quantidadeMaterial = Integer.parseInt((String) materialValue);
                 } else {
                     throw new Exception("Quantidade de material inválida");
                 }
-                
-                            // Atualizar o estoque dos materiais
-            for (ItemMaterial item : itensMaterial) {
-                Material material = item.getMaterial();
-                material.removerEstoque(item.getQuantidade());
-                materialDAO.atualizar(material);
-            }
 
-                // Configurar a produção
-                producao.setFuncionario(funcionarioSelecionado);
-                producao.setMaquina(maquinaSelecionada);
+                // Configurar a produção básica
                 producao.setProduto(produto);
-                producao.setQuantidadeProduzida(quantidadeProduzida);
-                producao.setDataProducao(new Date());
-                producao.setEstado(true);
-                // Definir dias para cura baseado no produto
-                producao.setDiasParaCura(produto.getTempoCura());
-                producao.setProntaParaUso(false); // Inicialmente não está pronta
-                // Atualizar o estoque do produto
-                produto.atualizarEstoque(quantidadeProduzida);
-                produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
+               // producao.setDiasParaCura(produto.getTempoCura());
+                producao.setMaquina(maquinaSelecionada);
+
+                // Criar lista de materiais utilizados
+                List<Material> materiaisUtilizados = new ArrayList<>();
+                for (ItemMaterial item : itensMaterial) {
+                    Material material = item.getMaterial();
+                    // Verificar se há estoque suficiente
+                    if (material.getQuantidade() < item.getQuantidade()) {
+                        throw new Exception("Estoque insuficiente para o material: " + material.getNome());
+                    }
+                    materiaisUtilizados.add(material);
+                }
+
+                // Registrar a produção com funcionário, quantidade e materiais
+                producao.registrarProducao(funcionarioSelecionado, quantidadeProduzida, materiaisUtilizados);
+
+                // Criar lote inicial
+                LoteProducao loteInicial = producao.criarLote(quantidadeProduzida);
+
+                // Atualizar materiais no banco
+                for (Material material : materiaisUtilizados) {
+                    materialDAO.atualizar(material);
+                }
+
                 // Salvar a produção
                 producaoDAO.salvar(producao);
-                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
-                limpaFormulario();
-                carregarGrade();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
-                        "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
 
+                // Atualizar o produto no banco
+                produtoDAO.atualizar(produto);
+
+//                JOptionPane.showMessageDialog(this,
+//                        "Produção registrada com sucesso.\nLote criado: " + loteInicial.getNumeroLote());
+//                limpaFormulario();
+                carregarGrade();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao salvar a produção.\n" + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
@@ -690,7 +732,6 @@ public class TelaProducao extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Selecione uma produção para excluir.");
         }
 
-
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
@@ -698,90 +739,75 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-//        if (validarFormulario()) {
-//            Long id;
-//            try {
-//                id = Long.parseLong(txtID.getText());
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(this, "ID inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
-//                return; // Retorna se o ID não for válido
-//            }
-//
-//                Producao producao = producaoDAO.buscarPorId(id);
-//                // Obter funcionário selecionado
-//                Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
-//                if (funcionarioSelecionado == null) {
-//                    throw new Exception("Selecione um funcionário");
-//                }
-//                // Obter máquina selecionada
-//                Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
-//                if (maquinaSelecionada == null) {
-//                    throw new Exception("Selecione uma máquina");
-//                }
-//                // Obter produto e verificar
-//                Produto produto = maquinaSelecionada.getProduto();
-//                ftfProduto.setValue(produto);
-//
-//                // Modifique essas linhas para:
-//                int quantidadeProduzida;
-//                int QuantidadeMaterial;
-//
-//// Para txtQuantidadeProduzida
-//                Object quantidadeValue = txtQuantidadeProduzida.getValue();
-//                if (quantidadeValue instanceof Integer) {
-//                    quantidadeProduzida = (Integer) quantidadeValue;
-//                } else if (quantidadeValue instanceof String) {
-//                    quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
-//                } else {
-//                    throw new Exception("Quantidade produzida inválida");
-//                }
-//
-//// Para spQuantidadeMaterial
-//                Object materialValue = spQuantidadeMaterial.getValue();
-//                if (materialValue instanceof Integer) {
-//                    QuantidadeMaterial = (Integer) materialValue;
-//                } else if (materialValue instanceof String) {
-//                    QuantidadeMaterial = Integer.parseInt((String) materialValue);
-//                } else {
-//                    throw new Exception("Quantidade de material inválida");
-//                }
-//                
-//                            // Atualizar o estoque dos materiais
-//            for (ItemMaterial item : itensMaterial) {
-//                Material material = item.getMaterial();
-//                material.removerEstoque(item.getQuantidade());
-//                materialDAO.atualizar(material);
-//            }
-//
-//                // Configurar a produção
-//                producao.setFuncionario(funcionarioSelecionado);
-//                producao.setMaquina(maquinaSelecionada);
-//                producao.setProduto(produto);
-//                producao.setQuantidadeProduzida(quantidadeProduzida);
-//                producao.setDataProducao(new Date());
-//                producao.setEstado(true);
-//                // Definir dias para cura baseado no produto
-//                producao.setDiasParaCura(produto.getTempoCura());
-//                producao.setProntaParaUso(false); // Inicialmente não está pronta
-//                // Atualizar o estoque do produto
-//                produto.atualizarEstoque(quantidadeProduzida);
-//                produtoDAO.atualizar(produto); // Adicione esta linha para salvar as alterações no produto
-//                // Salvar a produção
-//                producaoDAO.salvar(producao);
-//                JOptionPane.showMessageDialog(this, "Produção registrada com sucesso.");
-//                limpaFormulario();
-//                carregarGrade();
-//            } catch (Exception ex) {
-//                JOptionPane.showMessageDialog(this, "Erro ao salvar a produção.\n" + ex.getMessage(),
-//                        "Erro", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+    if (validarFormulario()) {
+        try {
+            Long id = Long.parseLong(txtID.getText());
+            Producao producao = producaoDAO.buscarPorId(id);
+
+            if (producao == null) {
+                throw new Exception("Produção não encontrada para o ID especificado.");
+            }
+
+            // Obter funcionário selecionado
+            Funcionario funcionarioSelecionado = (Funcionario) ftfFuncionario.getValue();
+            if (funcionarioSelecionado == null) {
+                throw new Exception("Selecione um funcionário.");
+            }
+
+            // Obter máquina selecionada
+            Maquina maquinaSelecionada = (Maquina) ftfMaquina.getValue();
+            if (maquinaSelecionada == null) {
+                throw new Exception("Selecione uma máquina.");
+            }
+
+            // Atualizar máquina e funcionário, se necessário
+            if (maquinaSelecionada.isDisponivel() && funcionarioSelecionado.getMaquinaAlocada() != maquinaSelecionada) {
+                maquinaSelecionada.alocar(funcionarioSelecionado);
+                funcionarioSelecionado.setMaquinaAlocada(maquinaSelecionada);
+                maquinaDAO.atualizar(maquinaSelecionada);
+                funcionarioDAO.atualizar(funcionarioSelecionado);
+            }
+
+            // Obter produto e verificar
+            Produto produto = maquinaSelecionada.getProduto();
+            producao.setProduto(produto);
+
+            // Atualizar quantidade produzida
+            int quantidadeProduzida;
+            Object quantidadeValue = txtQuantidadeProduzida.getValue();
+            if (quantidadeValue instanceof Integer) {
+                quantidadeProduzida = (Integer) quantidadeValue;
+            } else if (quantidadeValue instanceof String) {
+                quantidadeProduzida = Integer.parseInt((String) quantidadeValue);
+            } else {
+                throw new Exception("Quantidade produzida inválida.");
+            }
+
+            producao.setQuantidadeProduzida(quantidadeProduzida);
+
+            // Atualizar lista de materiais utilizados
+            List<Material> materiaisUtilizados = new ArrayList<>();
+            for (ItemMaterial item : itensMaterial) {
+                Material material = item.getMaterial();
+                if (material.getQuantidade() < item.getQuantidade()) {
+                    throw new Exception("Estoque insuficiente para o material: " + material.getNome());
+                }
+                materiaisUtilizados.add(material);
+            }
+            producao.setMateriais(materiaisUtilizados);
+
+            // Atualizar produção no banco de dados
+            producaoDAO.atualizar(producao);
+
+            JOptionPane.showMessageDialog(this, "Produção atualizada com sucesso.");
+            carregarGrade();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao editar a produção.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     }//GEN-LAST:event_btEditarActionPerformed
-
-    private void TbProducaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbProducaoMouseClicked
-
-    }//GEN-LAST:event_TbProducaoMouseClicked
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         BuscaMaterial BuscaMaterial = new BuscaMaterial(this);
@@ -861,21 +887,25 @@ public class TelaProducao extends javax.swing.JInternalFrame {
     private void tbItemMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbItemMaterialMouseClicked
 
     }//GEN-LAST:event_tbItemMaterialMouseClicked
-// Método para atualizar a tabela
-private void atualizarTabelaMaterial() {
-    // Limpar tabela
-    tmItemMaterial.setRowCount(0);
-    
-    // Adicionar itens
-    for (ItemMaterial item : itensMaterial) {
-        tmItemMaterial.addRow(new Object[]{
-            item.getCodigo(),
-            item.getMaterial().getNome(),
-            item.getQuantidade()
-        });
-    }
-}
 
+    private void TbProducaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbProducaoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TbProducaoMouseClicked
+// Método para atualizar a tabela
+
+    private void atualizarTabelaMaterial() {
+        // Limpar tabela
+        tmItemMaterial.setRowCount(0);
+
+        // Adicionar itens
+        for (ItemMaterial item : itensMaterial) {
+            tmItemMaterial.addRow(new Object[]{
+                item.getCodigo(),
+                item.getMaterial().getNome(),
+                item.getQuantidade()
+            });
+        }
+    }
 
     /**
      * Seleciona o registro da tabela e preenche o formulário.
@@ -941,10 +971,10 @@ private void atualizarTabelaMaterial() {
         txtQuantidadeProduzida.setValue(0);
         estadoGroup.clearSelection(); // Limpa a seleção dos botões de estado
         lblMessagem.setText("");
-itensMaterial.clear();
-    
-    // Resetar código
-    codigoAtual = 1;
+        itensMaterial.clear();
+
+        // Resetar código
+        codigoAtual = 1;
     }
 
     /**
@@ -1062,13 +1092,14 @@ itensMaterial.clear();
         });
     }
     // Método para inicializar o modelo da tabela
-private void inicializarTabela() {
-    tmItemMaterial = new DefaultTableModel();
-    tmItemMaterial.addColumn("Código");
-    tmItemMaterial.addColumn("Material");
-    tmItemMaterial.addColumn("Quantidade");
-    tbItemMaterial.setModel(tmItemMaterial);
-}
+
+    private void inicializarTabela() {
+        tmItemMaterial = new DefaultTableModel();
+        tmItemMaterial.addColumn("Código");
+        tmItemMaterial.addColumn("Material");
+        tmItemMaterial.addColumn("Quantidade");
+        tbItemMaterial.setModel(tmItemMaterial);
+    }
 
     private boolean validarFormularioItens() {
         if (ftfMaterial.getValue() == null) {
@@ -1079,14 +1110,16 @@ private void inicializarTabela() {
         return true;
     }
 
-    private void carregarGrade() {
-        ProducaoTableModel tm = (ProducaoTableModel) TbProducao.getModel();
-        try {
-            tm.setDados(producaoDAO.listarTodos());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+private void carregarGrade() {
+    LoteProducaoProducaoTableModel tm = (LoteProducaoProducaoTableModel)TbProducao.getModel();
+    try {
+        tm.setDados(producaoDAO.listarProducoesComAtributos());
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), 
+            "Erro", JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     void setMaquina(Maquina Maquina) {
         if (Maquina != null) {
@@ -1144,8 +1177,8 @@ private void inicializarTabela() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblMessagem;
     private javax.swing.JRadioButton rbtAlocar;
     private javax.swing.JRadioButton rbtdesalocar;

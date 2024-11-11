@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Cargo;
 
 /**
  *
@@ -183,4 +184,18 @@ public class FuncionarioDAO {
         }
         return count;
     }
+    // Método para listar todos os funcionários cujo cargo é OPERADOR
+public List<Funcionario> listarOperadores() {
+    EntityManager em = getEntityManager();
+    try {
+        TypedQuery<Funcionario> query = em.createQuery(
+            "SELECT f FROM Funcionario f WHERE f.cargo = :cargo AND f.estado = true", Funcionario.class);
+        query.setParameter("cargo", Cargo.OPERADOR);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+
 }

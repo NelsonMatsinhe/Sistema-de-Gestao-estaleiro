@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ProdutoTableModel extends AbstractTableModel {
 
-    private String colunas[] = {"Id", "Nome", "Categoria", "Tempo de Cura", "Quantidade", "Data de Registro", "Preço"};
+    private String colunas[] = {"Id", "Nome", "Categoria", "Tempo de Cura", "Data de Registro"};
     private List<Produto> dados;
 
     public ProdutoTableModel() {
@@ -37,11 +37,8 @@ public class ProdutoTableModel extends AbstractTableModel {
             case 3:
                 return produto.getTempoCura(); // Adiciona tempo de cura
             case 4:
-                return produto.getQuantidade(); // Adiciona quantidade
-            case 5:
                 return produto.getDataRegistro(); // Adiciona data de registro
-            case 6:
-                return produto.getPreco();
+
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente!");
         }

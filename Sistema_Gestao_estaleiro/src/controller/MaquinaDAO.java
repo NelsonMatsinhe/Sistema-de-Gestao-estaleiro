@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package controller;
+
 import model.Maquina;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
+
 /**
  *
  * @author Nelson Matsinhe
  */
-
 
 public class MaquinaDAO {
 
@@ -53,7 +53,7 @@ public class MaquinaDAO {
         List<Maquina> maquinas = null;
         try {
             TypedQuery<Maquina> query = em.createQuery(
-                "SELECT m FROM Maquina m", Maquina.class
+                    "SELECT m FROM Maquina m", Maquina.class
             );
             maquinas = query.getResultList();
         } finally {
@@ -82,7 +82,8 @@ public class MaquinaDAO {
             em.close();
         }
     }
-     public void atualizar(Maquina maquina) {
+
+    public void atualizar(Maquina maquina) {
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
@@ -98,4 +99,32 @@ public class MaquinaDAO {
             em.close();
         }
     }
+
+    public void desalocarTodasAsMaquinas() {
+        EntityManager em = JpaUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+
+            // Seleciona todas as máquinas alocadas
+            TypedQuery<Maquina> query = em.createQuery("SELECT m FROM Maquina m WHERE m.alocada = true", Maquina.class);
+            List<Maquina> maquinasAlocadas = query.getResultList();
+
+            // Desaloca cada máquina alocada
+            for (Maquina maquina : maquinasAlocadas) {
+                maquina.desalocar();
+                em.merge(maquina); // Atualiza a máquina no banco de dados
+            }
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }

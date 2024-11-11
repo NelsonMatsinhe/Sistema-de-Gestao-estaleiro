@@ -5,6 +5,7 @@ import model.Produto;
 import model.Producao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,75 +15,27 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ProducaoDAO producaoDAO = new ProducaoDAO();
-        
-        // Coletando dados para registrar uma produção
-        System.out.println("=== Registro de Produção ===");
+ ProducaoDAO producaoDAO = new ProducaoDAO();
+List<Object[]> producoesComAtributos = producaoDAO.listarProducoesComAtributos();
 
-        // Produto
-        System.out.print("Informe o ID do produto: ");
-        Long produtoId = scanner.nextLong();
-        Produto produto = buscarProdutoPorId(produtoId);  // Supondo que exista um método para buscar Produto
-        
-        // Funcionário
-        System.out.print("Informe o ID do funcionário: ");
-        Long funcionarioId = scanner.nextLong();
-        Funcionario funcionario = buscarFuncionarioPorId(funcionarioId);  // Supondo que exista um método para buscar Funcionário
+for (Object[] linha : producoesComAtributos) {
+    System.out.println("Produção ID: " + linha[0]);
+    System.out.println("Produto Nome: " + linha[1]);
+    System.out.println("Categoria: " + linha[2]);
+    System.out.println("Quantidade Produzida: " + linha[3]);
+    System.out.println("Data de Produção: " + linha[4]);
+    System.out.println("Funcionário Nome: " + linha[5]);
+    System.out.println("Máquina Nome: " + linha[6]);
+    System.out.println("Estado: " + linha[7]);
+    System.out.println("Lote ID: " + linha[8]);
+    System.out.println("Número do Lote: " + linha[9]);
+    System.out.println("Quantidade Inicial: " + linha[10]);
+    System.out.println("Quantidade Atual: " + linha[11]);
+    System.out.println("Data de Criação: " + linha[12]);
+    System.out.println("Data Final de Cura: " + linha[13]);
+    System.out.println("Pronta Para Uso: " + linha[14]);
+    System.out.println("----------------------------");
+}
 
-        // Máquina
-        System.out.print("Informe o ID da máquina: ");
-        Long maquinaId = scanner.nextLong();
-        Maquina maquina = buscarMaquinaPorId(maquinaId);  // Supondo que exista um método para buscar Máquina
-        
-        // Quantidade produzida
-        System.out.print("Informe a quantidade produzida: ");
-        int quantidadeProduzida = scanner.nextInt();
-        
-        // Data de produção (usando a data atual)
-        Date dataProducao = new Date();
-        
-        // Criação de uma nova produção
-        Producao producao = new Producao();
-        producao.setProduto(produto);
-        producao.setFuncionario(funcionario);
-        producao.setMaquina(maquina);
-        producao.setQuantidadeProduzida(quantidadeProduzida);
-        producao.setDataProducao(dataProducao);
-        producao.setProntaParaUso(false);  // Inicialmente, produção não está pronta
-        
-        // Salvando a produção no banco de dados
-        producaoDAO.salvar(producao);
-        System.out.println("Produção registrada com sucesso!");
-
-        scanner.close();
-    }
-    
-    // Método simulado para buscar produto pelo ID
-    private static Produto buscarProdutoPorId(Long id) {
-        // Simulação de busca de produto - aqui você implementaria a lógica real de busca
-        Produto produto = new Produto();
-        produto.setId(id );
-        produto.setNome("Produto Teste");
-        return produto;
-    }
-
-    // Método simulado para buscar funcionário pelo ID
-    private static Funcionario buscarFuncionarioPorId(Long id) {
-        // Simulação de busca de funcionário - aqui você implementaria a lógica real de busca
-        Funcionario funcionario = new Funcionario();
-        funcionario.setId(id);
-        funcionario.setNome("Funcionario Teste");
-        return funcionario;
-    }
-
-    // Método simulado para buscar máquina pelo ID
-    private static Maquina buscarMaquinaPorId(Long id) {
-        // Simulação de busca de máquina - aqui você implementaria a lógica real de busca
-        Maquina maquina = new Maquina();
-        maquina.setId(id);
-        maquina.setNome("Máquina Teste");
-        maquina.setDisponivel(true);
-        return maquina;
-    }
+}
 }

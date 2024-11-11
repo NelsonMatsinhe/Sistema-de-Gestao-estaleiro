@@ -6,9 +6,11 @@
 package view;
 
 import controller.DaoStock;
+import controller.LoteProducaoDAO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.tabelas.LoteProducaoTableModel;
 import model.tabelas.LowStockCellRenderer;
 import model.tabelas.StockMaterialTableModel;
 import model.tabelas.StockProdutoTableModel;
@@ -32,7 +34,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         carregarProdutos();
         carregarMateriais();
-
+        carregarGrade();
     }
     /**
      *
@@ -42,6 +44,7 @@ public class TelaStock extends javax.swing.JInternalFrame {
     Color f = new Color(219, 220, 252);
 
     DaoStock DaoStock = new DaoStock();
+    LoteProducaoDAO LoteProducaoDAO = new LoteProducaoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +66,9 @@ public class TelaStock extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbMaterial = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TbLote = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -158,10 +164,39 @@ public class TelaStock extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addGap(0, 125, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Stock dos Materiais", jPanel4);
+
+        TbLote.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        TbLote.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TbLote.setModel(new LoteProducaoTableModel());
+        TbLote.setRowHeight(25);
+        TbLote.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TbLoteMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(TbLote);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 125, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Lote", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,6 +234,10 @@ public class TelaStock extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tbMaterialMouseClicked
 
+    private void TbLoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbLoteMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TbLoteMouseClicked
+
     private void carregarProdutos() {
         StockProdutoTableModel tm = (StockProdutoTableModel) tbProduto.getModel();
         try {
@@ -212,6 +251,15 @@ public class TelaStock extends javax.swing.JInternalFrame {
                 tbProduto.getColumnModel().getColumn(i).setCellRenderer(renderer);
             }
 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void carregarGrade() {
+        LoteProducaoTableModel tm = (LoteProducaoTableModel) TbLote.getModel();
+        try {
+            tm.setDados(LoteProducaoDAO.listarTodos());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar grade.\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -237,14 +285,17 @@ public class TelaStock extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TbLote;
     private javax.swing.ButtonGroup estadoGroup;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tbMaterial;
     private javax.swing.JTable tbProduto;
